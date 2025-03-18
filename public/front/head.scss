@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "menu";
+@import "search";
+@import "sidebar";
+@import "second";
+@import "services";
+@import "mobile_head";
+@import "footer";
+@import "success_modal";
+@import "page/jumbotron";
+@import "page/service";
+@import "page/cities";
+@import "page/search";
+@import "page/vendor";
+@import "page/common";
+
+* {
+    // font-family: 'Roboto', sans-serif;
+    font-family: "Poppins", sans-serif;
+    // border:1px solid blue !important;
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #dbdbdb;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+* {
+    --red-primary: #ff5a5f;
+    --black-primary: rgb(80, 80, 80);
+    --black-secondary: #747474;
+    --black-tri: #626262;
+    --red-primary-hover: #f84248;
+    --yellow-primary: #ffc107;
+    --shadow: 0px 0px 10px 0px #e7ebee;
+    --shadow-strong: 0px 0px 10px 0px #a0a0a0;
+    --blue-primary: #38618b;
+}
+
+.text-black {
+    color: var(--black-primary);
+}
+.text-red {
+    color: var(--red-primary);
+}
+.bg-black {
+    background-color: var(--black-primary);
+}
+.bg-red {
+    background-color: var(--red-primary);
+}
+
+.btn-red-hover:hover{
+    color: white;
+    background-color: var(--red-primary);
+    cursor: pointer;
+}
+.text-red-hover:hover{
+    color: var(--red-primary) !important;
+    cursor: pointer;
+}
+
+.btn-red {
+    color: white;
+    background-color: var(--red-primary);
+    &:hover {
+        background-color: var(--red-primary-hover);
+    }
+}
+.btn-blue {
+    color: white;
+    background-color: var(--blue-primary);
+    &:hover {
+        background-color: var(--blue-primary-hover);
+    }
+}
+
+.head {
+    min-height: 100vh;
+    background: #8e9eab; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to top,
+        #ffffff,
+        #e7ebee
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to top,
+        #ffffff,
+        #e7ebee
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    &.page {
+        background: white;
+        min-height: auto;
+        position: sticky;
+        z-index: 1;
+        /* width: 100%; */
+        top: 0px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.336);
+    }
+}
+
+@media (max-width: 426px) {
+    .head {
+        min-height: auto;
+    }
+}
+
+.square {
+    padding-bottom: 100%;
+    position: relative;
+    .square-inner {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+    }
+}
+
+
+.add-product{
+    position: fixed;
+    bottom: -50px;
+    left: 10px;
+    height: 50px;
+    // width: 50px;
+    text-decoration: none;
+    line-height: 50px;
+    padding: 0px 10px;
+    border-radius: 5px;
+    border: none;
+    transition: 1s all;
+    background: var(--blue-primary);
+    color: white;
+}
+
+@media (max-width:425px){
+    .add-product{
+        bottom: 10px;
+    }
+
+}
+.go-to-top {
+    position: fixed;
+    bottom: -50px;
+    right: 10px;
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+    border: none;
+    transition: 1s all;
+    background: var(--red-primary);
+    color: #4e5d74;
+    &:hover {
+        background: var(--red-primary-hover);
+    }
+}
+
+#page-holder {
+    // transition: 0.3s all;
+}
+
+.modal-content.popup {
+    position: relative;
+}
+.popup.btn-close {
+    z-index: 1;
+    padding: 10px;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: center center;
+    transition: all 1s;
+    opacity: 1;
+    &:hover {
+        transform: rotate(180deg);
+        color: var(--red-primary);
+    }
+}

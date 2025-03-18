@@ -1,0 +1,2 @@
+<?php
+    return '{"map":"pusoe","email":"needtechnosoft@gmail.com","phone":"+9779800916365","addr":"Munalpath","others":[{"name":"cxf","phone":"fsfds","designation":"fhsfs","email":"fs@hhh.mm"}],"faqs":[{"id":1,"q":"asdfsdf"}]}';

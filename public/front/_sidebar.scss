@@ -1,0 +1,154 @@
+#sidebar{
+    position: fixed;
+    top: -100px;
+    left: 0px;
+    bottom: -100px;
+    width: 0px;
+    z-index: 9;
+    background-color: var(--red-primary);
+    overflow:hidden;
+    transition: 0.3s all;
+    &.active{
+        width: 100vw;
+        top:0px;
+        bottom:  0px;
+    }
+    .overlay{
+        // background-color: rgba($color: #000000, $alpha: 0.1);
+        height: 100%;
+        width: 100%;
+        .sidebar-menu-holder{
+            overflow-y: auto;
+            width: calc(80vw + 10px);
+            height: 100%;
+            background-color: var(--red-primary);
+            padding-right: 10px;
+            .sidebar-menu{
+                color: #fff;
+                overflow-y: hidden;
+                width: 100%;
+                height: 100%;
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    margin-right: 5px;
+                }
+
+                  /* Track */
+                  &::-webkit-scrollbar-track {
+                    background: var(--red-primary);
+                  }
+
+                  /* Handle */
+                  &::-webkit-scrollbar-thumb {
+                    background: #fff;
+                    width: 2px;
+                  }
+
+                  /* Handle on hover */
+                  &::-webkit-scrollbar-thumb:hover {
+                    background: rgb(226, 226, 226);
+                  }
+                  .back-bar{
+                      height: 50px;
+                      padding:5px;
+                      button{
+
+                          height: 40px;
+                          width: 40px;
+                          background: transparent;
+                          border: none;
+                          color:white;
+                          align-items: center;
+                      }
+                  }
+                  .bar{
+                      height: 1px;
+                      background: white;
+                      margin: 10px;
+                  }
+                  .menu-bar{
+                    display: flex;
+                    overflow:hidden;
+                    margin-right: 10px;
+                    justify-content: start;
+                    padding: 5px 10px;
+                    align-items: center;
+                    color: white;
+                    .material-icons{
+                        font-size: 25px;
+                    }
+                      a{
+                        font-weight: 600;
+                        margin-left: 5px;
+                        text-decoration: none;
+                        color:white;
+                      }
+                  }
+                  .user-bar{
+                      color: white;
+                      text-decoration: none;
+                      display: flex;
+                      overflow:hidden;
+                      margin-right: 10px;
+                      justify-content: start;
+                      padding: 5px 10px;
+                      align-items: center;
+                      .user-image{
+                        height: 40px;
+                        width: 40px;
+                        border-radius: 50%;
+                        overflow:hidden;
+                        margin-right: 5px;
+                        img{
+                            height: 100%;
+                            width: 100%;
+                            aspect-ratio: 1;
+
+                        }
+                      }
+                      .user-name{
+                          font-weight: 600;
+                      }
+                  }
+            }
+        }
+    }
+
+}
+
+.page-index{
+    position: fixed;
+    z-index: 11;
+    top:35px;
+    bottom: 35px;
+    left: 83%;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px 0px rgba($color: #000000, $alpha: 0.25);
+    overflow:hidden;
+    // opacity: 0.9;
+    animation: hover 0.4s linear 0s 1  ;
+    background: white;
+    .hide-on-menu{
+        display: none !important;
+    }
+}
+
+
+@keyframes hover {
+    0% {
+        top:50px;
+        bottom: 0px;
+        left: 50px;
+    }
+    75% {
+        top:38.75px;
+        bottom: 38.75px;
+        left: 62.25%;
+    }
+
+    100% {
+        top:35px;
+        bottom: 35px;
+        left: 83%;
+    }
+}

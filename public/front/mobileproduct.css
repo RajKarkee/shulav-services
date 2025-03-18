@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;&display=swap");
+* {
+  font-weight: 500;
+  font-family: 'Poppins', sans-serif;
+}
+
+.back {
+  width: 50px;
+  font-size: 35px;
+  position: absolute;
+  border-radius: 0px;
+  z-index: 113;
+  top: 5px;
+  left: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  height: 40px;
+}
+
+.back svg {
+  height: 25px;
+  width: 30px;
+}
+
+.share {
+  position: absolute;
+  border-radius: 0px;
+  z-index: 113;
+  top: 5px;
+  right: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  height: 40px;
+  width: 100px;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.name {
+  color: #4E5D74;
+  font-weight: 600;
+}
+
+.price {
+  color: #FF5A5F;
+}
+
+.desc {
+  text-align: justify;
+  color: grey;
+}
+
+#st-1,
+.st-logo,
+.st-disclaimer,
+.st-btn {
+  display: none !important;
+}
+
+.body {
+  padding: 0px;
+  margin: 0px;
+}
+/*# sourceMappingURL=mobileproduct.css.map */

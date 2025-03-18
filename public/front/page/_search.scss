@@ -1,0 +1,176 @@
+#page-search{
+    label{
+        font-weight: 600;
+    }
+
+    .btn-search{
+        background: var(--red-primary);
+        color:#ffffff;
+        width: 100%;
+
+    }
+    .not-found{
+        text-align: center;
+        img{
+            width:250px;
+        }
+    }
+    .vendor{
+
+        height: 100%;
+        display: block;
+        text-decoration: none !important;
+        color:#585858;
+        font-weight: 600;
+        margin-bottom: 15px;
+        .holder{
+            padding-bottom: 10px;
+            img{
+                background: #4E5D74;
+                width: 100%;
+                aspect-ratio: 1;
+            }
+
+            .top-title{
+                font-size: 14px;
+                text-decoration: none;
+                padding:5px 10px 0px  10px;
+                display: flex;
+                align-items: center;
+                span{
+                    margin-right: 5px;
+                }
+                i{
+                    margin-right: 5px;
+                }
+                &.name{
+                    padding:5px 10px 0px  10px;
+                    white-space: nowrap;
+                    overflow:hidden;
+                    text-overflow: ellipsis;
+
+                }
+                &.address{
+                    white-space: nowrap;
+                    overflow:hidden;
+                    text-overflow: ellipsis;
+                    margin-right: 10px;
+                }
+            }
+
+        }
+    }
+    .products{
+        margin-left: -7.5px;
+        margin-right: -7.5px;
+        &>div{
+            padding-right: 7.5px;
+            padding-left: 7.5px;
+            
+        }
+    }
+    .product{
+        display: block;
+        text-decoration: none;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: var(--shadow-strong);
+        .image{
+            height: 170px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &>img{
+                width:100%;
+            }
+        }
+        .product-desc{
+            padding:10px;
+            .name{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-weight: 500;
+                color:var(--blue-primary);
+            }
+            .price{
+                color:var(--red-primary);
+                font-size: 0.8rem;
+            }
+        }
+       
+    }
+
+}
+@media (max-width:426px){
+    #page-search{
+        .btn-search{
+            margin-top:5px;
+        }
+        #vendors-column{
+            column-count: 2;
+            column-gap: 6px;
+        }
+
+
+        .vendor{
+            break-inside: avoid-column;
+            margin-bottom: 6px;
+            .holder{
+
+                .top-title{
+                    font-size: 12px;
+                    text-decoration: none;
+                    padding:5px 10px 0px  10px;
+                    display: flex;
+                    align-items: center;
+                    span{
+                        margin-right: 5px;
+                    }
+                    i{
+                        margin-right: 5px;
+                    }
+                    &.name{
+                        padding:5px 10px 0px  10px;
+                        white-space: nowrap;
+                        overflow:hidden;
+                        text-overflow: ellipsis;
+
+                    }
+                    &.address{
+                        white-space: initial;
+                        overflow:hidden;
+                        text-overflow: ellipsis;
+                        margin-right: 0px;
+                    }
+                }
+
+            }
+        }
+
+        .product{
+        
+            border-radius: 5px;
+        
+            .image{
+                height: 90px;
+                
+            }
+            .product-desc{
+                padding:7.5px;
+                .name{
+                   
+                    font-size: 0.8rem;
+                }
+                .price{
+                    color:var(--red-primary);
+                    font-size: 0.7rem;
+                }
+            }
+           
+        }
+    }
+
+}

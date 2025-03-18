@@ -1,0 +1,46 @@
+#cities{
+    .single-city{
+        display: block;
+        margin-bottom: 30px;
+        box-shadow: var(--shadow);
+        color: var(--black-primary);
+        text-decoration: none;
+        img{
+            width: 100%;
+            aspect-ratio: 500/300;
+        }
+        .desc{
+            padding:10px;
+            .name{
+                text-align: center;
+                font-weight: 600;
+                font-size: 25px;
+            }
+        }
+    }
+}
+
+@media (max-width:426px){
+    #cities{
+        .col-6{
+            &:nth-child(even){
+                padding-left: 5px;
+            }
+            &:nth-child(odd){
+                padding-right: 5px;
+            }
+        }
+        .single-city{
+            margin-bottom: 10px;
+            .desc{
+                padding:5px 10px;
+                .name{
+                    text-align: center;
+                    font-weight: 600;
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+
+}

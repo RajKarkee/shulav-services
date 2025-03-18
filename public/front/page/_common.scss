@@ -1,0 +1,118 @@
+.vendor-alternate{
+
+    display: block;
+    text-decoration: none !important;
+    color:var(--black-primary);
+    font-weight: 600;
+    padding-bottom: 10px;
+    &:hover{
+        color: var(--black-primary);
+        .vendor-card {
+        background-color: rgba($color: #000000, $alpha: 0.05);
+        }
+    }
+    &:nth-child(odd){
+        padding-right: 7.5px;
+    }
+    &:nth-child(even){
+        padding-left: 7.5px;
+    }
+    .vendor-card {
+        height: 100%;
+        background-color: transparent;
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        .image{
+            text-align: center;
+            img{
+                width: 100%;
+            }
+        }
+        .info{
+
+            font-size: 0.9rem;
+            font-weight: 500;
+            .material-icons{
+                font-size: 1rem;
+            }
+            .no-overflow{
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .center{
+                display: flex;
+                align-items: center;
+                i{
+                    margin-right: 5px;
+                }
+
+
+            }
+        }
+    }
+
+    .heading {
+        font-weight: 700
+    }
+
+
+    .line-color {
+        color: var(--black-primary);
+        height: 3px
+    }
+}
+
+@media (max-width:426px){
+    .vendor-alternate{
+        break-inside: avoid-column;
+        font-weight: 600;
+        // margin-bottom: 10px;
+        &:nth-child(odd){
+            padding-right: 5px;
+        }
+        &:nth-child(even){
+            padding-left: 5px;
+        }
+        .vendor-card {
+            .image{
+                img{
+                    width: 70%;
+                    margin:10px 0px;
+                }
+            }
+            .info{
+
+                font-size: 0.8rem;
+                font-weight: 500;
+                .material-icons{
+                    font-size: 0.9rem;
+                }
+                .center{
+                    display: block;
+                    text-align: center;
+                    justify-content: center;
+                    align-items: flex-start;
+                    i{
+                        margin-top: 5px;;
+                    }
+                }
+
+                .no-overflow{
+                    white-space: initial;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+
+        .heading{
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+
+    }
+
+}
