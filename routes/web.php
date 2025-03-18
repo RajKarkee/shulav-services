@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\front1\FrontController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CertificateController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -36,16 +36,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', [FrontController::class, 'index'])->name('index');
+Route::name('front1.')->group(function(){
+    Route::get('/menu', [FrontController::class, 'menu'])->name('menu');
+    Route::get('/view', [FrontController::class, 'view'])->name('view');
+});
+
+
+
+
 
 Route::get('gen/{pass}', function ($pass) {
     return response()->json(['pass' => bcrypt($pass)]);
@@ -66,9 +65,9 @@ Route::get('mail/{email}', function ($email) {
 
 Route::match(['GET', 'POST'], 'verify', [FrontVendorController::class, 'verify'])->name('verify');
 Route::match(['GET', 'POST'], '/chooseCity', [HomeController::class, 'chooseCity'])->name('chooseCity');
-Route::redirect('/home','/');
+// Route::redirect('/home','/');
 
-Route::get('/', [HomeController::class, 'index'])->middleware('role:vendor')->name('index');
+// Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Route::post('/indexData', [HomeController::class, 'indexData'])->name('indexData');
 Route::get('homepage/{id}', [HomeController::class, 'append']);
@@ -147,7 +146,7 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function(){
 });
 
 
-Route::name('vendor.')->prefix('vendor/dashboard')->middleware('role:vendor')->group(function () {
+Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vendor')->group(function () {
     // Route::match(['GET', 'POST'], 'step', [FrontVendorController::class, 'step'])->name('step');
 
     Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
