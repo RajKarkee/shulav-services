@@ -34,7 +34,7 @@ class CategoryController extends Controller
             $data->image=$request->image->store('uploads/'.($request->state==1?'category':'service'));
         }
         $data->save();
-        Artisan::call("make:data");
+        //Artisan::call("make:data");
 
         return $request->state==1?view('admin.setting.service.singlecategory',['cat'=>$data]):view('admin.setting.service.singleservice',['cat'=>$data]);
     }
@@ -54,7 +54,7 @@ class CategoryController extends Controller
             $data->image=$request->image->store('uploads/'.($request->state==1?'category':'service'));
         }
         $data->save();
-        Artisan::call("make:data");
+        //Artisan::call("make:data");
 
         if($request->state==1){
             $data->services;
@@ -70,7 +70,7 @@ class CategoryController extends Controller
             $data=Service::find($request->id);
         }
         $data->delete();
-        Artisan::call("make:data");
+        //Artisan::call("make:data");
 
         return response()->json(['status'=>true]);
     }

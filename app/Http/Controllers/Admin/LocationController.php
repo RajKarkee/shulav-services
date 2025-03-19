@@ -29,7 +29,7 @@ class LocationController extends Controller
                 $city->image=$request->image->store('uploads/location');
             }
             $city->save();
-            Artisan::call("make:data");
+            // //Artisan::call("make:data");
 
             return response()->json(['status'=>true]);
         }else{
