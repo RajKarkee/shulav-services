@@ -73,7 +73,7 @@ class VendorController extends Controller
         $data = json_decode(include(public_path('api/city_' . $id . '.php')));
         foreach ($data->vendors as $key => $value) {
             if ($value->id == $vendor->id) {
-                Artisan::call('make:city', ['id' =>  $id]);
+                //Artisan::call('make:city', ['id' =>  $id]);
             }
         }
 
@@ -81,7 +81,7 @@ class VendorController extends Controller
         dd($data);
         foreach ($data->top_professionals as $key => $value) {
             if ($value->id == $vendor->id) {
-                Artisan::call('make:homepage');
+                //Artisan::call('make:homepage');
             }
         }
     }

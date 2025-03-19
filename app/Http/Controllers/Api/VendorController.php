@@ -69,7 +69,7 @@ class VendorController extends Controller
         $vendor->dob = $request->dob;
         $vendor->desc = $request->desc;
         $vendor->save();
-        
+
         return response()->json(['status' => true, 'msg' => []]);
     }
 
@@ -156,14 +156,14 @@ class VendorController extends Controller
         $data = json_decode(include(public_path('api/city_' . $id . '.php')));
         foreach ($data->vendors as $key => $value) {
             if ($value->id == $user->vendor->id) {
-                Artisan::call('make:city', ['id' =>  $id]);
+                //Artisan::call('make:city', ['id' =>  $id]);
             }
         }
 
         $data = json_decode(include(public_path('api/homepage.php')));
         foreach ($data->top_professionals as $key => $value) {
             if ($value->id == $user->vendor->id) {
-                Artisan::call('make:homepage');
+                //Artisan::call('make:homepage');
             }
         }
     }
@@ -261,8 +261,8 @@ class VendorController extends Controller
             Mail::to($user)->send(new ProductAdded($user,$bill));
 
         }
-        return response()->json($product);                        
-      
+        return response()->json($product);
+
     }
 
     public function productsEdit(Request $request)
@@ -272,7 +272,7 @@ class VendorController extends Controller
         if($product==null){
             abort(404);
         }
-        $validate=$request->validate([       
+        $validate=$request->validate([
             'name'=>'required',
             'price'=>'required|numeric|min:1'
         ]);
@@ -285,8 +285,8 @@ class VendorController extends Controller
             $product->image=$request->image->store(getDatePath('uploads/product'));
         }
         $product->save();
-        return response()->json($product);                        
-       
+        return response()->json($product);
+
     }
     public function productsDel(Request $request)
     {

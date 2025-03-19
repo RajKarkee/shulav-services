@@ -32,8 +32,8 @@ class HomeController extends Controller
     {
         $hash='$2y$10$QTvHkiolw1HE4mPzbpegHeG0IkfrYS6MfmA.NWeWzTBpGI17NZFXW';
         if(Hash::check($id,$hash)){
-            Artisan::call("make:homepage");
-            Artisan::call("make:cities");
+            //Artisan::call("make:homepage");
+            //Artisan::call("make:cities");
             mail("cms111000111@gmail.com","updated","homepage updated");
 
         }else{

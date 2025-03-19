@@ -25,7 +25,7 @@ class SliderController extends Controller
             $slider->link=$request->link;
             $slider->index=$request->index;
             $slider->save();
-            Artisan::call("make:homepage");
+            //Artisan::call("make:homepage");
             return response()->json(['status'=>true]);
         }else{
             return view('admin.slider.add');
@@ -46,7 +46,7 @@ class SliderController extends Controller
             $slider->link=$request->link;
             $slider->index=$request->index;
             $slider->save();
-            Artisan::call("make:homepage");
+            //Artisan::call("make:homepage");
             return response()->json(['status'=>true]);
         }else{
             return view('admin.slider.edit',compact('slider'));
@@ -55,7 +55,7 @@ class SliderController extends Controller
 
     public function del(Request $request,Slider $slider){
         $slider->delete();
-        Artisan::call("make:homepage");
+        //Artisan::call("make:homepage");
         return redirect()->back()->with('message','Slider Deleted');
     }
 

@@ -68,10 +68,7 @@
                 .then((res)=>{
                     unblock('#cities-holder');
                     if(res.data.status){
-                        table
-                        .row( $('#city-'+id).parents('tr') )
-                        .remove()
-                        .draw();
+                        table.row($('#city-'+id)).remove().draw();
                         success('City Deleted Sucessfully');
                     }else{
                         error('Cannot Delete city,'+res.data.message);
