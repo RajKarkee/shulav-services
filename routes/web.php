@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\VendorController;
+use App\Http\Controllers\Admin\ProductTypeController;
 use App\Http\Controllers\Front\AuthController as FrontAuthController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\JobController as FrontJobController;
@@ -26,6 +27,8 @@ use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\VendorController as FrontVendorController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Vendor\ProductController;
+use App\Http\Controllers\Admin\AdminProductController;
+
 use App\Mail\ProductAdded;
 use App\Mail\UserJoined;
 use App\Models\User;
@@ -37,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::name('front1.')->group(function(){
+Route::name('front1.')->group(function () {
     Route::get('/menu', [FrontController::class, 'menu'])->name('menu');
     Route::get('/view', [FrontController::class, 'view'])->name('view');
 });
@@ -51,11 +54,11 @@ Route::get('gen/{pass}', function ($pass) {
 });
 
 Route::get('mail/{email}', function ($email) {
-    $user=User::where('email',$email)->first();
-    $bill=VendorBill::latest()->first();
-    $user->token='lorem';
-    Mail::to($user)->send(new ProductAdded($user,$bill));
-    return view('email.bill',compact('user','bill'));
+    $user = User::where('email', $email)->first();
+    $bill = VendorBill::latest()->first();
+    $user->token = 'lorem';
+    Mail::to($user)->send(new ProductAdded($user, $bill));
+    return view('email.bill', compact('user', 'bill'));
 
     // return response()->json(['pass' => bcrypt($pass)]);
 });
@@ -106,41 +109,41 @@ Route::middleware('guest')->group(function () {
     Route::match(['GET', 'POST'], 'checkEmail', [FrontAuthController::class, 'checkEmail'])->name('checkEmail');
 });
 
-Route::name('user.')->prefix('user')->middleware('role:user')->group(function(){
-    Route::get('', [UserController::class,'index'])->name('dashboard');
-    Route::get('bookmark/{vendor_id}', [UserController::class,'bookmark'])->name('bookmark');
-    Route::match(['GET','POST'],'edit-info', [UserController::class,'editInfo'])->name('edit-info');
-    Route::match(['GET','POST'],'update-pass', [UserController::class,'updatePass'])->name('update-pass');
-    Route::match(['GET','POST'],'change-image', [FrontVendorController::class,'changeImage'])->name('change-image');
-    Route::match(['GET','POST'],'change-name', [FrontVendorController::class,'changeName'])->name('change-name');
-    Route::match(['GET','POST'],'change-desc', [FrontVendorController::class,'changeDesc'])->name('change-desc');
+Route::name('user.')->prefix('user')->middleware('role:user')->group(function () {
+    Route::get('', [UserController::class, 'index'])->name('dashboard');
+    Route::get('bookmark/{vendor_id}', [UserController::class, 'bookmark'])->name('bookmark');
+    Route::match(['GET', 'POST'], 'edit-info', [UserController::class, 'editInfo'])->name('edit-info');
+    Route::match(['GET', 'POST'], 'update-pass', [UserController::class, 'updatePass'])->name('update-pass');
+    Route::match(['GET', 'POST'], 'change-image', [FrontVendorController::class, 'changeImage'])->name('change-image');
+    Route::match(['GET', 'POST'], 'change-name', [FrontVendorController::class, 'changeName'])->name('change-name');
+    Route::match(['GET', 'POST'], 'change-desc', [FrontVendorController::class, 'changeDesc'])->name('change-desc');
 
-    Route::post('add-review', [UserController::class,'addReview'])->name('review.add');
+    Route::post('add-review', [UserController::class, 'addReview'])->name('review.add');
 
     Route::prefix('jobs')->name('jobs.')->group(function () {
-        Route::match(['get', 'post'], '/', [JobController::class,'index'])->name('index');
-        Route::match(['get', 'post'], '/add', [JobController::class,'addPage'])->name('add.page');
-        Route::match(['get', 'post'], '/add/store', [JobController::class,'add'])->name('add');
-        Route::match(['get', 'post'], '/edit/{id}', [JobController::class,'edit'])->name('edit');
-        Route::match(['get', 'post'], '/update/{id}', [JobController::class,'update'])->name('update');
-        Route::match(['get', 'post'], '/delete/{id}', [JobController::class,'delete'])->name('delete');
-        Route::match(['get', 'post'], '/detail/{id}', [JobController::class,'detail'])->name('detail');
-        Route::match(['get', 'post'], '/running', [JobController::class,'runningJob'])->name('running');
-        Route::match(['get', 'post'], '/finished', [JobController::class,'finishedJob'])->name('finished');
-        Route::match(['get', 'post'], '/bid-requested', [JobController::class,'bidRequestedJob'])->name('requested');
-        Route::match(['get', 'post'], '/bid-accept/{id}/{vendor_id}', [JobController::class,'acceptBid'])->name('acceptBid');
-        Route::match(['get', 'post'], '/finished-accept', [JobController::class,'acceptFinishedJob'])->name('acceptFinishedJob');
+        Route::match(['get', 'post'], '/', [JobController::class, 'index'])->name('index');
+        Route::match(['get', 'post'], '/add', [JobController::class, 'addPage'])->name('add.page');
+        Route::match(['get', 'post'], '/add/store', [JobController::class, 'add'])->name('add');
+        Route::match(['get', 'post'], '/edit/{id}', [JobController::class, 'edit'])->name('edit');
+        Route::match(['get', 'post'], '/update/{id}', [JobController::class, 'update'])->name('update');
+        Route::match(['get', 'post'], '/delete/{id}', [JobController::class, 'delete'])->name('delete');
+        Route::match(['get', 'post'], '/detail/{id}', [JobController::class, 'detail'])->name('detail');
+        Route::match(['get', 'post'], '/running', [JobController::class, 'runningJob'])->name('running');
+        Route::match(['get', 'post'], '/finished', [JobController::class, 'finishedJob'])->name('finished');
+        Route::match(['get', 'post'], '/bid-requested', [JobController::class, 'bidRequestedJob'])->name('requested');
+        Route::match(['get', 'post'], '/bid-accept/{id}/{vendor_id}', [JobController::class, 'acceptBid'])->name('acceptBid');
+        Route::match(['get', 'post'], '/finished-accept', [JobController::class, 'acceptFinishedJob'])->name('acceptFinishedJob');
 
     });
 
     Route::prefix('restaurant')->name('restaurant.')->group(function () {
-        Route::match(['get', 'post'], '', [FrontRestaurantController::class,'index'])->name('index');
-        Route::match(['get', 'post'], '{id}', [FrontRestaurantController::class,'menus'])->name('menus');
-        Route::match(['get', 'post'], 'menu/{id}', [FrontRestaurantController::class,'menusDetail'])->name('menusDetail');
+        Route::match(['get', 'post'], '', [FrontRestaurantController::class, 'index'])->name('index');
+        Route::match(['get', 'post'], '{id}', [FrontRestaurantController::class, 'menus'])->name('menus');
+        Route::match(['get', 'post'], 'menu/{id}', [FrontRestaurantController::class, 'menusDetail'])->name('menusDetail');
     });
 
-    Route::match(['get', 'post'], 'cart', [FrontRestaurantController::class,'cart'])->name('cart');
-    Route::match(['get', 'post'], 'place-to-order', [FrontRestaurantController::class,'placeToOrder'])->name('placeToOrder');
+    Route::match(['get', 'post'], 'cart', [FrontRestaurantController::class, 'cart'])->name('cart');
+    Route::match(['get', 'post'], 'place-to-order', [FrontRestaurantController::class, 'placeToOrder'])->name('placeToOrder');
 
 
 });
@@ -162,49 +165,41 @@ Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vend
     Route::match(['GET', 'POST'], 'change-desc', [FrontVendorController::class, 'changeDesc'])->name('change-desc');
     Route::match(['GET', 'POST'], 'edit-info', [FrontVendorController::class, 'editInfo'])->name('edit-info');
     Route::match(['GET', 'POST'], 'update-pass', [FrontVendorController::class, 'updatePass'])->name('update-pass');
-    Route::prefix('product')->name('product.')->group(function () {
-        Route::get('@{type}', [ProductController::class, 'index'])->name('index');
-        Route::match(['GET', 'POST'], 'add/@{type}', [ProductController::class, 'add'])->name('add');
-        Route::match(['GET', 'POST'], 'gallery/{product}', [ProductController::class, 'gallery'])->name('gallery');
-        Route::match(['GET', 'POST'], 'edit/{product}', [ProductController::class, 'edit'])->name('edit');
-        Route::match(['GET', 'POST'], 'del/{product}', [ProductController::class, 'del'])->name('del');
-        Route::match(['GET', 'POST'], 'status/{product}/{status}', [ProductController::class, 'status'])->name('status');
-    });
 
 
 
     Route::prefix('certificate')->name('certificate.')->group(function () {
-        Route::match(['get', 'post'], '/', [CertificateController::class,'index'])->name('index');
-        Route::match(['get', 'post'], '/add', [CertificateController::class,'add'])->name('add');
-        Route::match(['get', 'post'], '/store', [CertificateController::class,'store'])->name('store');
-        Route::match(['get', 'post'], '/edit/{id}', [CertificateController::class,'edit'])->name('edit');
-        Route::match(['get', 'post'], '/update/{id}', [CertificateController::class,'update'])->name('update');
-        Route::match(['get', 'post'], '/delete/{id}', [CertificateController::class,'delete'])->name('delete');
+        Route::match(['get', 'post'], '/', [CertificateController::class, 'index'])->name('index');
+        Route::match(['get', 'post'], '/add', [CertificateController::class, 'add'])->name('add');
+        Route::match(['get', 'post'], '/store', [CertificateController::class, 'store'])->name('store');
+        Route::match(['get', 'post'], '/edit/{id}', [CertificateController::class, 'edit'])->name('edit');
+        Route::match(['get', 'post'], '/update/{id}', [CertificateController::class, 'update'])->name('update');
+        Route::match(['get', 'post'], '/delete/{id}', [CertificateController::class, 'delete'])->name('delete');
     });
 
     Route::prefix('skill')->name('skill.')->group(function () {
-        Route::match(['get', 'post'], '/', [SkillController::class,'index'])->name('index');
-        Route::match(['get', 'post'], '/add', [SkillController::class,'add'])->name('add');
-        Route::match(['get', 'post'], '/store', [SkillController::class,'store'])->name('store');
-        Route::match(['get', 'post'], '/edit/{id}', [SkillController::class,'edit'])->name('edit');
-        Route::match(['get', 'post'], '/update/{id}', [SkillController::class,'update'])->name('update');
-        Route::match(['get', 'post'], '/delete/{id}', [SkillController::class,'delete'])->name('delete');
+        Route::match(['get', 'post'], '/', [SkillController::class, 'index'])->name('index');
+        Route::match(['get', 'post'], '/add', [SkillController::class, 'add'])->name('add');
+        Route::match(['get', 'post'], '/store', [SkillController::class, 'store'])->name('store');
+        Route::match(['get', 'post'], '/edit/{id}', [SkillController::class, 'edit'])->name('edit');
+        Route::match(['get', 'post'], '/update/{id}', [SkillController::class, 'update'])->name('update');
+        Route::match(['get', 'post'], '/delete/{id}', [SkillController::class, 'delete'])->name('delete');
     });
 
 
     Route::prefix('job-search')->name('job-search.')->group(function () {
-        Route::match(['get', 'post'], '/', [FrontJobController::class,'jobSearch'])->name('index');
-        Route::match(['get', 'post'], '/detail/{id}', [FrontJobController::class,'jobSearchdetails'])->name('details');
-        Route::match(['get', 'post'], '/bid', [FrontJobController::class,'addBid'])->name('bid');
+        Route::match(['get', 'post'], '/', [FrontJobController::class, 'jobSearch'])->name('index');
+        Route::match(['get', 'post'], '/detail/{id}', [FrontJobController::class, 'jobSearchdetails'])->name('details');
+        Route::match(['get', 'post'], '/bid', [FrontJobController::class, 'addBid'])->name('bid');
     });
 
 
 
-    Route::match(['get', 'post'], '/my-bids', [FrontJobController::class,'mybids'])->name('mybids');
-    Route::match(['get', 'post'], '/bid-accepted-jobs', [FrontJobController::class,'bidAccepted'])->name('bidaccept');
-    Route::match(['get', 'post'], '/finished-job-request/{id}', [FrontJobController::class,'finishedJobReq'])->name('finishedJobReq');
-    Route::match(['get', 'post'], '/finished-jobs', [FrontJobController::class,'finishedJob'])->name('finishedJob');
-    Route::match(['get', 'post'], '/received-payment/{id}', [FrontJobController::class,'yesReceivedPayment'])->name('receivedAPayment');
+    Route::match(['get', 'post'], '/my-bids', [FrontJobController::class, 'mybids'])->name('mybids');
+    Route::match(['get', 'post'], '/bid-accepted-jobs', [FrontJobController::class, 'bidAccepted'])->name('bidaccept');
+    Route::match(['get', 'post'], '/finished-job-request/{id}', [FrontJobController::class, 'finishedJobReq'])->name('finishedJobReq');
+    Route::match(['get', 'post'], '/finished-jobs', [FrontJobController::class, 'finishedJob'])->name('finishedJob');
+    Route::match(['get', 'post'], '/received-payment/{id}', [FrontJobController::class, 'yesReceivedPayment'])->name('receivedAPayment');
 
 
 
@@ -226,10 +221,30 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('append/{id}/{command}', [DashboardController::class, 'append']);
         Route::prefix('pricing')->name('pricing.')->group(function () {
             Route::get('', [PricingController::class, 'index'])->name('index');
-            Route::post( 'add', [PricingController::class, 'add'])->name('add');
-            Route::post( 'edit/{pricing}', [PricingController::class, 'edit'])->name('edit');
+            Route::post('add', [PricingController::class, 'add'])->name('add');
+            Route::post('edit/{pricing}', [PricingController::class, 'edit'])->name('edit');
             Route::get('del/{pricing}', [PricingController::class, 'del'])->name('del');
         });
+
+
+        Route::prefix('producttype')->group(function () {
+            Route::get('/product-types', [ProductTypeController::class, 'index'])->name('product_types.index');
+            Route::get('/product-types/create', [ProductTypeController::class, 'create'])->name('product_types.create');
+            Route::post('/product-types', [ProductTypeController::class, 'store'])->name('product_types.store');
+            Route::delete('/product-types/{productType}', [ProductTypeController::class, 'destroy'])->name('product_types.destroy');
+        });
+        Route::prefix('products')->group(function () {
+            Route::get('/', [AdminProductController::class, 'index'])->name('products.index');
+            Route::get('/create', [AdminProductController::class, 'create'])->name('products.create');
+            Route::post('/store', [AdminProductController::class, 'store'])->name('products.store');
+            Route::get('/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
+            Route::put('/{product}', [AdminProductController::class, 'update'])->name('products.update');
+            Route::delete('/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+        });
+
+
+
+
 
         Route::prefix('payment')->name('payment.')->group(function () {
             Route::get('details', [PaymentController::class, 'index'])->name('index');
@@ -238,6 +253,23 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 
+        // Route::prefix('product')->name('product.')->group(function () {
+        //     Route::get('index/{type}', [ProductController::class, 'index'])->name('index');
+        //     Route::match(['get', 'post'], '/add/{type}', [ProductController::class, 'add'])->name('add');
+        //     Route::match(['get', 'post'], '/edit/{product}', [ProductController::class, 'edit'])->name('edit');
+        // });
+
+
+
+    // Vendor-specific product routes (adjust according to your existing vendor routes)
+    // Route::prefix('vendor/products')->group(function () {
+    //     Route::get('/', [VendorProductController::class, 'index'])->name('vendor.products.index');
+    //     Route::get('/create', [VendorProductController::class, 'create'])->name('vendor.products.create');
+    //     Route::post('/store', [VendorProductController::class, 'store'])->name('vendor.products.store');
+    //     Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('vendor.products.edit');
+    //     Route::put('/{product}', [VendorProductController::class, 'update'])->name('vendor.products.update');
+    //     Route::delete('/{product}', [VendorProductController::class, 'destroy'])->name('vendor.products.destroy');
+    // });
         Route::prefix('bills')->name('bills.')->group(function () {
             Route::get('', [DashboardController::class, 'bills'])->name('index');
             Route::match(['GET', 'POST'], 'detail/{bill}', [DashboardController::class, 'billDetail'])->name('detail');
@@ -301,7 +333,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 route::match(['GET', 'POST'], 'edit/{city}', [CityController::class, 'edit'])->name('edit');
                 route::post('delete', [CityController::class, 'delete'])->name('delete');
                 Route::prefix('location')->name('location.')->group(function () {
-                    Route::get('/{id}',[LocationController::class,'index'])->name('index');
+                    Route::get('/{id}', [LocationController::class, 'index'])->name('index');
                     route::match(['GET', 'POST'], '/{id}/add', [LocationController::class, 'add'])->name('add');
                     route::match(['GET', 'POST'], 'edit/{location}', [LocationController::class, 'edit'])->name('edit');
                     route::post('delete', [LocationController::class, 'delete'])->name('delete');
@@ -310,13 +342,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
         });
 
-        Route::prefix('restaurant')->name('restaurant.')->group(function(){
+        Route::prefix('restaurant')->name('restaurant.')->group(function () {
             route::match(['GET', 'POST'], '', [RestaurantController::class, 'index'])->name('index');
             route::match(['GET', 'POST'], 'load-data', [RestaurantController::class, 'loadData'])->name('loadData');
             route::match(['GET', 'POST'], 'update', [RestaurantController::class, 'update'])->name('update');
             route::match(['GET', 'POST'], 'delete', [RestaurantController::class, 'delete'])->name('delete');
 
-            Route::prefix('menu')->name('menu.')->group(function(){
+            Route::prefix('menu')->name('menu.')->group(function () {
                 route::match(['GET', 'POST'], '', [MenuController::class, 'index'])->name('index');
                 route::match(['GET', 'POST'], 'load-data', [MenuController::class, 'loadData'])->name('loadData');
                 route::match(['GET', 'POST'], 'update', [MenuController::class, 'update'])->name('update');
@@ -324,7 +356,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             });
         });
 
-        Route::prefix('realstates')->name('realstates.')->group(function(){
+        Route::prefix('realstates')->name('realstates.')->group(function () {
             route::match(['GET', 'POST'], '', [RealstatesController::class, 'index'])->name('index');
             route::match(['GET', 'POST'], 'location', [RealstatesController::class, 'location'])->name('location');
             route::match(['GET', 'POST'], 'load-data', [RealstatesController::class, 'loadData'])->name('loadData');

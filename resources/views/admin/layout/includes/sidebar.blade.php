@@ -46,6 +46,19 @@
             </li> --}}
 
             <li>
+                <a href="{{ route('admin.product_types.index')}}">
+                    <i class="material-icons">shopping_cart</i>
+                    Product Type
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.products.index' ,['type'=>1])}}">
+                    <i class="material-icons">shopping_cart</i>
+                    Product Add
+                </a>
+            </li>
+
+            <li>
                 <a href="{{route('admin.realstates.index')}}">
                     <i class="material-icons">dashboard</i>
                     Realstates

@@ -12,7 +12,7 @@ class CategoryController extends Controller
 {
     public function index(){
         $cats=Category::with('services')->get();
-        return view('admin.setting.service.category',compact('cats'));
+        return view('admin.setting.service.category',data: compact('cats'));
     }
 
     public function category(Category $cat){

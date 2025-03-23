@@ -17,12 +17,7 @@
         </div>
     </div>
     <div class="homepage">
-        <div class="container">
 
-            <div class="banner">
-                <img src="media/new1.jpg" alt="Color Your Way to Epic Rewards" class="full-width-banner">
-            </div>
-        </div>
     </div>
 
     <div class="view-container">

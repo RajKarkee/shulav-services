@@ -103,3 +103,56 @@ function getVendor(){
     }
     return authInfo::$vendor;
 }
+function generateImageThumbnail($imagePath)
+{
+    $thumbnailPath = dirname($imagePath) . '/thumb_' . basename($imagePath);
+
+    $fullPath=storage_path('app/'. $imagePath);
+    $fullPathThumb=storage_path('app/'. $thumbnailPath);
+
+    $imageType = exif_imagetype($fullPath);
+
+    switch ($imageType) {
+        case IMAGETYPE_JPEG:
+            $source = imagecreatefromjpeg($fullPath);
+            break;
+        case IMAGETYPE_PNG:
+            $source = imagecreatefrompng($fullPath);
+            break;
+        case IMAGETYPE_GIF:
+            $source = imagecreatefromgif($fullPath);
+            break;
+        case IMAGETYPE_WEBP: // IMAGETYPE_WEBP constant not available in PHP < 7.4, use its value directly
+            $source = imagecreatefromwebp($fullPath);
+
+        default:
+            // Unsupported image type
+    }
+
+    // Get the image dimensions
+    list($originalWidth, $originalHeight) = getimagesize($fullPath);
+
+    // Calculate new dimensions for the thumbnail
+    $maxSize = 200;
+    if ($originalWidth > $originalHeight) {
+        $newWidth = $maxSize;
+        $newHeight = intval($originalHeight / $originalWidth * $maxSize);
+    } else {
+        $newWidth = intval($originalWidth / $originalHeight * $maxSize);
+        $newHeight = $maxSize;
+    }
+
+    // Create a new image resource
+    $thumb = imagecreatetruecolor($newWidth, $newHeight);
+    // Resize the image
+    imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newWidth, $newHeight, $originalWidth, $originalHeight);
+
+    // Save the thumbnail
+    imagejpeg($thumb, $fullPathThumb); // Adjust function according to the image type
+
+    // Free up memory
+    imagedestroy($thumb);
+    imagedestroy($source);
+
+    return $thumbnailPath;
+}

@@ -25,7 +25,7 @@ class ProductController extends Controller
         $products = DB::table('products')->where([
             ['type', $type],
             ['vendor_id', $user->vendor->id],
-            
+
         ])->select(DB::raw('products.*,(select id from vendor_bills where service_id=products.id and type=5) as bill_id,(select paid from vendor_bills where service_id=products.id and type=5) as paid'))->get();
         // dd($products);
         return view('vendor.product.index', compact('type', 'products', 'user'));
@@ -126,7 +126,7 @@ class ProductController extends Controller
 
 
             // dd($days, $start, $end, $product, $product, $pricing,$bill);
-            return redirect()->back()->with('message','product added');                        
+            return redirect()->back()->with('message','product added');
         } else {
             return view('vendor.product.add', compact('type', 'user'));
         }
@@ -143,7 +143,7 @@ class ProductController extends Controller
             ]);
             $product->name = $request->name;
             $product->price = $request->price;
-         
+
             $product->desc = Purify::removeJS(($request->desc ?? ""));
             $product->short_desc = $request->short_desc ?? "";
             $product->vendor_id = $user->vendor->id;

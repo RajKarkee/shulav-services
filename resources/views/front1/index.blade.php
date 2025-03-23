@@ -2,19 +2,16 @@
 @section('content')
     <div class="homepage">
         <div class="container">
-
-            <div class="banner">
-                <img src="media/new1.jpg" alt="Color Your Way to Epic Rewards" class="full-width-banner">
-            </div>
+            @includeIf('front1.cache.home.slider')
             <section class="categories">
                 <a href="{{route('front1.menu')}}" class="category">
-                    <div class="pic"><img src="media/car.jpg" alt="Cars"></div>Cars
+                    <div class="pic"><img src="{{ asset('media/car.jpg') }}" alt="Cars"></div>Cars
                 </a>
                 <a href="properties.html" class="category">
                     <div class="pic"><img src="media/property.jpg" alt="Properties"></div>Properties
                 </a>
                 <a href="mobiles.html" class="category">
-                    <div class="pic"><img src="media/mobile.png" alt="Mobiles"></div>Mobiles
+                    <div class="pic"><img src="{{asset('media/mobile.png')}}" alt="Mobiles"></div>Mobiles
                 </a>
                 <a href="jobs.html" class="category">
                     <div class="pic"><img src="media/jobs.png" alt="Jobs"></div>Jobs
