@@ -1,10 +1,12 @@
 @extends('admin.layout.app')  <!-- Assuming you have a layout file for the admin -->
 
-@section('title', 'Add Product')
+@section('s-title')
+    <li class="breadcrumb-item"><a href="{{ route('admin.products.index') }}">Product</a></li>
+    <li class="breadcrumb-item">Add</li>
+@endsection
 
 @section('css')
-    <!-- Add Dropify CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/dropify/0.2.2/css/dropify.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('admin/plugins/drophify/css/dropify.min.css') }}">
 @endsection
 
 @section('content')
@@ -35,14 +37,20 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="form-group">
-                        <label for="short_desc">Short Description</label>
-                        <textarea class="form-control @error('short_desc') is-invalid @enderror" id="short_desc" name="short_desc" rows="3" required>{{ old('short_desc') }}</textarea>
-                        @error('short_desc')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <label for="type">Product Type</label>
+                        <select class="form-control @error('type') is-invalid @enderror" id="type" name="type" required>
+                            <option value="">Select Product Type</option>
+                            @foreach($productTypes as $type)
+                                <option value="{{ $type->id }}" {{ old('type') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('type')
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+
 
                     <div class="form-group">
                         <label for="price">Price</label>
@@ -51,6 +59,11 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="vendor_id">Vendor Id <label>
+                            <input type="text" class='form-control' id="vendor_id" value="{{ $vendor->id }}">
+                        </div>
+
 
                     <div class="form-group">
                         <label for="service_id">Service ID</label>
@@ -59,7 +72,25 @@
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
+                    <div class="form-group">
+                        <label for="cityid">City</label>
+                        <select class="form-control @error('cityid') is-invalid @enderror" id="cityid" name="cityid" required>
+                            <option value="">Select a City</option>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}" {{ old('cityid') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('cityid')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="count">Product Count</label>
+                        <input type="number" class="form-control @error('count') is-invalid @enderror" id="count" name="count" value="{{ old('count') }}" required>
+                        @error('count')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
                     <div class="form-group">
                         <label for="start">Start Date</label>
                         <input type="date" class="form-control @error('start') is-invalid @enderror" id="start" name="start" value="{{ old('start') }}" required>
@@ -79,17 +110,20 @@
 
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="type">Product Type</label>
-                        <select class="form-control @error('type') is-invalid @enderror" id="type" name="type" required>
-                            <option value="">Select Product Type</option>
-                            @foreach($productTypes as $type)
-                                <option value="{{ $type->id }}" {{ old('type') == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('type')
+                        <label for="image">Product Image</label>
+                        <input type="file" class="form-control dropify @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" required>
+                        @error('image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label for="short_desc">Short Description</label>
+                        <textarea class="form-control @error('short_desc') is-invalid @enderror" id="short_desc" name="short_desc" rows="3" required>{{ old('short_desc') }}</textarea>
+                        @error('short_desc')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="form-group">
                         <label for="desc">Description</label>
                         <textarea class="form-control @error('desc') is-invalid @enderror" id="desc" name="desc" rows="5" required>{{ old('desc') }}</textarea>
@@ -98,41 +132,14 @@
                         @enderror
                     </div>
 
-                    <div class="form-group">
-                        <label for="count">Product Count</label>
-                        <input type="number" class="form-control @error('count') is-invalid @enderror" id="count" name="count" value="{{ old('count') }}" required>
-                        @error('count')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="image">Product Image</label>
-                        <input type="file" class="form-control dropify @error('image') is-invalid @enderror" id="image" name="image" accept="image/*" required>
-                        @error('image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="cityid">City</label>
-                        <select class="form-control @error('cityid') is-invalid @enderror" id="cityid" name="cityid" required>
-                            <option value="">Select a City</option>
-                            @foreach($cities as $city)
-                                <option value="{{ $city->id }}" {{ old('cityid') == $city->id ? 'selected' : '' }}>{{ $city->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('cityid')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
 
 
-                    <div class="form-group form-check">
-                        <input type="checkbox" class="form-check-input" id="active" name="active" {{ old('active') ? 'checked' : '' }}>
-                        <label class="form-check-label" for="active">Active</label>
-                    </div>
                 </div>
+
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="active" name="active" {{ old('active') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="active">Active</label>
+                                    </div>
             </div>
 
             <button type="submit" class="btn btn-primary">Add Product</button>
@@ -141,7 +148,12 @@
 @endsection
 
 @section('script')
+
+    <script src="{{ asset('admin/plugins/drophify/js/dropify.min.js') }}"></script>
     <script>
-        $('.dropify').dropify();
+        $(function() {
+            $('.dropify').dropify();
+            // $('#long_desc').summernote();
+        });
     </script>
 @endsection

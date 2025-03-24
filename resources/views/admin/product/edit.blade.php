@@ -1,4 +1,9 @@
 @extends('admin.layout.app')
+@section('s-title')
+    <li class="breadcrumb-item"><a href="{{ route('admin.product.index') }}">Product</a></li>
+    <li class="breadcrumb-item">Edit</li>
+@endsection
+
 @section('content')
     <div class="container">
         <h2>Edit Product: {{ $product->name }}</h2>

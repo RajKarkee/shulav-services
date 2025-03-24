@@ -28,6 +28,7 @@ use App\Http\Controllers\Front\VendorController as FrontVendorController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\ServiceController;
 
 use App\Mail\ProductAdded;
 use App\Mail\UserJoined;
@@ -261,15 +262,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
 
-    // Vendor-specific product routes (adjust according to your existing vendor routes)
-    // Route::prefix('vendor/products')->group(function () {
-    //     Route::get('/', [VendorProductController::class, 'index'])->name('vendor.products.index');
-    //     Route::get('/create', [VendorProductController::class, 'create'])->name('vendor.products.create');
-    //     Route::post('/store', [VendorProductController::class, 'store'])->name('vendor.products.store');
-    //     Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('vendor.products.edit');
-    //     Route::put('/{product}', [VendorProductController::class, 'update'])->name('vendor.products.update');
-    //     Route::delete('/{product}', [VendorProductController::class, 'destroy'])->name('vendor.products.destroy');
-    // });
+        // Vendor-specific product routes (adjust according to your existing vendor routes)
+        // Route::prefix('vendor/products')->group(function () {
+        //     Route::get('/', [VendorProductController::class, 'index'])->name('vendor.products.index');
+        //     Route::get('/create', [VendorProductController::class, 'create'])->name('vendor.products.create');
+        //     Route::post('/store', [VendorProductController::class, 'store'])->name('vendor.products.store');
+        //     Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('vendor.products.edit');
+        //     Route::put('/{product}', [VendorProductController::class, 'update'])->name('vendor.products.update');
+        //     Route::delete('/{product}', [VendorProductController::class, 'destroy'])->name('vendor.products.destroy');
+        // });
         Route::prefix('bills')->name('bills.')->group(function () {
             Route::get('', [DashboardController::class, 'bills'])->name('index');
             Route::match(['GET', 'POST'], 'detail/{bill}', [DashboardController::class, 'billDetail'])->name('detail');
@@ -368,6 +369,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
 
     });
+});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('service', ServiceController::class);
 });
 
 

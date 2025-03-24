@@ -6,7 +6,7 @@
             <li>
                 <a href="/">
                     <i class="material-icons">dashboard</i>
-                    dashboard
+                    Dashboard
                 </a>
 
             </li>
@@ -44,17 +44,23 @@
                     </li> --}}
                 {{-- </ul>
             </li> --}}
-
+{{--
             <li>
                 <a href="{{ route('admin.product_types.index')}}">
                     <i class="material-icons">shopping_cart</i>
                     Product Type
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ route('admin.products.index' ,['type'=>1])}}">
                     <i class="material-icons">shopping_cart</i>
-                    Product Add
+                    Product
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.service.index' ,['type'=>1])}}">
+                    <i class="material-icons">build</i>
+                    Services
                 </a>
             </li>
 
@@ -64,9 +70,6 @@
                     Realstates
                 </a>
             </li>
-
-
-
 
             <li >
                 <a href="#"><i class="material-icons">settings</i>Restaurant<i class="material-icons has-sub-menu">add</i></a>

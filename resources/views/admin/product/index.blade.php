@@ -1,8 +1,18 @@
 @extends('admin.layout.app')
+@section('css-include')
+    <link href="{{ asset('admin/plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
+
+@endsection
+@section('page-option')
+    <a type="button" class="btn btn-primary" href="{{route('admin.products.create')}}">Add Product</a>
+@endsection
+@section('s-title')
+    <li class="breadcrumb-item">Product</li>
+@endsection
 @section('content')
     <div class="container">
         <h2>Products</h2>
-        <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a>
+        {{-- <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a> --}}
         @if(session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}

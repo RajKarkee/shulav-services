@@ -1,9 +1,12 @@
-<tr data-id="{{$cat->id}}" data-rate="{{$cat->rate}}" data-name="{{$cat->name}}" data-desc="{{$cat->desc}}" data-image="{{asset($cat->image)}}" id="service-{{$cat->id}}">
+<tr data-id="{{$cat->id}}" data-type="{{$cat->type}}" data-rate="{{$cat->rate}}" data-name="{{$cat->name}}" data-desc="{{$cat->desc}}" data-image="{{asset($cat->image)}}" id="service-{{$cat->id}}">
     <td >
         <img src="{{asset($cat->image)}}" style="max-width: 100px" alt="">
     </td>
     <td>
         {{$cat->name}}
+    </td>
+    <td>
+       {{$cat->id}}
     </td>
     <td>
         {{$cat->rate}}

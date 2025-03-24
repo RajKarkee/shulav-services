@@ -3,13 +3,13 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/drophify/css/dropify.min.css') }}">
 @endsection
 @section('page-option')
-    <button type="button" class="btn btn-primary" data-toggle="modal" onclick="showAdd(2,{{$cat->id}})">Add Service</button>
-
+    <button type="button" class="btn btn-primary" data-toggle="modal" onclick="showAdd(2,{{ $cat->id }})">Add
+        Service</button>
 @endsection
 @section('s-title')
     <li class="breadcrumb-item">Setting</li>
-    <li class="breadcrumb-item"><a href="{{route('admin.setting.category.index')}}">Categories</a></li>
-    <li class="breadcrumb-item">{{$cat->name}}</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.setting.category.index') }}">Categories</a></li>
+    <li class="breadcrumb-item">{{ $cat->name }}</li>
     <li class="breadcrumb-item">Services </li>
 @endsection
 @section('content')
@@ -46,29 +46,34 @@
                         desc
                     </th>
                     <th>
-
+                        type
                     </th>
                 </thead>
                 <tbody id="data">
                     @foreach ($cat->services as $cat)
-                        <tr data-id="{{$cat->id}}" data-rate="{{$cat->rate}}" data-name="{{$cat->name}}" data-desc="{{$cat->desc}}" data-image="{{asset($cat->image)}}" id="service-{{$cat->id}}">
-                            <td >
-                                <img src="{{asset($cat->image)}}" style="max-width: 100px" alt="">
+                        <tr data-id="{{ $cat->id }}" data-type="{{ $cat->type }}" data-rate="{{ $cat->rate }}"
+                            data-name="{{ $cat->name }}" data-desc="{{ $cat->desc }}"
+                            data-image="{{ asset($cat->image) }}" id="service-{{ $cat->id }}">
+                            <td>
+                                <img src="{{ asset($cat->image) }}" style="max-width: 100px" alt="">
                             </td>
                             <td>
-                                {{$cat->name}}
+                                {{ $cat->name }}
                             </td>
                             <td>
-                                {{$cat->rate}}
+                                {{ $cat->rate }}
                             </td>
                             <td style="width: 35%">
-                                {{$cat->desc}}
+                                {{ $cat->desc }}
+                            </td>
+                            <td>
+                                {{ $cat->type }}
                             </td>
                             <td class="btn-table">
-                                <button class="btn btn-secondary btn-sm" onclick="showEdit(2,{{$cat->id}})">
+                                <button class="btn btn-secondary btn-sm" onclick="showEdit(2,{{ $cat->id }})">
                                     <i class="material-icons">edit</i>
                                 </button>
-                                <button class="btn btn-sm btn-danger text-danger" onclick="del(2,{{$cat->id}})">
+                                <button class="btn btn-sm btn-danger text-danger" onclick="del(2,{{ $cat->id }})">
                                     <i class="material-icons">delete</i>
                                 </button>
                             </td>
@@ -102,7 +107,7 @@
                 $('.service-' + element.dataset.id).each(function(index, element1) {
                     if (element1.dataset.name.toLowerCase().startsWith(ele.value.toLowerCase())) {
                         $(element1).removeClass('d-none');
-                        can=true;
+                        can = true;
                     } else {
                         $(element1).addClass('d-none');
                     }
@@ -134,29 +139,32 @@
             });
         }
 
-        function del(_state,id){
-            state=_state;
-            if($('.service-'+id).length>0 && state==1){
-                if(confirm('This Category Contains Services, Do You Still ant to delete Category?')){
+        function del(_state, id) {
+            state = _state;
+            if ($('.service-' + id).length > 0 && state == 1) {
+                if (confirm('This Category Contains Services, Do You Still ant to delete Category?')) {
 
-                }else{
+                } else {
                     return;
                 }
             }
-            if(confirm('Do You Want To Delete '+(state==1?'Category':'Service'))){
+            if (confirm('Do You Want To Delete ' + (state == 1 ? 'Category' : 'Service'))) {
                 $('body').block();
-                axios.post('{{route('admin.setting.category.delete')}}',{id:id,state:_state})
-                .then((res)=>{
-                    if(res.data.status){
-                        toastr.success((state==1?'Category':'Service')+" Deleted Sucessfully.")
-                        $('#'+(state==1?'cat-':'service-')+id).remove();
-                    }
-                    $('body').unblock();
-                })
-                .catch((err)=>{
-                    $('body').unblock();
-                    toastr.error('Cannot Delete '+(state==1?'Category':'Service')+" Please Try Again.")
-                });
+                axios.post('{{ route('admin.setting.category.delete') }}', {
+                        id: id,
+                        state: _state
+                    })
+                    .then((res) => {
+                        if (res.data.status) {
+                            toastr.success((state == 1 ? 'Category' : 'Service') + " Deleted Sucessfully.")
+                            $('#' + (state == 1 ? 'cat-' : 'service-') + id).remove();
+                        }
+                        $('body').unblock();
+                    })
+                    .catch((err) => {
+                        $('body').unblock();
+                        toastr.error('Cannot Delete ' + (state == 1 ? 'Category' : 'Service') + " Please Try Again.")
+                    });
             }
         }
     </script>
