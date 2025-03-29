@@ -11,17 +11,18 @@
             <div class="modal-body">
                 <form id="addform">
                     @csrf
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{$parent_id}}">
                     <div class="row">
+                        <div class="col-md-4" id="addimage">
+                            <input type="file" class="dropify" name="image" id="image" accept=".jpg,.jpeg,.png" data-default="">
+                        </div>
                         <div class="col-md-8">
-                            <input type="hidden" id="category_id" name="category_id" value="">
-                            <input type="hidden" id="state" name="state" value="1">
-
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" name="name" id="name" class="form-control">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group d-none"  >
                                 <label for="rate">Rate</label>
                                 <input type="number" name="rate" id="rate" class="form-control" value="{{ isset($cat) ? $cat->rate : '' }}">
                             </div>
@@ -32,23 +33,16 @@
                             </div>
 
                             <!-- Service Type Dropdown -->
-                            <div class="form-group">
-                                <label for="service_id">Service Type</label>
-                                <select name="service_id" id="service_id" class="form-control">
-                                    <option value="">Select Service Type</option>
-                                    <option value="1">Normal Service</option>
-                                    <option value="2">Hotel & Restaurants</option>
-                                    <option value="3">Bus Ticket</option>
-                                    <option value="4">Plane Ticket</option>
-                                    <option value="5">Vehicle Rent</option>
+                            <div class="form-group {{$parent_id?'d-none':''}}">
+                                <label for="type">Service Type</label>
+                                <select name="type" id="type" class="form-control type">
+
                                 </select>
                             </div>
 
                         </div>
 
-                        <div class="col-md-4" id="addimage">
-                            <input type="file" class="dropify" name="image" id="image" data-default="">
-                        </div>
+
                     </div>
 
                 </form>
@@ -81,17 +75,9 @@
             $('#addmodal').block({message: '<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div>'});
             axios.post('{{route('admin.setting.category.add')}}',fd)
             .then((res)=>{
-                console.log(res);
-                const cat_id=$('#category_id').val();
-                $('#data').append(res.data);
+                cats.push(res.data);
+                $('#data').append(render(res.data));
 
-                // if(state==1){
-
-                //     $('#all').append(res.data);
-                // }else{
-                //     $('#services-'+cat_id).append(res.data);
-
-                // }
                 document.getElementById('addform').reset();
                 $('#rate').val({{ isset($cat)?$cat->rate:'0'}});
                 $('#addmodal').modal('hide');

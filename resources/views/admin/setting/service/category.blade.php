@@ -11,6 +11,10 @@
 @section('s-title')
     <li class="breadcrumb-item">Setting</li>
     <li class="breadcrumb-item">Services Categories</li>
+    @if ($parent)
+        <li class="breadcrumb-item">{{$parent->name}}</li>
+        <li class="breadcrumb-item">Sub Category</li>
+    @endif
 @endsection
 
 @section('content')
@@ -21,44 +25,13 @@
                     <tr>
                         <th>Image</th>
                         <th>Name</th>
-                        <th>Rate</th>
                         <th>Type</th>
                         <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="data">
-                    @foreach ($cats as $cat)
-                        <tr data-id="{{$cat->id}}" data-name="{{$cat->name}}" data-type="{{$cat->type}}" data-rate="{{$cat->rate}}" data-desc="{{$cat->desc}}" data-image="{{asset($cat->image)}}" id="cat-{{$cat->id}}">
-                            <td>
-                                <img src="{{ asset($cat->image) }}" style="max-width: 100px" alt="">
-                            </td>
-                            <td>{{$cat->name}}</td>
-                            <td>{{$cat->rate}}</td>
-                            <td>
-                                @switch($cat->type)
-                                    @case(1) Normal @break
-                                    @case(2) Hotel & Restaurant @break
-                                    @case(3) Bus Ticket @break
-                                    @case(4) Plane Ticket @break
-                                    @case(5) Vehicle Rent @break
-                                    @default N/A
-                                @endswitch
-                            </td>
-                            <td style="width: 35%">{{$cat->desc}}</td>
-                            <td class="btn-table">
-                                <button class="btn mt-1 btn-secondary btn-sm" onclick="showEdit(1, {{$cat->id}})">
-                                    <i class="material-icons">edit</i>
-                                </button>
-                                <button class="btn mt-1 btn-sm btn-danger text-danger" onclick="del(1, {{$cat->id}})">
-                                    <i class="material-icons">delete</i>
-                                </button>
-                                <a href="{{route('admin.setting.category.category', ['cat'=>$cat->id])}}" class="btn mt-1 btn-success btn-sm">
-                                    <i class="material-icons">list</i>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
+
                 </tbody>
             </table>
         </div>
@@ -66,17 +39,58 @@
 
     @include('admin.setting.service.add')
     @include('admin.setting.service.edit')
+
+    <textarea id="cats" class="d-none">@json($cats)</textarea>
 @endsection
 
 @section('script')
-    <script src="{{ asset('admin/plugins/drophify/js/dropify.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+    <script src="{{ asset('admin/plugins/drophify/js/dropify.min.js') }}"></script>
 
     <script>
+        const serviceTypes = @json(\App\Helper::serviceTypes);
+        var cats=[];
         var state = 1;
         $(document).ready(function() {
             $('.dropify').dropify();
+            cats = JSON.parse($('#cats').val());
+            $('#cats').remove();
+            for (const key in serviceTypes) {
+                if (Object.prototype.hasOwnProperty.call(serviceTypes, key)) {
+                    const value = serviceTypes[key];
+                    $('.type').append(`<option value="${key}">${value}</option>`);
+                    // $('#etype').append(`<option value="${key}">${value}</option>`);
+                }
+            }
+
+            $('#data').html(cats.map(cat => render(cat)).join(''));
         });
+
+        function render(cat){
+            const subURL = "{{ route('admin.setting.category.index') }}";
+            return `<tr id="cat-${cat.id}">
+                        <td>
+                            <img src="/${cat.image}" style="max-width: 100px" alt="">
+                        </td>
+                        <td>${cat.name}</td>
+                        <td>
+                            ${serviceTypes[cat.type]}
+                        </td>
+                        <td style="width: 35%">${cat.desc}</td>
+                        <td class="btn-table">
+                            <button class="btn mt-1 btn-secondary btn-sm" onclick="showEdit(1, ${cat.id})">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button class="btn mt-1 btn-sm btn-danger text-danger" onclick="del(1, ${cat.id})">
+                                <i class="material-icons">delete</i>
+                            </button>
+                            <a href="${subURL}?parent_id=${cat.id}" class="btn mt-1 btn-success btn-sm">
+                                <i class="material-icons">list</i>
+                            </a>
+                        </td>
+                    </tr>`;
+
+        }
 
         function del(_state, id) {
             state = _state;

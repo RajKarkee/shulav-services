@@ -12,27 +12,28 @@
                 <form id="editform">
                     @csrf
                     <div class="row">
+                        <div class="col-md-4" id="editimage">
+                            <input type="file" class="" name="image" id="eimage" accept=".jpg,.jpeg,.png" data-default="">
+                        </div>
                         <div class="col-md-8">
-                            <input type="hidden" id="ecategory_id" name="category_id" value="">
                             <input type="hidden" id="eid" name="id" value="">
-                            <input type="hidden" id="estate" name="state" value="1">
                              <div class="form-group">
                                  <label for="name">Name</label>
                                  <input type="text" name="name" id="ename" class="form-control" >
                              </div>
                              <div class="form-group">
-                                <label for="rate">Rate</label>
-                                <input type="number" name="rate" id="erate" class="form-control" >
-                            </div>
-                             <div class="form-group">
                                  <label for="desc">Description</label>
                                  <textarea name="desc" id="edesc" class="form-control" maxlength="160"></textarea>
                              </div>
+                             <div class="form-group">
+                                <label for="type">Service Type</label>
+                                <select name="type" id="etype" class="form-control type">
+
+                                </select>
+                            </div>
 
                         </div>
-                        <div class="col-md-4" id="editimage">
-                            <input type="file" class="" name="image" id="eimage" data-default="">
-                        </div>
+
                     </div>
                 </form>
             </div>
@@ -46,28 +47,21 @@
 @section('script2')
     <script >
         function showEdit(_state,id){
-            $('#editmodal').modal('show');
             $('#edittitle').text('Edit '+(_state==1?'Category':'Service'));
             $('#editsave').text('Update '+(_state==1?'Category':'Service'));
-            $('#estate').val(_state);
-            // $('#category_id').val(_state==1?0:cat_id);
             $('#editimage').html('');
-            let data;
-            if(_state==1){
-                data=$('#cat-'+id)[0].dataset;
-            }else{
-                data=$('#service-'+id)[0].dataset;
 
-            }
-            $('#eid').val(data.id);
-            $('#ename').val(data.name);
-            $('#erate').val(data.rate);
-            $('#edesc').html(data.desc);
-            console.log(data);
-            $('#editimage').html('<input type="file" class="dropify" name="image" id="eimage" data-default-file="'+data.image+'">');
+            let cat = cats.find(cat => cat.id == id);
+
+            $('#eid').val(cat.id);
+            $('#ename').val(cat.name);
+            $('#edesc').val(cat.desc);
+            $('#etype').val(cat.type);
+
+            $('#editimage').html('<input type="file" class="dropify" name="image" id="eimage" data-default-file="/'+cat.image+'">');
             $('#eimage').dropify();
 
-            state=_state;
+            $('#editmodal').modal('show');
         }
          function update(){
             const name=$('#ename').val();
@@ -79,17 +73,26 @@
             $('#editmodal').block({message: '<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div>'});
             axios.post('{{route('admin.setting.category.update')}}',fd)
             .then((res)=>{
-                console.log(res);
-                const id=$('#eid').val();
-                if(state==1){
-                    $('#cat-'+id).replaceWith(res.data);
-                }else{
-                    $('#service-'+id).replaceWith(res.data);
-                }
+                const updatedData = res.data;
+
+                cats = cats.map(cat => {
+                    if(cat.id==updatedData.id){
+                        cat.name = updatedData.name;
+                        cat.desc = updatedData.desc;
+                        cat.type = updatedData.type;
+                        cat.image = updatedData.image;
+                    }
+                    return cat;
+                });
+
+                $('#cat-'+updatedData.id).replaceWith(render(updatedData));
+                toastr.success("Category Updated Successfully.");
+
                 document.getElementById('editform').reset();
                 $('#editmodal').modal('hide');
                 $('#editimage .dropify-clear')[0].click();
                 $('#editmodal').unblock();
+
 
             })
             .catch((err)=>{

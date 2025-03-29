@@ -22,11 +22,6 @@
                     <div class="form-group">
                         <label for="type">Service Type</label>
                         <select name="type" id="type" class="form-control">
-                            <option value="1">Normal Service</option>
-                            <option value="2">Hotel & Restaurants</option>
-                            <option value="3">Bus Ticket</option>
-                            <option value="4">Plane Ticket</option>
-                            <option value="5">Vehicle Rent</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -34,8 +29,8 @@
                         <select name="category_id" id="category_id" class="form-control">
                             <option value="">Select Category</option>
                             {{-- @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach --}}
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach --}}
                         </select>
                     </div>
                     <div class="form-group">
@@ -66,12 +61,16 @@
     </div>
 @endsection
 @section('script')
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <script src="{{ asset('admin/plugins/drophify/js/dropify.min.js') }}"></script>
     <script>
+
+        const serviceTypes = @json(\App\Helper::serviceTypes);
         $(function() {
             $('.dropify').dropify();
-          //  $('#long_desc').summernote();
+            $('#type').html(
+                serviceTypes.map(type => `<option value="${type}">${type}</option>`)
+            );
+
         });
     </script>
 @endsection

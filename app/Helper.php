@@ -35,6 +35,22 @@ class Helper{
         'Excellent'
     ];
 
+    public const serviceTypes = [
+        1 => 'Normal Service',
+        2 => 'Hotel And Restaurant',
+        3 => 'Ticketing',
+        4 => 'Vehicle Renting',
+        5 => 'House Renting',
+        6 => 'Venue Ticketing',
+    ];
+
+    const service_type_normal = 1;
+    const service_type_hotel = 2;
+    const service_type_ticketing = 3;
+    const service_type_vehicle_renting = 4;
+    const service_type_house_renting = 5;
+    const service_type_venue_ticketing = 6;
+
     public static function createImage($img,$path='')
     {
         try {

@@ -7,12 +7,23 @@ use App\Models\Category;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
-    public function index(){
-        $cats=Category::with('services')->get();
-        return view('admin.setting.service.category',data: compact('cats'));
+    public function index(Request $request){
+        $cats=[];
+        $parent_id=$request->parent_id;
+        $parent=null;
+        if($parent_id){
+            $cats=DB::table(Category::tableName)->where('parent_id',$parent_id)->get();
+            $parent=DB::table(Category::tableName)->where('id',$parent_id)->first();
+        }else{
+            $cats=DB::table(Category::tableName)->where('parent_id',null)->get();
+
+        }
+
+        return view('admin.setting.service.category',data: compact('cats','parent_id','parent'));
     }
 
     public function category(Category $cat){
@@ -20,58 +31,41 @@ class CategoryController extends Controller
     }
 
     public function add(Request $request){
-        $data=null;
-        if($request->state==1){
-            $data=new Category();
+        $category = new Category();
+        $category->name = $request->name;
+        $category->parent_id = $request->parent_id;
+        if($request->filled('parent_id')){
+            $parent = Category::find($request->parent_id);
+            $category->type = $parent->type;
         }else{
-            $data=new Service();
-            $data->category_id=$request->category_id;
+            $category->type = $request->type??1;
         }
-        $data->name=$request->name;
-        $data->rate=$request->rate??0;
-        $data->desc=$request->desc;
-        if($request->hasFile('image')){
-            $data->image=$request->image->store('uploads/'.($request->state==1?'category':'service'));
+        $category->desc = $request->desc;
+        $category->rate=$request->rate??0;
+        if ($request->hasFile('image')) {
+            $category->image = $request->image->store('uploads/category');
         }
-        $data->save();
-        //Artisan::call("make:data");
 
-        return $request->state==1?view('admin.setting.service.singlecategory',['cat'=>$data]):view('admin.setting.service.singleservice',['cat'=>$data]);
+        $category->save();
+
+        return response()->json($category);
     }
 
     public function update(Request $request){
-        $data=null;
-        if($request->state==1){
-            $data=Category::find($request->id);
-        }else{
-            $data=Service::find($request->id);
+        $category = Category::find($request->id);
+        $category->name = $request->name;
+        $category->type = $request->type??1;
+        $category->desc = $request->desc;
+        $category->rate=$request->rate??0;
+        if ($request->hasFile('image')) {
+            $category->image = $request->image->store('uploads/category');
+        }
+        $category->save();
 
-        }
-        $data->name=$request->name;
-        $data->rate=$request->rate??0;
-        $data->desc=$request->desc;
-        if($request->hasFile('image')){
-            $data->image=$request->image->store('uploads/'.($request->state==1?'category':'service'));
-        }
-        $data->save();
-        //Artisan::call("make:data");
-
-        if($request->state==1){
-            $data->services;
-        }
-        return $request->state==1?view('admin.setting.service.singlecategory',['cat'=>$data]):view('admin.setting.service.singleservice',['cat'=>$data]);
+        return response()->json($category);
     }
 
     public function delete(Request $request){
-        $data=null;
-        if($request->state==1){
-            $data=Category::find($request->id);
-        }else{
-            $data=Service::find($request->id);
-        }
-        $data->delete();
-        //Artisan::call("make:data");
-
-        return response()->json(['status'=>true]);
+        Category::where('id',$request->id)->delete();
     }
 }
