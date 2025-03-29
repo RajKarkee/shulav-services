@@ -52,22 +52,22 @@
                 </a>
             </li> --}}
             <li>
-                <a href="{{ route('admin.products.index' ,['type'=>1])}}">
+                <a href="{{ route('admin.products.index')}}">
                     <i class="material-icons">shopping_cart</i>
                     Product
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ route('admin.service.index' ,['type'=>1])}}">
                     <i class="material-icons">build</i>
                     Services
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a href="{{route('admin.realstates.index')}}">
                     <i class="material-icons">dashboard</i>
-                    Realstates
+                    Real Estates
                 </a>
             </li>
 

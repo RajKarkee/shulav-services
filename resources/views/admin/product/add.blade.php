@@ -20,7 +20,7 @@
 @section('content')
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" onSubmit="saveData(event,this);">
                 @csrf
 
                 <div class="row">
@@ -127,6 +127,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
 
     <script>
+        var lock=false;
         $(function() {
             $('.dropify').dropify();
             $('#desc').summernote({
@@ -135,5 +136,25 @@
                 height: 200
             });
         });
+
+        function saveData(e,ele){
+            e.preventDefault();
+            if(lock){
+                return;
+            }
+            lock=true;
+            var formData = new FormData(ele);
+            axios.post(ele.action, formData )
+            .then((res)=>{
+
+            })
+            .catch((err)=>{
+
+            })
+            .finally(()=>{
+                lock=false;
+            })
+
+        }
     </script>
 @endsection
