@@ -1,53 +1,52 @@
 @extends('admin.layout.app')
 @section('css-include')
     <link href="{{ asset('admin/plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
-
 @endsection
 @section('page-option')
-    <a type="button" class="btn btn-primary" href="{{route('admin.products.create')}}">Add Product</a>
+    <a type="button" class="btn btn-primary" href="{{ route('admin.products.create') }}">Add Product</a>
 @endsection
 @section('s-title')
-    <li class="breadcrumb-item">Product</li>
+    <li class="breadcrumb-item">Products</li>
 @endsection
 @section('content')
-    <div class="container">
-        <h2>Products</h2>
-        {{-- <a href="{{ route('admin.products.create') }}" class="btn btn-primary mb-3">Add New Product</a> --}}
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Short Description</th>
-                    <th>Price</th>
-                    <th>Vendor</th>
-                    <th>City</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($products as $product)
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->short_desc }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->vendor->name }}</td>
-                        <td>{{ $product->city->name }}</td>
-                        <td>
-                            <a href="{{ route('admin.products.edit', $product->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                            </form>
-                        </td>
+                        <th>Name</th>
+                        <th>Short Description</th>
+                        <th>Price</th>
+                        <th>Vendor</th>
+                        <th>City</th>
+                        <th>Action</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const cities = @json(\App\Helper::getCitiesMini());
+        const categories = @json(\App\Helper::getCategoriesMini());
+        function render(product) {
+            return `
+                <tr>
+                    <td>${product.name}</td>
+                    <td>${product.short_description}</td>
+                    <td>${product.price}</td>
+                    <td>${product.vendor.name}</td>
+                    <td>${product.city.name}</td>
+                    <td>
+                        <a href="/admin/products/${product.id}/edit" class="btn btn-primary">Edit</a>
+                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                    </td>
+                </tr>
+            `;
+        }
+    </script>
 @endsection

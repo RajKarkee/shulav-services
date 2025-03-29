@@ -14,18 +14,16 @@ class AdminProductController extends Controller
     // Display all products
     public function index()
     {
-        $products = Product::with(['productType', 'vendor', 'cities'])->get();
-        return view('admin.product.index', compact('products'));
+
+        return view('admin.product.index');
     }
 
     // Show the form to add a new product
     // Show the form to add a new product
     public function create()
     {
-        $productTypes = ProductType::all();
-        $vendors = Vendor::all();
-        $cities = City::all();  // Fetch cities from the database
-        return view('admin.product.add', compact('productTypes', 'vendors', 'cities')); // Pass $cities to the view
+
+        return view('admin.product.add'); // Pass $cities to the view
     }
 
     // Store a new product

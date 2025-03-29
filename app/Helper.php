@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class Helper{
@@ -73,6 +75,51 @@ class Helper{
         }
 
     }
+
+    //for category
+    public static function getCategories()
+    {
+        return Cache::rememberForever('cache_categories', function () {
+            return DB::table('categories')->get();
+        });
+    }
+
+    public static function getCategoriesMini()
+    {
+        return Cache::rememberForever('cache_categories_mini', function () {
+            return DB::table('categories')->get(['id','name','parent_id']);
+        });
+    }
+
+    public static function clearCategoriesCache()
+    {
+        Cache::forget('cache_categories');
+        Cache::forget('cache_categories_mini');
+    }
+
+    //for city
+    public static function getCities()
+    {
+        return Cache::rememberForever('cache_cities', function () {
+            return DB::table('cities')->get();
+        });
+    }
+    public static function getCitiesMini()
+    {
+        return Cache::rememberForever('cache_cities_mini', function () {
+            return DB::table('cities')->get(['id','name']);
+        });
+    }
+    public static function clearCitiesCache()
+    {
+        Cache::forget('cache_cities');
+        Cache::forget('cache_cities_mini');
+    }
+
+
+
+
+
     public static function putCache($_filePath, $content)
     {
         $pathDatas=explode('.',$_filePath);

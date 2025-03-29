@@ -23,7 +23,6 @@
     <link href="{{ asset('admin/plugins/font-awesome/css/all.min.css') }}" rel="stylesheet">
     @yield('css-include')
 
-
     <!-- Theme Styles -->
     <link href="{{ asset('admin/css/connect.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/css/dark_theme.css') }}" rel="stylesheet">
@@ -39,7 +38,9 @@
         .btn-table *{
             font-size: 18px;
         }
-
+        label{
+            color:rgb(49, 49, 49);
+        }
 
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

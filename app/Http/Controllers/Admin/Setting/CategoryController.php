@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
+use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Service;
@@ -47,6 +48,7 @@ class CategoryController extends Controller
         }
 
         $category->save();
+        Helper::clearCategoriesCache();
 
         return response()->json($category);
     }
@@ -61,11 +63,13 @@ class CategoryController extends Controller
             $category->image = $request->image->store('uploads/category');
         }
         $category->save();
+        Helper::clearCategoriesCache();
 
         return response()->json($category);
     }
 
     public function delete(Request $request){
         Category::where('id',$request->id)->delete();
+        Helper::clearCategoriesCache();
     }
 }

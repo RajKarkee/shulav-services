@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Setting;
 
+use App\Helper;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\City;
@@ -26,8 +27,7 @@ class CityController extends Controller
                 $city->image=$request->image->store('uploads/city');
             }
             $city->save();
-            //Artisan::call("make:data");
-
+            Helper::clearCitiesCache();
             return response()->json(['status'=>true]);
         }else{
             return view('admin.setting.city.add');
@@ -43,7 +43,7 @@ class CityController extends Controller
                 $city->image=$request->image->store('uploads/city');
             }
             $city->save();
-            //Artisan::call("make:data");
+            Helper::clearCitiesCache();
             return response()->json(['status'=>true]);
         }else{
             return view('admin.setting.city.edit',compact('city'));
@@ -52,7 +52,7 @@ class CityController extends Controller
 
     public function delete(Request $request){
         City::where('id',$request->id)->delete();
-        //Artisan::call("make:data");
+        Helper::clearCitiesCache();
         return response()->json(['status'=>true]);
     }
 }
