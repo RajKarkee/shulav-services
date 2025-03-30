@@ -248,9 +248,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('detail/{id}', [PaymentController::class, 'store'])->name('store');
         });
         Route::prefix('frontPageSection')->name('frontPageSection.')->group(function () {
-            Route::match(['GET','POST'],'', [FrontPageController::class, 'frontPageSection'])->name('index');
+            Route::match(['GET','POST'],'', [FrontPageController::class, 'index'])->name('index');
+            Route::post('edit/{section_id}', [FrontPageController::class, 'edit'])->name('edit');
+            Route::get('del/{section_id}', [FrontPageController::class, 'del'])->name('del');
             Route::prefix('product')->name('product.')->group(function () {
-                Route::match(['GET','POST'],'index/{section}', [FrontPageController::class, 'frontPageSectionProduct'])->name('index');
+                Route::match(['GET','POST'],'index/{section_id}', [FrontPageController::class, 'productIndex'])->name('index');
+                Route::get('del/{sectionProduct_id}', [FrontPageController::class, 'productDel'])->name('del');
             });
         });
         Route::prefix('bills')->name('bills.')->group(function () {
