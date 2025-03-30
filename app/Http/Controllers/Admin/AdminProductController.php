@@ -15,14 +15,13 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
-        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
-        $cities = DB::table('cities')->get(['id', 'name']);
-        return view('admin.product.index', compact('serviceCategories', 'cities'));
+
+        return view('admin.product.index');
     }
 
     public function loadData(Request $request)
     {
-        $query = Product::query();
+        $query = DB::table(Product::tableName);
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
@@ -30,11 +29,8 @@ class AdminProductController extends Controller
             $query->where('city_id', $request->city_id);
         }
 
-        $products = $query->with(['city'])->get();
-        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
-        $cities = DB::table('cities')->get(['id', 'name']);
-
-        return view('admin.product.index', compact('products', 'serviceCategories', 'cities'));
+        $products = $query->get(['id', 'name', 'short_desc',  'price', 'on_sale', 'image', 'category_id', 'city_id']);
+        return response()->json( $products);
     }
     public function create()
     {

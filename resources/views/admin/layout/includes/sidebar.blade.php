@@ -4,7 +4,7 @@
         <ul class="accordion-menu" id="accordion-menu">
 
             <li>
-                <a href="/">
+                <a href="{{ route('admin.dashboard') }}">
                     <i class="material-icons">dashboard</i>
                     Dashboard
                 </a>

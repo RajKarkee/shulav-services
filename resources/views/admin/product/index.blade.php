@@ -11,18 +11,13 @@
 @section('content')
     <div class="card shadow mb-3">
         <div class="card-body">
-            <form action="{{ route('admin.products.loadData') }}" method="POST" class="row">
+            <form action="{{ route('admin.products.loadData') }}" method="POST" class="row" onSubmit="loadData(this,event)">
                 @csrf
                 <div class="col-md-4 mb-2">
                     <label for="category_id" class="form-label">Service Category</label>
                     <select name="category_id" id="category_id" class="form-control">
                         <option value="">All Categories</option>
-                        @foreach ($serviceCategories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->name }}
-                            </option>
-                        @endforeach
+
                     </select>
                 </div>
 
@@ -30,11 +25,7 @@
                     <label for="city_id" class="form-label">City</label>
                     <select name="city_id" id="city_id" class="form-control">
                         <option value="">All Cities</option>
-                        @foreach ($cities as $city)
-                            <option value="{{ $city->id }}" {{ request('city_id') == $city->id ? 'selected' : '' }}>
-                                {{ $city->name }}
-                            </option>
-                        @endforeach
+
                     </select>
                 </div>
                 <div class="col-md-4 d-flex align-items-end mb-2">
@@ -55,29 +46,59 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @if (isset($products) && count($products) > 0)
-                        @foreach ($products as $product)
-                            <tr>
-                                <td>{{ $product->name }}</td>
-                                <td>{{ $product->short_desc }}</td>
-                                <td>{{ $product->price }}</td>
-                                <td>{{ $product->city->name ?? 'N/A' }}</td>
-                                <td>
-                                    <a href="{{ route('admin.products.edit', $product->id) }}"
-                                        class="btn btn-sm btn-info">Edit</a>
-                                    <a href="{{ route('admin.products.del', ['product_id' => $product->id]) }}"
-                                        class="btn btn-sm btn-danger">Del</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="5" class="text-center">No products found</td>
-                        </tr>
-                    @endif
+                <tbody id="product-list">
+
                 </tbody>
             </table>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        const cities = @json(\App\Helper::getCitiesMini());
+        const categories = @json(\App\Helper::getCategoriesMini());
+        var cityMap= {};
+
+        $(document).ready(function () {
+            $('#category_id').append(categories.map(category => {
+                return `<option value="${category.id}">${category.name}</option>`;
+            }));
+            $('#city_id').append(categories.map(category => {
+                return `<option value="${category.id}">${category.name}</option>`;
+            }));
+            cities.forEach(city => {
+                cityMap[city.id] = city.name;
+            });
+        });
+
+
+        function loadData(form, event) {
+            event.preventDefault();
+            const editURL = "{{ route('admin.products.edit',['product_id'=>'xxx_id']) }}";
+            const deleteURL = "{{ route('admin.products.del',['product_id'=>'xxx_id']) }}";
+            const formData = new FormData(form);
+            axios.post(form.action, formData)
+                .then(response => {
+                    $('#product-list').html(
+                        response.data.map(data=> {
+                            return `<tr id="product-${data.id}">
+                                <td>${data.name}</td>
+                                <td>${data.short_desc}</td>
+                                <td>${data.price}</td>
+                                <td>${cityMap[data.city_id]}</td>
+                                <td>
+                                    <a href="${editURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="${deleteURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-danger">Del</a>
+                                </td>
+                            </tr>`;
+                        }).join('')
+                    );
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
+
+    </script>
+
 @endsection
