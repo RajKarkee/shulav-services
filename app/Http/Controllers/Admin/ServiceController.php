@@ -43,16 +43,9 @@ class ServiceController extends Controller
         $service->type = $request->type;
         $service->category_id = $request->category_id;
         $service->active = $request->active ?? 1;
-        $categories = Category::all();
-
-        // Handle Image Upload - Saving directly to 'uploads/service' directory
         if ($request->hasFile('image')) {
-            $imagePath = 'uploads/service/';
-            $fileName = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->image->move(public_path($imagePath), $fileName);
-            $service->image = $imagePath . $fileName;
+            $service->image = $request->file('image')->store('uploads/service');
         }
-
         $service->save();
 
         return redirect()->route('admin.service.index')->with('success', 'Service added successfully.');

@@ -234,13 +234,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/product-types', [ProductTypeController::class, 'store'])->name('product_types.store');
             Route::delete('/product-types/{productType}', [ProductTypeController::class, 'destroy'])->name('product_types.destroy');
         });
-        Route::prefix('products')->group(function () {
-            Route::get('/', [AdminProductController::class, 'index'])->name('products.index');
-            Route::get('/create', [AdminProductController::class, 'create'])->name('products.create');
-            Route::post('/store', [AdminProductController::class, 'store'])->name('products.store');
-            Route::get('/{product}/edit', [AdminProductController::class, 'edit'])->name('products.edit');
-            Route::put('/{product}', [AdminProductController::class, 'update'])->name('products.update');
-            Route::delete('/{product}', [AdminProductController::class, 'destroy'])->name('products.destroy');
+        Route::prefix('products')->name('products.')->group(function () {
+            Route::get('/', [AdminProductController::class, 'index'])->name('index');
+            Route::post('/load-data', [AdminProductController::class, 'loadData'])->name('loadData');
+            Route::get('/create', [AdminProductController::class, 'create'])->name('create');
+            Route::post('/store', [AdminProductController::class, 'store'])->name('store');
+            Route::match(['get', 'post'], '/edit/{product_id}', [AdminProductController::class, 'edit'])->name('edit');
+            Route::get('del/{product_id}', [AdminProductController::class, 'del'])->name('del');
         });
 
 

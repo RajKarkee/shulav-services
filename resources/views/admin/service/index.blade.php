@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/drophify/css/dropify.min.css') }}">
 @endsection
 @section('page-option')
-<a type="button" class="btn btn-primary" href="{{route('admin.service.create')}}">Add Service</a>
+    <a type="button" class="btn btn-primary" href="{{ route('admin.service.create') }}">Add Service</a>
 @endsection
 @section('s-title')
     <li class="breadcrumb-item">Services</li>
@@ -28,18 +28,35 @@
                         <td>{{ $service->rate ?? 'N/A' }}</td>
                         <td>
                             @switch($service->type)
-                                @case(1) Normal Service @break
-                                @case(2) Hotel & Restaurants @break
-                                @case(3) Bus Ticket @break
-                                @case(4) Plane Ticket @break
-                                @case(5) Vehicle Rent @break
-                                @default N/A
+                                @case(1)
+                                    Normal Service
+                                @break
+
+                                @case(2)
+                                    Hotel & Restaurants
+                                @break
+
+                                @case(3)
+                                    Bus Ticket
+                                @break
+
+                                @case(4)
+                                    Plane Ticket
+                                @break
+
+                                @case(5)
+                                    Vehicle Rent
+                                @break
+
+                                @default
+                                    N/A
                             @endswitch
                         </td>
                         <td>{{ $service->active ? 'Active' : 'Inactive' }}</td>
                         <td>
                             <a href="{{ route('admin.service.edit', $service->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('admin.service.destroy', $service->id) }}" method="POST" style="display: inline-block;">
+                            <form action="{{ route('admin.service.destroy', $service->id) }}" method="POST"
+                                style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>

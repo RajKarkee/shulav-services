@@ -98,7 +98,7 @@
                         <a  href="{{route('admin.pricing.index')}}" >Pricing</a>
                     </li>
                     <li class="sub-item">
-                        <a  href="{{route('admin.setting.category.index')}}" >Services</a>
+                        <a  href="{{route('admin.setting.category.index')}}" >Services category</a>
                     </li>
                     <li class="sub-item">
                         <a  href="{{route('admin.setting.city.index')}}" >Cities</a>

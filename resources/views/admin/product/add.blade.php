@@ -11,7 +11,7 @@
 
 
     <style>
-        #mass-image .dropify-wrapper{
+        #mass-image .dropify-wrapper {
             height: 150px;
         }
     </style>
@@ -20,21 +20,22 @@
 @section('content')
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" onSubmit="saveData(event,this);">
+            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
                 <div class="row">
                     <div class=" col-md-4">
                         <div>
                             <label for="image">Feature Image</label>
-                            <input type="file" name="image" class="form-control dropify" accept=".jpg,.jpeg,.png" id="image" required>
+                            <input type="file" name="image" class="form-control dropify" accept=".jpg,.jpeg,.png"
+                                id="image" required>
                         </div>
                         <hr>
                         <div class="row" id="mass-image">
                             @for ($index = 0; $index < 6; $index++)
                                 <div class="col-md-6">
                                     <label for="image_{{ $index }}">Image {{ $index + 1 }}</label>
-                                    <input type="file" name="image-{{$index}}" class="form-control dropify" accept=".jpg,.jpeg,.png" id="image_{{ $index }}">
+                                    <input type="file" name="image-{{ $index }}" class="form-control dropify"
+                                        accept=".jpg,.jpeg,.png" id="image_{{ $index }}">
                                 </div>
                             @endfor
                         </div>
@@ -46,7 +47,7 @@
                                 <div class="form-group">
                                     <label for="category_id">Service Category</label>
                                     <select type="text" name="category_id" class="form-control" id="category_id" required>
-                                        @foreach (\App\Helper::getCategoriesMini() as $category)
+                                        @foreach ($serviceCategories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
@@ -56,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="city_id">City</label>
                                     <select type="text" name="city_id" class="form-control" id="city_id" required>
-                                        @foreach (\App\Helper::getCitiesMini() as $city)
+                                        @foreach ($cities as $city)
                                             <option value="{{ $city->id }}">{{ $city->name }}</option>
                                         @endforeach
                                     </select>
@@ -72,14 +73,22 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="price">Price</label>
-                                    <input type="number" step="0.01" name="price" class="form-control" id="price" required>
+                                    <input type="number" step="0.01" name="price" class="form-control" id="price"
+                                        required>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="sale_price"><input type="checkbox" name="on_sale" id="on_sale" class="mr-2" onChange="$('#sale_price').attr('readonly',!this.checked;$('#sale_price').attr('required',!this.checked;" />Sale Price</label>
-                                    <input type="number" step="0.01" name="sale_price" class="form-control" id="sale_price" readonly>
+                                    <div class="custom-control custom-switch ">
+                                        <input type="checkbox" class="custom-control-input" id="on_sale" name="on_sale"
+                                            value="1" onchange="toggleSalePrice()">
+                                        <label class="custom-control-label" for="on_sale">On Sale</label>
+                                    </div>
+                                    <div id="sale_price_container" style="display: none; margin-top: 6px;">
+                                        <input type="number" step="0.01" name="sale_price" class="form-control"
+                                            id="sale_price" disabled>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -127,8 +136,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
 
     <script>
-        var
-        var lock=false;
+        var lock = false;
         $(function() {
             $('.dropify').dropify();
             $('#desc').summernote({
@@ -138,24 +146,39 @@
             });
         });
 
-        function saveData(e,ele){
-            e.preventDefault();
-            if(lock){
-                return;
+        // function saveData(e, ele) {
+        //     e.preventDefault();
+
+        //     if (lock) return;
+
+        //     lock = true;
+        //     const formData = new FormData(ele);
+
+        //     axios.post(ele.action, formData)
+        //         .then(res => {
+        //             toastr.success('Product added successfully');
+        //             location.reload();
+        //         })
+        //         .catch(err => {})
+        //         .finally(() => {
+        //             lock = false;
+        //         });
+        // }
+
+        function toggleSalePrice() {
+            var saleContainer = document.getElementById('sale_price_container');
+            var salePriceInput = document.getElementById('sale_price');
+
+            if (document.getElementById('on_sale').checked) {
+                saleContainer.style.display = 'block';
+                salePriceInput.disabled = false;
+                salePriceInput.required = true;
+            } else {
+                saleContainer.style.display = 'none';
+                salePriceInput.disabled = true;
+                salePriceInput.required = false;
+                salePriceInput.value = '';
             }
-            lock=true;
-            var formData = new FormData(ele);
-            axios.post(ele.action, formData )
-            .then((res)=>{
-
-            })
-            .catch((err)=>{
-
-            })
-            .finally(()=>{
-                lock=false;
-            })
-
         }
     </script>
 @endsection

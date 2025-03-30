@@ -7,104 +7,115 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductType;
 use App\Models\Vendor;
 use App\Models\City;
+use App\Models\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminProductController extends Controller
 {
-    // Display all products
-    public function index()
+    public function index(Request $request)
     {
-
-        return view('admin.product.index');
+        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
+        $cities = DB::table('cities')->get(['id', 'name']);
+        return view('admin.product.index', compact('serviceCategories', 'cities'));
     }
 
-    // Show the form to add a new product
-    // Show the form to add a new product
+    public function loadData(Request $request)
+    {
+        $query = Product::query();
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+        if ($request->filled('city_id')) {
+            $query->where('city_id', $request->city_id);
+        }
+
+        $products = $query->with(['city'])->get();
+        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
+        $cities = DB::table('cities')->get(['id', 'name']);
+
+        return view('admin.product.index', compact('products', 'serviceCategories', 'cities'));
+    }
     public function create()
     {
-
-        return view('admin.product.add'); // Pass $cities to the view
+        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
+        $cities = DB::table('cities')->get(['id', 'name']);
+        return view('admin.product.add', compact('serviceCategories', 'cities')); // Pass $cities to the view
     }
 
-    // Store a new product
-
-    // Show edit form
-    public function edit(Product $product)
-    {
-        $productTypes = ProductType::all();
-        $products = Product::all();
-        $cities = City::all();
-        $vendors = Vendor::all();
-        return view('admin.product.edit', compact('product', 'productTypes', 'vendors'));
-    }
-
-    // Update product
-    public function update(Request $request, Product $product)
+    public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:products,name,' . $product->id,
+            'name' => 'required|unique:products,name',
             'short_desc' => 'required',
             'desc' => 'required',
             'price' => 'required|numeric',
-            'image' => 'image', // Image is optional in update
-            'service_id' => 'required|integer',
-            'start' => 'required|date',
-            'end' => 'required|date',
-            'count' => 'required|integer',
-            'cityid' => 'required|exists:cities,id',
-            'type' => 'required|exists:product_types,id'
+            'image' => 'required|image',
+            'category_id' => 'required|exists:categories,id',
+            'city_id' => 'required|exists:cities,id',
+            'start' => 'nullable|date',
+            'end' => 'nullable|date'
         ]);
 
-        // Store new image if uploaded
+        $product = new Product();
+        $product->name = $request->name;
+        $product->short_desc = $request->short_desc;
+        $product->desc = $request->desc;
+        $product->price = $request->price;
+        $product->on_sale = $request->sale_price;
+        $product->category_id = $request->category_id;
+        $product->city_id = $request->city_id;
+        $product->start = $request->start;
+        $product->end = $request->end;
+        $product->active = 1;
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $imageName);
-            $imagePath = 'uploads/' . $imageName;
-        } else {
-            $imagePath = $product->image;
+            $product->image = $request->file('image')->store('uploads/products');
         }
 
-        // Update product
-        $product->update([
-            'type' => $request->type,
-            'name' => $request->name,
-            'short_desc' => $request->short_desc,
-            'desc' => $request->desc,
-            'price' => $request->price,
-            'vendor_id' => $request->vendor_id,
-            'active' => $request->active,
-            'image' => $imagePath,
-            'service_id' => $request->service_id,
-            'start' => $request->start,
-            'end' => $request->end,
-            'count' => $request->count,
-            'cityid' => $request->cityid,
-        ]);
+        for ($i = 0; $i < 6; $i++) {
+            if ($request->hasFile('image-' . $i)) {
+                $product->{'image' . ($i + 1)} = $request->file('image-' . $i)->store('uploads/products');
+            }
+        }
+        $product->save();
+        return redirect()->back()->with('success', 'Product added successfully!');
+    }
+    public function edit(Request $request, $product_id)
+    {
+        $product = Product::where('id', $product_id)->first();
+        if($request->getMethod() == 'GET'){
+            $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
+            $cities = DB::table('cities')->get(['id', 'name']);
+            return view('admin.product.edit', compact('product', 'serviceCategories', 'cities'));
+        }else{
+            $product->name = $request->name;
+            $product->short_desc = $request->short_desc;
+            $product->desc = $request->desc;
+            $product->price = $request->price;
+            $product->on_sale = $request->sale_price;
+            $product->category_id = $request->category_id;
+            $product->city_id = $request->city_id;
+            $product->start = $request->start;
+            $product->end = $request->end;
+            $product->active = 1;
+            if ($request->hasFile('image')) {
+                $product->image = $request->file('image')->store('uploads/products');
+            }
 
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
+            for ($i = 0; $i < 6; $i++) {
+                if ($request->hasFile('image-' . $i)) {
+                    $product->{'image' . ($i + 1)} = $request->file('image-' . $i)->store('uploads/products');
+                }
+            }
+            $product->save();
+            return redirect()->back()->with('success', 'Product updated successfully!');
+        }
     }
 
     // Delete product
-    public function destroy(Product $product)
+    public function del( $product_id)
     {
-        // Remove file if it exists
-        $imagePath = public_path($product->image);
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
-
-        $product->delete();
-        return redirect()->route('admin.products.index')->with('success', 'Product deleted!');
-    }
-    protected function uploadImage(Request $request)
-    {
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('uploads'), $imageName);
-            return 'uploads/' . $imageName;
-        }
-        return null;
+        Product::where('id', $product_id)->delete();
+        return redirect()->back()->with('success', 'Product deleted successfully!');
     }
 }

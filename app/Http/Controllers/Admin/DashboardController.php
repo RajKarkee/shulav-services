@@ -71,7 +71,7 @@ class DashboardController extends Controller
                     ]);
 
                 }else if($bill->type==5){
-                   
+
                     Product::where('id',$bill->service_id)->update(['active'=>1]);
                 }else{
 
