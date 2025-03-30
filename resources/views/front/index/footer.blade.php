@@ -1,26 +1,29 @@
 <div class="footer">
     <div >
         <div style="max-width: 100%" class="logo mb-2">
-            <img src="http://127.0.0.1:8000/uploads/setting/3Us4FvSBbXxUMwFUE4w2ED2HDsb7bBiEcIxmOJLl.png" alt="">
+            <img src="http://127.0.0.1:8000/uploads/setting/b5iQ7wfCGasz6ChMMs3TwPXCIwzvGR1fGI0yiCrJ.png" alt="">
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-3 footer-single">
 
-            <a href="https://play.google.com/store/games?hl=en" class="mobile-logo">
+            <a href="" class="mobile-logo">
                 <img src="http://127.0.0.1:8000/front/palystore.svg" class="w-100" alt="">
             </a>
             <hr class="d-block d-md-none">
         </div>
         <div class="col-md-3 footer-single">
                 <div class="title mb-2">
-                    Anmol Rents
+                    
                 </div>
                 <div class="subtitle">
                     <address>
-                        Netflix<br>
+                        <br>
+                        
+                        <a href="tel:980009800">980009800</a>,
                                                  <br>
+                                                  <a href="mailto:Test@admin.com">Test@admin.com</a>,
                                              </address>
                 </div>
             <hr class="d-block d-md-none">
@@ -44,7 +47,7 @@
                 To get latest new and updates from us please Subscribe our newsletter.
             </div>
                 <form id="subscribe" action="http://127.0.0.1:8000/subscribe" class="subscribe shadow">
-                    <input type="hidden" name="_token" value="jnIJ2QFUbChDl5MtkydKot7yAER3KUYd0d5ctN8a" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
+                    <input type="hidden" name="_token" value="YY9gB3cPwmWPzzsf61l1Kz4eHLbIv0hzXlXgPi2N" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
                     <button>
                         <i class="fas px-2 fa-arrow-right">
                         </i>
@@ -56,22 +59,7 @@
     </div>
     <hr class="mb-0">
                 <div class="social">
-                    <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-twitter"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-instagram"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-youtube"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-                        </div>
+                                    </div>
 </div>
 
 <div id="subscribe-modal" class="modal fade">

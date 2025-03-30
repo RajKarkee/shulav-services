@@ -7,14 +7,22 @@
     <title>OLX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{asset('front1/index.css')}}">
+    <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
 </head>
 
 <body>
+    @php
+        $data = App\Helper::getSetting('minor') ??
+            (object) [
+                'logo' => '',
+            ];
+    @endphp
     <header>
         <div class="main-header">
             <div class="logo">
-                <a href="{{route('index')}}"><h3>Sulav rents</h3></a>
+                <a href="{{ route('index') }}">
+                    <img src="{{ $data->logo }}" alt="">
+                </a>
             </div>
 
             <div class="search-container">
@@ -49,7 +57,6 @@
                 ALL CATEGORIES
                 <i class="fas fa-chevron-down"></i>
             </div>
-
             <nav>
                 <ul>
                     <li><a href="aaa.html">Cars</a></li>
@@ -157,7 +164,8 @@
 
 
 
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-body p-0">
@@ -221,7 +229,8 @@
                                 All your personal details are safe with us.
                             </p>
                             <p class="small terms-text">
-                                If you continue, you are accepting <a href="#">Sulav rents Terms and Conditions</a> and <a href="#">Privacy Policy</a>
+                                If you continue, you are accepting <a href="#">Sulav rents Terms and
+                                    Conditions</a> and <a href="#">Privacy Policy</a>
                             </p>
                         </div>
                     </div>
@@ -229,6 +238,9 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('front1/js/main.js') }}"></script>
+    <script src="{{ asset('front1/js/nextpg.js') }}"></script>
+    <script src="{{ asset('front1/js/imageSlider.js') }}"></script>
 
 </body>
 

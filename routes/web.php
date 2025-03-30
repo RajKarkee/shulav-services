@@ -42,9 +42,9 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::name('front1.')->group(function () {
-    Route::get('/menu', [FrontController::class, 'menu'])->name('menu');
-    Route::get('/view', [FrontController::class, 'view'])->name('view');
+Route::name('serviceCategory')->name('serviceCategory')->group(function () {
+    Route::get('/index', [FrontController::class, 'categoryIndex'])->name('index');
+    Route::get('/single/{category_id}', [FrontController::class, 'categorySingle'])->name('single');
 });
 
 
@@ -152,10 +152,7 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
 
 
 Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vendor')->group(function () {
-    // Route::match(['GET', 'POST'], 'step', [FrontVendorController::class, 'step'])->name('step');
-
     Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
-    // Route::match(['GET','POST'],'subscribe', [FrontVendorController::class,'subscribe'])->name('subscribe');
     Route::match(['GET', 'POST'], 'reviews', [FrontVendorController::class, 'reviews'])->name('reviews');
     Route::match(['GET', 'POST'], 'bill/{bill}', [FrontVendorController::class, 'bill'])->name('bill');
     Route::match(['GET', 'POST'], 'bills', [FrontVendorController::class, 'bills'])->name('bills');
@@ -167,9 +164,6 @@ Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vend
     Route::match(['GET', 'POST'], 'change-desc', [FrontVendorController::class, 'changeDesc'])->name('change-desc');
     Route::match(['GET', 'POST'], 'edit-info', [FrontVendorController::class, 'editInfo'])->name('edit-info');
     Route::match(['GET', 'POST'], 'update-pass', [FrontVendorController::class, 'updatePass'])->name('update-pass');
-
-
-
     Route::prefix('certificate')->name('certificate.')->group(function () {
         Route::match(['get', 'post'], '/', [CertificateController::class, 'index'])->name('index');
         Route::match(['get', 'post'], '/add', [CertificateController::class, 'add'])->name('add');

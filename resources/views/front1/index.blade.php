@@ -8,36 +8,11 @@
                 @endforeach
             </div>
             <section class="categories">
-                <a href="{{route('front1.menu')}}" class="category">
-                    <div class="pic"><img src="{{ asset('media/car.jpg') }}" alt="Cars"></div>Cars
+                @foreach ($serviceCategories as $category )
+                <a href="" class="category">
+                    <div class="pic"><img src="{{ asset($category->image) }}" alt="Cars"></div>{{ $category->name }}
                 </a>
-                <a href="properties.html" class="category">
-                    <div class="pic"><img src="media/property.jpg" alt="Properties"></div>Properties
-                </a>
-                <a href="mobiles.html" class="category">
-                    <div class="pic"><img src="{{asset('media/mobile.png')}}" alt="Mobiles"></div>Mobiles
-                </a>
-                <a href="jobs.html" class="category">
-                    <div class="pic"><img src="media/jobs.png" alt="Jobs"></div>Jobs
-                </a>
-                <a href="travel.html" class="category">
-                    <div class="pic"><img src="media/travel.png" alt="Travel"></div>Travel
-                </a>
-                <a href="bikes.html" class="category">
-                    <div class="pic"><img src="media/bike.png" alt="Bikes"></div>Bikes
-                </a>
-                <a href="electronics.html" class="category">
-                    <div class="pic"><img src="media/electronics.png" alt="Electronics"></div>Electronics
-                </a>
-                <a href="commercial.html" class="category">
-                    <div class="pic"><img src="media/commercial.png" alt="Commercial"></div>Commercial
-                </a>
-                <a href="furniture.html" class="category">
-                    <div class="pic"><img src="media/furniture.png" alt="Furniture"></div>Furniture
-                </a>
-                <a href="fashion.html" class="category">
-                    <div class="pic"><img src="media/fashon.png" alt="Fashion"></div>Fashion
-                </a>
+                @endforeach
             </section>
 
         </div>

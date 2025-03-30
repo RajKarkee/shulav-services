@@ -84,6 +84,11 @@ class Helper{
         });
     }
 
+    public static function getSetting($code, $direct = false)
+    {
+        $s = DB::table('settings')->where('code', $code)->select('value')->first();
+        return $direct ? ($s != null ? $s->value : null) : ($s != null ? json_decode($s->value) : null);
+    }
     public static function getCategoriesMini()
     {
         return Cache::rememberForever('cache_categories_mini', function () {
