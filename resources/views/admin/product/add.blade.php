@@ -146,24 +146,6 @@
             });
         });
 
-        // function saveData(e, ele) {
-        //     e.preventDefault();
-
-        //     if (lock) return;
-
-        //     lock = true;
-        //     const formData = new FormData(ele);
-
-        //     axios.post(ele.action, formData)
-        //         .then(res => {
-        //             toastr.success('Product added successfully');
-        //             location.reload();
-        //         })
-        //         .catch(err => {})
-        //         .finally(() => {
-        //             lock = false;
-        //         });
-        // }
 
         function toggleSalePrice() {
             var saleContainer = document.getElementById('sale_price_container');

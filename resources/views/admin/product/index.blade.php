@@ -43,6 +43,7 @@
                         <th>Short Description</th>
                         <th>Price</th>
                         <th>City</th>
+                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -57,35 +58,39 @@
     <script>
         const cities = @json(\App\Helper::getCitiesMini());
         const categories = @json(\App\Helper::getCategoriesMini());
-        var cityMap= {};
-
-        $(document).ready(function () {
+        var cityMap = {};
+        var categoryMap = {};
+        $(document).ready(function() {
             $('#category_id').append(categories.map(category => {
                 return `<option value="${category.id}">${category.name}</option>`;
             }));
-            $('#city_id').append(categories.map(category => {
-                return `<option value="${category.id}">${category.name}</option>`;
+            $('#city_id').append(cities.map(city => {
+                return `<option value="${city.id}">${city.name}</option>`;
             }));
             cities.forEach(city => {
                 cityMap[city.id] = city.name;
             });
+            categories.forEach(category => {
+                categoryMap[category.id] = category.name;
+            })
         });
 
 
         function loadData(form, event) {
             event.preventDefault();
-            const editURL = "{{ route('admin.products.edit',['product_id'=>'xxx_id']) }}";
-            const deleteURL = "{{ route('admin.products.del',['product_id'=>'xxx_id']) }}";
+            const editURL = "{{ route('admin.products.edit', ['product_id' => 'xxx_id']) }}";
+            const deleteURL = "{{ route('admin.products.del', ['product_id' => 'xxx_id']) }}";
             const formData = new FormData(form);
             axios.post(form.action, formData)
                 .then(response => {
                     $('#product-list').html(
-                        response.data.map(data=> {
+                        response.data.map(data => {
                             return `<tr id="product-${data.id}">
                                 <td>${data.name}</td>
                                 <td>${data.short_desc}</td>
                                 <td>${data.price}</td>
                                 <td>${cityMap[data.city_id]}</td>
+                                <td>${categoryMap[data.category_id]}</td>
                                 <td>
                                     <a href="${editURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-info">Edit</a>
                                     <a href="${deleteURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-danger">Del</a>
@@ -98,7 +103,5 @@
                     console.error(error);
                 });
         }
-
     </script>
-
 @endsection

@@ -15,7 +15,6 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
-
         return view('admin.product.index');
     }
 
@@ -28,9 +27,8 @@ class AdminProductController extends Controller
         if ($request->filled('city_id')) {
             $query->where('city_id', $request->city_id);
         }
-
         $products = $query->get(['id', 'name', 'short_desc',  'price', 'on_sale', 'image', 'category_id', 'city_id']);
-        return response()->json( $products);
+        return response()->json($products);
     }
     public function create()
     {
