@@ -170,5 +170,5 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('js/imageSlider.js') }}"></script>
+        <script src="{{ asset('front1/js/imageSlider.js') }}"></script>
     @endsection

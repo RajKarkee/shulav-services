@@ -2,7 +2,11 @@
 @section('content')
     <div class="homepage">
         <div class="container">
-            @includeIf('front1.cache.home.slider')
+            <div class="banner">
+                @foreach ($sliders as $slider)
+                <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+                @endforeach
+            </div>
             <section class="categories">
                 <a href="{{route('front1.menu')}}" class="category">
                     <div class="pic"><img src="{{ asset('media/car.jpg') }}" alt="Cars"></div>Cars
@@ -455,9 +459,7 @@
             </div>
         </div>
     </div>
-
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/main.js"></script>
-
+        <script src="{{ asset('front1/js/main.js') }}"></script>
     @endsection
 

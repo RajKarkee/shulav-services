@@ -28,6 +28,7 @@ use App\Http\Controllers\Front\VendorController as FrontVendorController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\FrontPageController;
 use App\Http\Controllers\Admin\ServiceController;
 
 use App\Mail\ProductAdded;
@@ -242,35 +243,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::match(['get', 'post'], '/edit/{product_id}', [AdminProductController::class, 'edit'])->name('edit');
             Route::get('del/{product_id}', [AdminProductController::class, 'del'])->name('del');
         });
-
-
-
-
-
         Route::prefix('payment')->name('payment.')->group(function () {
             Route::get('details', [PaymentController::class, 'index'])->name('index');
             Route::get('detail/{id}', [PaymentController::class, 'store'])->name('store');
         });
-
-
-
-        // Route::prefix('product')->name('product.')->group(function () {
-        //     Route::get('index/{type}', [ProductController::class, 'index'])->name('index');
-        //     Route::match(['get', 'post'], '/add/{type}', [ProductController::class, 'add'])->name('add');
-        //     Route::match(['get', 'post'], '/edit/{product}', [ProductController::class, 'edit'])->name('edit');
-        // });
-
-
-
-        // Vendor-specific product routes (adjust according to your existing vendor routes)
-        // Route::prefix('vendor/products')->group(function () {
-        //     Route::get('/', [VendorProductController::class, 'index'])->name('vendor.products.index');
-        //     Route::get('/create', [VendorProductController::class, 'create'])->name('vendor.products.create');
-        //     Route::post('/store', [VendorProductController::class, 'store'])->name('vendor.products.store');
-        //     Route::get('/{product}/edit', [VendorProductController::class, 'edit'])->name('vendor.products.edit');
-        //     Route::put('/{product}', [VendorProductController::class, 'update'])->name('vendor.products.update');
-        //     Route::delete('/{product}', [VendorProductController::class, 'destroy'])->name('vendor.products.destroy');
-        // });
+        Route::prefix('frontPageSection')->name('frontPageSection.')->group(function () {
+            Route::match(['GET','POST'],'', [FrontPageController::class, 'frontPageSection'])->name('index');
+            Route::prefix('product')->name('product.')->group(function () {
+                Route::match(['GET','POST'],'index/{section}', [FrontPageController::class, 'frontPageSectionProduct'])->name('index');
+            });
+        });
         Route::prefix('bills')->name('bills.')->group(function () {
             Route::get('', [DashboardController::class, 'bills'])->name('index');
             Route::match(['GET', 'POST'], 'detail/{bill}', [DashboardController::class, 'billDetail'])->name('detail');
@@ -291,8 +273,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::match(['GET', 'POST'], 'status/{vendor}/{status}', [VendorController::class, 'status'])->name('status');
         });
         Route::prefix('setting')->name('setting.')->group(function () {
-
-
             Route::match(['GET', 'POST'], 'payment', [SettingController::class, 'payment'])->name('payment');
 
             Route::prefix('front')->name('front.')->group(function () {

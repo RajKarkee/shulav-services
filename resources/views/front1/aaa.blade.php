@@ -215,7 +215,6 @@
         </div>
     </div>
 
-
-    <script src="js/nextpg.js"></script>
+    <script src="{{ asset('front1/js/nextpg.js') }}"></script>
 
 @endsection

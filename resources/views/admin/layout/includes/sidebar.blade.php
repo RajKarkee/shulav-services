@@ -88,9 +88,6 @@
 
                 </ul>
             </li>
-
-
-
             <li >
                 <a href="#"><i class="material-icons">settings</i>Settings<i class="material-icons has-sub-menu">add</i></a>
                 <ul class="sub-menu">
@@ -117,6 +114,14 @@
                     </li>
                     <li class="sub-item">
                         <a href="{{route('admin.setting.front.contact')}}" > Contact page</a>
+                    </li>
+                </ul>
+            </li>
+            <li >
+                <a href="#"><i class="material-icons">settings</i>Front Settings<i class="material-icons has-sub-menu">add</i></a>
+                <ul class="sub-menu">
+                    <li class="sub-item">
+                        <a href="">Front Page Section</a>
                     </li>
                 </ul>
             </li>
