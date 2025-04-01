@@ -7,6 +7,9 @@
     <title>OLX</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
 </head>
 
@@ -16,6 +19,7 @@
             (object) [
                 'logo' => '',
             ];
+        $serviceCategories = DB::table('categories')->where('type',2)->whereNull('parent_id')->get(['id', 'name']);
     @endphp
     <header>
         <div class="main-header">
@@ -59,13 +63,10 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="aaa.html">Cars</a></li>
-                    <li><a href="#">Motorcycles</a></li>
-                    <li><a href="#">Mobile Phones</a></li>
-                    <li><a href="#">For Sale: Houses & Apartments</a></li>
-                    <li><a href="#">Scooters</a></li>
-                    <li><a href="#">Commercial & Other Vehicles</a></li>
-                    <li><a href="#">For Rent: Houses & Apartments</a></li>
+                    @foreach ($serviceCategories as $category )
+                    <li><a href="aaa.html">  {{ $category->name }}</a></li>
+                    @endforeach
+                
                 </ul>
             </nav>
         </div>

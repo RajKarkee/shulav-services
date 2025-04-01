@@ -13,6 +13,7 @@ class FrontController extends Controller
         $serviceCategories = DB::table('categories')->where('type',2)->whereNull('parent_id')->get(['id', 'name', 'image']);
         return view('front1.index',compact('sliders','serviceCategories'));
     }
+    
     public function categoryIndex(){
         return view('front1.aaa');
     }

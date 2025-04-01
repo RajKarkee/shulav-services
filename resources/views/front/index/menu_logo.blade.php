@@ -1,3 +1,3 @@
 <div class="menu-section">
-    <img onclick="window.location.href='/';" src="http://127.0.0.1:8000/uploads/setting/NjALLRcZ8pTj6yg5ye0idGYShnaOXQN3TuS3OlaN.png" alt="" class="logo">
+    <img onclick="window.location.href='/';" src="http://127.0.0.1:8000/uploads/setting/6psO5CVd3ScOXSEieKgeBeyfRlW18qIwP40ifJr3.png" alt="" class="logo">
 </div>

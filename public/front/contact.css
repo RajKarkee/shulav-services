@@ -11,8 +11,6 @@
 }
 
 .contact-holder {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
 }
 
@@ -21,12 +19,8 @@
   font-weight: 600;
   font-size: 30px;
   padding: 5px 10px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .contact-logo-sm {
@@ -34,12 +28,8 @@
   font-weight: 600;
   font-size: 20px;
   padding: 5px 10px;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
   display: inline-flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .contact-text {
@@ -107,26 +97,23 @@ label {
 }
 
 label.required::after {
-  content: '*';
+  content: "*";
   color: var(--red-primary);
 }
 
 #faq-page {
   padding: 50px 0px;
 }
-
 #faq-page .title.after {
   font-weight: 700;
   font-size: 1.3rem;
 }
-
 #faq-page .q {
   color: var(--red-primary);
   font-weight: 600;
   font-size: 19px;
   margin-top: 20px;
 }
-
 #faq-page .other {
   color: var(--red-primary);
   font-weight: 600;
@@ -136,7 +123,6 @@ label.required::after {
   display: block;
   text-decoration: none;
 }
-
 #faq-page .a {
   font-size: 16px;
   color: #626262;
@@ -207,5 +193,4 @@ label.required::after {
   border: 0px;
 }
 
-/*--thank you pop ends here--*/
-/*# sourceMappingURL=contact.css.map */
+/*--thank you pop ends here--*//*# sourceMappingURL=contact.css.map */

@@ -14,16 +14,21 @@ body {
   border-bottom: 1px solid #ebeef0;
 }
 .main-header .logo {
-  height: 35px;
+  width: 100px;
+  height: 40px;
   margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
-.main-header .logo a {
-  text-decoration: none;
-}
-.main-header .logo h3 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #002f34;
+.main-header .logo img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 .main-header .location-selector {
   display: flex;
@@ -142,10 +147,50 @@ body {
 }
 .banner .full-width-banner,
 .ad .full-width-banner {
+  position: relative;
   width: 100%;
-  max-width: 1200px;
   height: auto;
   border-radius: 4px;
+}
+.banner .custom-nav,
+.ad .custom-nav {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+.banner .custom-prev,
+.banner .custom-next,
+.ad .custom-prev,
+.ad .custom-next {
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+.banner .custom-prev:hover,
+.banner .custom-next:hover,
+.ad .custom-prev:hover,
+.ad .custom-next:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+.banner .custom-prev i,
+.banner .custom-next i,
+.ad .custom-prev i,
+.ad .custom-next i {
+  font-size: 18px;
+  color: #333;
 }
 
 .location-dropdown {

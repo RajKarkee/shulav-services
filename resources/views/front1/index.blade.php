@@ -1,17 +1,27 @@
 @extends('front1.navbar.layout')
 @section('content')
     <div class="homepage">
-        <div class="container">
-            <div class="banner">
+
+
+        <div class="banner">
+            <div class="owl-carousel">
                 @foreach ($sliders as $slider)
-                <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner">
                 @endforeach
             </div>
+            <div class="custom-nav">
+                <button class="custom-prev"><i class="fas fa-chevron-left"></i></button>
+                <button class="custom-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+
+        </div>
+        <div class="container">
             <section class="categories">
-                @foreach ($serviceCategories as $category )
-                <a href="" class="category">
-                    <div class="pic"><img src="{{ asset($category->image) }}" alt="Cars"></div>{{ $category->name }}
-                </a>
+                @foreach ($serviceCategories as $category)
+                    <a href="" class="category">
+                        <div class="pic"><img src="{{ asset($category->image) }}" alt="Cars"></div>
+                        {{ $category->name }}
+                    </a>
                 @endforeach
             </section>
 
@@ -434,7 +444,60 @@
             </div>
         </div>
     </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="{{ asset('front1/js/main.js') }}"></script>
-    @endsection
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('front1/js/main.js') }}"></script>
+    <script>
+    $(document).ready(function() {
+       
+        var owl = $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            // nav: true,
+            dots: true,
+            autoplay: true,
+            autoplayTimeout: 10000,
+            animateIn: 'fadeIn',
+            animateOut: 'fadeOut',
+            autoplayHoverPause: true, cc
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 1
+                },
+                1000: {
+                    items: 1
+                }
+            }
+        });
 
+        $('.owl-carousel .owl-prev, .owl-carousel .owl-next').click(function() {
+            owl.trigger('stop.owl.autoplay');
+            owl.trigger('play.owl.autoplay', [10000]);
+        });
+        
+
+        $('.custom-prev').click(function() {
+            owl.trigger('prev.owl.carousel');
+            owl.trigger('stop.owl.autoplay');
+            owl.trigger('play.owl.autoplay', [10000]);
+        });
+        
+        $('.custom-next').click(function() {
+            owl.trigger('next.owl.carousel');
+            owl.trigger('stop.owl.autoplay');
+            owl.trigger('play.owl.autoplay', [10000]);
+        });
+        
+
+        $('.slider-prev').click(function() {
+            $('.slider-wrapper').animate({ scrollLeft: '-=300' }, 500);
+        });
+        
+        $('.slider-next').click(function() {
+            $('.slider-wrapper').animate({ scrollLeft: '+=300' }, 500);
+        });
+    });
+    </script>
+@endsection

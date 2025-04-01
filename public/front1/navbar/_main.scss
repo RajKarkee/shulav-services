@@ -5,18 +5,28 @@
     background-color: #f7f8f9;
     border-bottom: 1px solid #ebeef0;
     .logo {
-        height: 35px;
+        width: 100px;
+        height: 40px;
         margin-right: 16px;
-
-        a{
-            text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
         }
+        //     text-decoration: none;
+        // }
 
-        h3 {
-            margin: 0;
-            font-size: 1.5rem;
-            color: #002f34;
-        }
+        // h3 {
+        //     margin: 0;
+        //     font-size: 1.5rem;
+        //     color: #002f34;
+        // }
     }
     .location-selector {
         display: flex;
@@ -91,12 +101,10 @@
             font-size: 20px;
             color: var(--primary-color);
         }
-
-
     }
     a.login {
         text-decoration: none !important;
-        color:var(--primary-color);
+        color: var(--primary-color);
         font-size: 16px;
         font-weight: 500;
     }
@@ -156,11 +164,49 @@
     text-align: center;
 
     .full-width-banner {
+        position: relative;
         width: 100%;
-        max-width: 1200px;
+        // max-width: 1200px;
         height: auto;
         border-radius: 4px;
     }
+    .custom-nav {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+    
+    .custom-prev,
+    .custom-next {
+        background: rgba(255, 255, 255, 0.7);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .custom-prev:hover,
+    .custom-next:hover {
+        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .custom-prev i,
+    .custom-next i {
+        font-size: 18px;
+        color: #333;
+    }
+    
 }
 
 .location-dropdown {
@@ -326,7 +372,8 @@
         position: relative;
         margin: 24px 0;
 
-        &::before, &::after {
+        &::before,
+        &::after {
             content: "";
             position: absolute;
             top: 50%;
