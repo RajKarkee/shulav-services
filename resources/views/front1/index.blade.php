@@ -26,9 +26,9 @@
             </section>
 
         </div>
-        @foreach ($sections as  $section)
+        @foreach ($sections as $section)
             @if ($section->design_type == '1')
-                <div class="container" id="section-{{$section->position}}">
+                <div class="container" id="section-{{ $section->position }}">
                     <div class="section">
                         <div class="header">
                             <h4>{{ $section->section_name }}</h4>
@@ -189,272 +189,276 @@
 
 
 
-    <div class="container">
-
-        <h4>Fresh recommendations</h4>
-        <div class="row row-cols-4">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar1.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Ramesh</div>
-                                <div class="time">Time</div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product1.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 15</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-tools"></i> making renovation
+        <div class="container">
+            @foreach ($sections as $section)
+                @if ($section->design_type == '2')
+                    <h4>{{ $section->section_name }}</h4>
+                    <div class="row row-cols-4"> <!-- Move row outside the loop -->
+                        @foreach ($section->products as $product)
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar1.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Ramesh</div>
+                                                <div class="time">Time</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="{{ asset($product->image) }}" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 15</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-tools"></i> {{ $product->short_desc }}
+                                                </div>
+                                                <h5>{{ $product->name }}</h5>
+                                                <p class="price">{{ $product->price }}</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>New furniture</h5>
-                                <p class="price">Negotiable</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
+                        @endforeach
+                    </div> <!-- Close row after the loop -->
+                @endif
+            @endforeach
 
-            </div>
+            {{-- <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar2.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Hari</div>
+                                                <div class="time">29 minutes</div>
+                                            </div>
+                                        </div>
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar2.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Hari</div>
-                                <div class="time">29 minutes</div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product2.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 4</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-dumbbell"></i> New very very new
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/product2.jpg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 4</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-dumbbell"></i> New very very new
+                                                </div>
+                                                <h5>top 3 GYM</h5>
+                                                <p class="price">Price not fixed</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>top 3 GYM</h5>
-                                <p class="price">Price not fixed</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar3.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Shyam</div>
-                                <div class="time">20hrs</div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar3.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Shyam</div>
+                                                <div class="time">20hrs</div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product3.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 1</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-car-parts"></i> makingg progreess
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/product3.jpg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 1</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car-parts"></i> makingg progreess
+                                                </div>
+                                                <h5>visit nepal 2025</h5>
+                                                <p class="price">930000Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>visit nepal 2025</h5>
-                                <p class="price">930000Rs</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <!-- Additional cards -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar4.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">CarDealer</div>
-                                <div class="time">3hrs </div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <!-- Additional cards -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar4.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">CarDealer</div>
+                                                <div class="time">3hrs </div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/carimage.jpeg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 8</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-car"></i>Buy this car
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/carimage.jpeg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 8</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car"></i>Buy this car
+                                                </div>
+                                                <h5>Toyota Corolla 2020</h5>
+                                                <p class="price">185 000 Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>Toyota Corolla 2020</h5>
-                                <p class="price">185 000 Rs</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
 
 
 
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar1.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Ramesh</div>
-                                <div class="time">Time</div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar1.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Ramesh</div>
+                                                <div class="time">Time</div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product1.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 15</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-tools"></i> making renovation
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/product1.jpg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 15</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-tools"></i> making renovation
+                                                </div>
+                                                <h5>New furniture</h5>
+                                                <p class="price">Negotiable</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>New furniture</h5>
-                                <p class="price">Negotiable</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
 
-            </div>
+                            </div>
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar2.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Hari</div>
-                                <div class="time">29 minutes</div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar2.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Hari</div>
+                                                <div class="time">29 minutes</div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product2.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 4</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-dumbbell"></i> New very very new
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/product2.jpg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 4</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-dumbbell"></i> New very very new
+                                                </div>
+                                                <h5>top 3 GYM</h5>
+                                                <p class="price">Price not fixed</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>top 3 GYM</h5>
-                                <p class="price">Price not fixed</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
 
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar3.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">Shyam</div>
-                                <div class="time">20hrs</div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar3.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">Shyam</div>
+                                                <div class="time">20hrs</div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/product3.jpg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 1</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-car-parts"></i> makingg progreess
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/product3.jpg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 1</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car-parts"></i> makingg progreess
+                                                </div>
+                                                <h5>visit nepal 2025</h5>
+                                                <p class="price">930000Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>visit nepal 2025</h5>
-                                <p class="price">930000Rs</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col">
-                <!-- Additional cards -->
-                <div class="card">
-                    <div class="card-header">
-                        <div class="user-info">
-                            <div class="avatar">
-                                <img src="media/avatar4.jpg" alt="User">
-                            </div>
-                            <div class="details">
-                                <div class="username">CarDealer</div>
-                                <div class="time">3hrs </div>
-                            </div>
-                        </div>
+                            <div class="col">
+                                <!-- Additional cards -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="user-info">
+                                            <div class="avatar">
+                                                <img src="media/avatar4.jpg" alt="User">
+                                            </div>
+                                            <div class="details">
+                                                <div class="username">CarDealer</div>
+                                                <div class="time">3hrs </div>
+                                            </div>
+                                        </div>
 
-                    </div>
-                    <a href="product-details.html" class="card-link">
-                        <div class="card">
-                            <div class="card-image">
-                                <img src="media/carimage.jpeg" alt="Product">
-                                <span class="image-count"><i class="fas fa-camera"></i> 8</span>
-                            </div>
-                            <div class="card-body">
-                                <div class="category">
-                                    <i class="fas fa-car"></i>Buy this car
+                                    </div>
+                                    <a href="product-details.html" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="media/carimage.jpeg" alt="Product">
+                                                <span class="image-count"><i class="fas fa-camera"></i> 8</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car"></i>Buy this car
+                                                </div>
+                                                <h5>Toyota Corolla 2020</h5>
+                                                <p class="price">185 000 Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                                <h5>Toyota Corolla 2020</h5>
-                                <p class="price">185 000 Rs</p>
                             </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+                        </div> --}}
         </div>
-    </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('front1/js/main.js') }}"></script>
