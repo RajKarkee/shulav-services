@@ -20,6 +20,10 @@ class Product extends Model
     {
         return $this->belongsTo(City::class);
     }
+    
+    public function productType(){
+        return $this->belongsTo(ProductType::class, 'type');
+    }
 
 
 }

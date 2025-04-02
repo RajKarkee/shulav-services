@@ -1,7 +1,7 @@
 <div class="footer">
     <div >
         <div style="max-width: 100%" class="logo mb-2">
-            <img src="http://127.0.0.1:8000/uploads/setting/HWBFff99gpSU4CTScNmRyGN2smoNsyx9JY9L2sJA.png" alt="">
+            <img src="http://127.0.0.1:8000/uploads/setting/6XhoYKUZpskEudjxN1GI5Oiob1WX3M7BZaIDBfCE.png" alt="">
         </div>
     </div>
     <hr>
@@ -47,7 +47,7 @@
                 To get latest new and updates from us please Subscribe our newsletter.
             </div>
                 <form id="subscribe" action="http://127.0.0.1:8000/subscribe" class="subscribe shadow">
-                    <input type="hidden" name="_token" value="UUkNVyZSZE4janqca5iNcJD3OHvn3A58qfUPEhYU" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
+                    <input type="hidden" name="_token" value="jEaII4BZdZ7tG3BXr2gvQyEnMoW0qWpQFcg8JMV5" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
                     <button>
                         <i class="fas px-2 fa-arrow-right">
                         </i>

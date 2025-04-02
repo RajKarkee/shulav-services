@@ -33,6 +33,7 @@ class FrontPageController extends Controller
     }
     public function del($section_id)
     {
+        FrontPageSectionProduct::where('front_page_section_id', $section_id)->delete();
         FrontPageSection::where('id', $section_id)->delete();
         return redirect()->back()->with('message', 'Section Deleted Successfully');
     }

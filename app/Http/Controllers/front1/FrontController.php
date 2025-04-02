@@ -5,13 +5,16 @@ namespace App\Http\Controllers\front1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\FrontPageSection;
 
 class FrontController extends Controller
 {
     public function index(){
         $sliders = DB::table('sliders')->get(['id', 'image', 'link']);
         $serviceCategories = DB::table('categories')->where('type',2)->whereNull('parent_id')->get(['id', 'name', 'image']);
-        return view('front1.index',compact('sliders','serviceCategories'));
+        $sections=FrontPageSection::with('products.productType')->get();
+        return view('front1.index',compact('sliders','serviceCategories','sections'));
+
     }
     
     public function categoryIndex(){
