@@ -138,7 +138,6 @@
                 animateIn: 'fadeIn',
                 animateOut: 'fadeOut',
                 autoplayHoverPause: true,
-                cc
                 responsive: {
                     0: {
                         items: 1
