@@ -11,6 +11,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
+    @yield('css')
 </head>
 
 <body>
@@ -242,6 +243,7 @@
     <script src="{{ asset('front1/js/main.js') }}"></script>
     <script src="{{ asset('front1/js/nextpg.js') }}"></script>
     <script src="{{ asset('front1/js/imageSlider.js') }}"></script>
+    @yield('script')
 
 </body>
 

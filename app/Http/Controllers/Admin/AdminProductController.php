@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper;
 use App\Models\Product;
 use App\Http\Controllers\Controller;
 use App\Models\ProductType;
@@ -32,7 +33,7 @@ class AdminProductController extends Controller
     }
     public function create()
     {
-        $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
+        $serviceCategories = Helper::getCategoriesMini();
         $cities = DB::table('cities')->get(['id', 'name']);
         return view('admin.product.add', compact('serviceCategories', 'cities')); // Pass $cities to the view
     }
