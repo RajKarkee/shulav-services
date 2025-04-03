@@ -105,7 +105,15 @@
                     </div>
                 </div>
                 <div class="col-md-4 text-end">
-                    <h2 class="fs-1 fw-bold mb-3" style="display: flex">{{ $product->price }}</h2>
+                    @if ($product->on_sale)
+    <h2 class="fs-1 fw-bold mb-3 text-danger" style="display: flex;">
+        <del class="text-muted me-2">{{ $product->price }}</del> {{ $product->on_sale }}
+    </h2>
+    <span class="badge bg-success text-white">On Sale</span>
+@else
+    <h2 class="fs-1 fw-bold mb-3" style="display: flex;">{{ $product->price }}</h2>
+@endif
+                    {{-- <h2 class="fs-1 fw-bold mb-3" style="display: flex">{{ $product->price }}</h2> --}}
                     <button class="btn btn-dark w-100 py-2">Make offer</button>
                 </div>
             </div>
@@ -149,9 +157,9 @@
             <div class="row mb-3">
                 <div class="col-md-8">
                     <h4 class="mb-3">Description</h4>
-                    <p>{{ $product->short_desc }}</p>
+                    <p>{!! $product->short_desc !!}</p>
                     <h4 class='mb-3'>ADDITIONAL INFORMATION:</h4>
-                    <p>{{ $product->desc }}</p>
+                    <p>{!! $product->desc !!}</p>
                 </div>
                 <div class="col-md-4">
                     <div class="card mb-3">
