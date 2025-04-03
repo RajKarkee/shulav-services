@@ -1,0 +1,239 @@
+@media screen and (max-width: 767px) {
+    .homepage {
+        .categories {
+            .category {
+                width: 33.33%; // 3 categories per row on mobile
+                padding: 8px;
+
+                .pic {
+                    width: 50px;
+                    height: 50px;
+                }
+            }
+        }
+
+        .section,
+        .dynamic-container {
+            .header {
+                padding: 0 10px;
+
+                h4 {
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .slider {
+            .slider-wrapper {
+                gap: 10px;
+                padding: 0 5px;
+            }
+
+            .card {
+                width: calc(100vw - 40px); // Full width minus margins
+
+                .card-link {
+                    .card {
+                        .card-image {
+                            height: 180px;
+                        }
+
+                        .card-body {
+                            padding: 10px;
+
+                            h5 {
+                                font-size: 14px;
+                                margin-bottom: 5px;
+                            }
+
+                            .price {
+                                font-size: 16px;
+                            }
+
+                            .category {
+                                font-size: 11px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .row-cols-4 {
+            grid-template-columns: repeat(2, 1fr); // 2 columns on mobile
+            gap: 12px;
+            padding: 0 10px;
+
+            .card {
+                .card-link {
+                    .card {
+                        .card-image {
+                            height: 160px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .image {
+        .image-container {
+            height: 300px;
+        }
+
+        .navigation-arrows {
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+
+                &.left {
+                    margin-left: 5px;
+                }
+
+                &.right {
+                    margin-right: 5px;
+                }
+
+                i {
+                    font-size: 24px;
+                }
+            }
+        }
+
+        .thumbnail-nav {
+            overflow-x: auto;
+            justify-content: flex-start;
+            padding: 10px 5px;
+
+            .thumbnail {
+                flex: 0 0 70px;
+                height: 50px;
+                min-width: 70px;
+            }
+        }
+
+        .image-actions {
+            top: 10px;
+            right: 10px;
+
+            .action-btn {
+                width: 34px;
+                height: 34px;
+
+                i {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    .product-details {
+        padding: 15px;
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+    }
+
+    .olx-header {
+        padding: 8px 10px;
+
+        .main-header {
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .logo h3 {
+            font-size: 18px;
+        }
+
+        .search-container {
+            order: 3;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .sell-button {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .homepage {
+        .categories {
+            .category {
+                width: 50%; // 2 categories per row on very small devices
+            }
+        }
+
+        .slider {
+            .card {
+                width: calc(100vw - 30px);
+            }
+        }
+
+        .row-cols-4 {
+            grid-template-columns: 1fr; // Single column on very small devices
+
+            .card {
+                .card-link {
+                    .card {
+                        .card-image {
+                            height: 180px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .image {
+        .image-container {
+            height: 250px;
+        }
+    }
+
+    .banner {
+        .custom-nav {
+            button {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
+}
+
+.homepage {
+    .card {
+        .card-link {
+            .card {
+                box-shadow: none;
+
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+html,
+body {
+    -webkit-overflow-scrolling: touch;
+}
+
+.slider-controls button,
+.custom-nav button,
+.card-link,
+.category,
+.thumbnail {
+    touch-action: manipulation;
+}

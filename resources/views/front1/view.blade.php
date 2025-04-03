@@ -33,7 +33,7 @@
 
             <div class="image-container">
                 <div class="image-slider">
-                    <!-- Add multiple images here -->
+
                     <img src="{{ asset($product->image) }}" alt="Product" class="product-image active">
 
                     @for ($i = 1; $i <= 6; $i++)
@@ -55,7 +55,6 @@
 
             </div>
 
-            <!-- Add thumbnail navigation -->
             <div class="thumbnail-nav">
                 @php $index=1; @endphp
                 <div class="thumbnail active" data-index="0">
@@ -106,13 +105,13 @@
                 </div>
                 <div class="col-md-4 text-end">
                     @if ($product->on_sale)
-    <h2 class="fs-1 fw-bold mb-3 text-danger" style="display: flex;">
-        <del class="text-muted me-2">{{ $product->price }}</del> {{ $product->on_sale }}
-    </h2>
-    <span class="badge bg-success text-white">On Sale</span>
-@else
-    <h2 class="fs-1 fw-bold mb-3" style="display: flex;">{{ $product->price }}</h2>
-@endif
+                        <h2 class="fs-1 fw-bold mb-3 text-danger" style="display: flex;">
+                            <del class="text-muted me-2">{{ $product->price }}</del> {{ $product->on_sale }}
+                        </h2>
+                        <span class="badge bg-success text-white">On Sale</span>
+                    @else
+                        <h2 class="fs-1 fw-bold mb-3" style="display: flex;">{{ $product->price }}</h2>
+                    @endif
                     {{-- <h2 class="fs-1 fw-bold mb-3" style="display: flex">{{ $product->price }}</h2> --}}
                     <button class="btn btn-dark w-100 py-2">Make offer</button>
                 </div>
