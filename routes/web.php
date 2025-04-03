@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\front1\FrontController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CertificateController;
@@ -43,7 +44,7 @@ use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::name('product.')->name('product.')->group(function () {
-   
+
     Route::get('/{name}/{id}', [FrontController::class, 'categorySingle'])->name('show');
 });
 Route::name('serviceCategory')->name('serviceCategory')->group(function () {
@@ -139,7 +140,6 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
         Route::match(['get', 'post'], '/bid-requested', [JobController::class, 'bidRequestedJob'])->name('requested');
         Route::match(['get', 'post'], '/bid-accept/{id}/{vendor_id}', [JobController::class, 'acceptBid'])->name('acceptBid');
         Route::match(['get', 'post'], '/finished-accept', [JobController::class, 'acceptFinishedJob'])->name('acceptFinishedJob');
-
     });
 
     Route::prefix('restaurant')->name('restaurant.')->group(function () {
@@ -150,8 +150,6 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
 
     Route::match(['get', 'post'], 'cart', [FrontRestaurantController::class, 'cart'])->name('cart');
     Route::match(['get', 'post'], 'place-to-order', [FrontRestaurantController::class, 'placeToOrder'])->name('placeToOrder');
-
-
 });
 
 
@@ -200,18 +198,13 @@ Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vend
     Route::match(['get', 'post'], '/finished-job-request/{id}', [FrontJobController::class, 'finishedJobReq'])->name('finishedJobReq');
     Route::match(['get', 'post'], '/finished-jobs', [FrontJobController::class, 'finishedJob'])->name('finishedJob');
     Route::match(['get', 'post'], '/received-payment/{id}', [FrontJobController::class, 'yesReceivedPayment'])->name('receivedAPayment');
-
-
-
 });
 
-// Route::middleware('')
-
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::middleware('guest')->group(function () {
-        route::match(['GET', 'POST'], 'login', [AuthController::class, 'login'])->name('login');
-        route::match(['GET', 'POST'], 'guest/logout', [AuthController::class, 'logout'])->name('guest.logout');
-    });
+    route::match(['GET', 'POST'], 'login', [AuthController::class, 'login'])->name('login');
+    route::match(['GET', 'POST'], 'guest/logout', [AuthController::class, 'logout'])->name('guest.logout');
+    // Route::middleware('guest')->group(function () {
+    // });
     Route::middleware('role:admin')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::match(['GET', 'POST'], 'password', [DashboardController::class, 'password'])->name('password');
@@ -246,11 +239,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('detail/{id}', [PaymentController::class, 'store'])->name('store');
         });
         Route::prefix('frontPageSection')->name('frontPageSection.')->group(function () {
-            Route::match(['GET','POST'],'', [FrontPageController::class, 'index'])->name('index');
+            Route::match(['GET', 'POST'], '', [FrontPageController::class, 'index'])->name('index');
             Route::post('edit/{section_id}', [FrontPageController::class, 'edit'])->name('edit');
             Route::get('del/{section_id}', [FrontPageController::class, 'del'])->name('del');
             Route::prefix('product')->name('product.')->group(function () {
-                Route::match(['GET','POST'],'index/{section_id}', [FrontPageController::class, 'productIndex'])->name('index');
+                Route::match(['GET', 'POST'], 'index/{section_id}', [FrontPageController::class, 'productIndex'])->name('index');
                 Route::get('del/{sectionProduct_id}', [FrontPageController::class, 'productDel'])->name('del');
             });
         });
@@ -320,7 +313,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                     route::match(['GET', 'POST'], 'edit/{location}', [LocationController::class, 'edit'])->name('edit');
                     route::post('delete', [LocationController::class, 'delete'])->name('delete');
                 });
-
             });
         });
 
@@ -347,13 +339,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             route::match(['GET', 'POST'], 'image/{id}', [RealstatesController::class, 'imagedelete'])->name('imagedelete');
             route::match(['GET', 'POST'], 'gallery-save', [RealstatesController::class, 'gallery'])->name('gallery');
         });
-
-
     });
 });
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::resource('service', ServiceController::class);
-});
+// Route::prefix('admin')->name('admin.')->group(function () {
+//     Route::resource('service', ServiceController::class);
+// });
 
 
 Route::get('users/{username}', function ($username) {
