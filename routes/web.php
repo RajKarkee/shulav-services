@@ -42,6 +42,10 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
+Route::name('product.')->name('product.')->group(function () {
+   
+    Route::get('/{name}/{id}', [FrontController::class, 'categorySingle'])->name('show');
+});
 Route::name('serviceCategory')->name('serviceCategory')->group(function () {
     Route::get('/index', [FrontController::class, 'categoryIndex'])->name('index');
     Route::get('/single/{category_id}', [FrontController::class, 'categorySingle'])->name('single');

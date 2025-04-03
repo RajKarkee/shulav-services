@@ -26,7 +26,7 @@
         </div>
         @foreach ($sections as $section)
             @if ($section->design_type == '1')
-                <div class="container" id="section-{{ $section->position }}">
+                <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
                     <div class="section">
                         <div class="header">
                             <h4>{{ $section->section_name }}</h4>
@@ -56,7 +56,7 @@
                                                 <i class="fas fa-star"></i> Premium
                                             </div>
                                         </div>
-                                        <a href="product-details.html" class="card-link">
+                                        <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                             <div class="card">
                                                 <div class="card-image">
                                                     <img src="{{ asset($product->image) }}" alt="Product">
@@ -78,12 +78,10 @@
                     </div>
                 </div>
             @endif
-        @endforeach
-        <div class="container">
-            @foreach ($sections as $section)
-                @if ($section->design_type == '2')
+            @if ($section->design_type == '2')
+            <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
                     <h4>{{ $section->section_name }}</h4>
-                    <div class="row row-cols-4"> <!-- Move row outside the loop -->
+                    <div class="row row-cols-4"> 
                         @foreach ($section->products as $product)
                             <div class="col">
                                 <div class="card">
@@ -98,7 +96,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <a href="product-details.html" class="card-link">
+                                    <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                         <div class="card">
                                             <div class="card-image">
                                                 <img src="{{ asset($product->image) }}" alt="Product">
@@ -117,9 +115,11 @@
                             </div>
                         @endforeach
                     </div>
+                </div>
                 @endif
-            @endforeach
-        </div>
+        @endforeach
+      
+
     </div>
 @endsection
 @section('script')

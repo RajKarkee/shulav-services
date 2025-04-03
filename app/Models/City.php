@@ -10,4 +10,9 @@ class City extends Model
     use HasFactory;
     
     const tableName='cities';
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
