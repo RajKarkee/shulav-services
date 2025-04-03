@@ -42,7 +42,7 @@
                                 <!-- Card 1 -->
                                 @foreach ($section->products as $product)
                                     <div class="card">
-                                        <div class="card-header">
+                                        {{-- <div class="card-header">
                                             <div class="user-info">
                                                 <div class="avatar">
                                                     <img src="media/avatar.jpg" alt="User">
@@ -55,12 +55,20 @@
                                             <div class="premium-tag">
                                                 <i class="fas fa-star"></i> Premium
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                             <div class="card">
                                                 <div class="card-image">
                                                     <img src="{{ asset($product->image) }}" alt="Product">
-                                                    <span class="image-count"><i class="fas fa-camera"></i> 15</span>
+                                                    <span class="image-count"><i class="fas fa-camera"></i>       {{ 
+                                                        (isset($product->image) && !empty($product->image) ? 1 : 0) +
+                                                        (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
+                                                        (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
+                                                        (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
+                                                        (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
+                                                        (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
+                                                        (isset($product->image6) && !empty($product->image6) ? 1 : 0)
+                                                    }}</span>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="category">
@@ -85,7 +93,7 @@
                         @foreach ($section->products as $product)
                             <div class="col">
                                 <div class="card">
-                                    <div class="card-header">
+                                    {{-- <div class="card-header">
                                         <div class="user-info">
                                             <div class="avatar">
                                                 <img src="media/avatar1.jpg" alt="User">
@@ -95,12 +103,20 @@
                                                 <div class="time">Time</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                         <div class="card">
                                             <div class="card-image">
                                                 <img src="{{ asset($product->image) }}" alt="Product">
-                                                <span class="image-count"><i class="fas fa-camera"></i> 15</span>
+                                                <span class="image-count"><i class="fas fa-camera"></i>       {{ 
+                                                    (isset($product->image) && !empty($product->image) ? 1 : 0) +
+                                                    (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
+                                                    (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
+                                                    (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
+                                                    (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
+                                                    (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
+                                                    (isset($product->image6) && !empty($product->image6) ? 1 : 0)
+                                                }}</span>
                                             </div>
                                             <div class="card-body">
                                                 <div class="category">
