@@ -11,7 +11,7 @@ class FrontController extends Controller
 {
     public function index(){
         $sliders = DB::table('sliders')->get(['id', 'image', 'link']);
-        $serviceCategories = DB::table('categories')->where('type',2)->whereNull('parent_id')->get(['id', 'name', 'image']);
+        $serviceCategories = DB::table('categories')->whereNull('parent_id')->get(['id', 'name', 'image']);
         $sections = FrontPageSection::with('products.productType')->get();
         return view('front1.index',compact('sliders','serviceCategories','sections'));
 

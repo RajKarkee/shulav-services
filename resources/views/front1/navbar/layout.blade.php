@@ -20,7 +20,9 @@
             (object) [
                 'logo' => '',
             ];
-        $serviceCategories = DB::table('categories')->where('type',2)->whereNull('parent_id')->get(['id', 'name']);
+        $serviceCategories = DB::table('categories')->whereNull('parent_id')->get(['id', 'name']);
+        $cities = DB::table('cities')->get(['id', 'name']);
+
     @endphp
     <header>
         <div class="main-header">
@@ -82,11 +84,14 @@
                 <div class="footer-column">
                     <h5>POPULAR LOCATIONS</h5>
                     <ul>
-                        <li><a href="#">Biratnagar</a></li>
+                        @foreach($cities as $city)
+                        <li><a href="#">{{$city->name}}</a></li>
+                        @endforeach
+                        {{-- <li><a href="#">Biratnagar</a></li>
                         <li><a href="#">Dharan</a></li>
                         <li><a href="#">Ithari</a></li>
                         <li><a href="#">Jhapa</a></li>
-                        <li><a href="#">Damak</a></li>
+                        <li><a href="#">Damak</a></li> --}}
                     </ul>
                 </div>
 
@@ -171,11 +176,13 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-body p-0">
+                    @foreach($cities as $city)
                     <div class="location-option selected">
-                        <span>Biratnagar</span>
+                        <span>{{$city-> name}}</span>
                         <i class="fas fa-check"></i>
                     </div>
-                    <div class="location-option">
+                    @endforeach
+                    {{-- <div class="location-option">
                         <span>Dharan</span>
                     </div>
                     <div class="location-option">
@@ -186,7 +193,7 @@
                     </div>
                     <div class="location-option">
                         <span>Damak</span>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
