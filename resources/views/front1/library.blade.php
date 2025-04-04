@@ -11,7 +11,7 @@
 
                         </ul>
                     </nav>
-                    <h1>{{ $category->name }}</h1>
+                    <h1 id="category_name">{{ $category->name }}</h1>
                 </div>
             </div>
             <div class="row">
@@ -29,7 +29,8 @@
                             </li>
                             @foreach ($allcategories as $allcategory)
                                 <li>
-                                    <a href="{{route('product.library',$allcategory->id)}}" class="main-category" onclick="toggleSubCategories(event, this)">
+                                    <a href="{{ route('product.library.filter', ['category_id' => $allcategory->id]) }}"
+                                        class="main-category" onclick="selectCategory(event, this)">
                                         {{ $allcategory->name }}
                                         <i class="fas fa-chevron-down"></i>
                                     </a>
@@ -37,7 +38,10 @@
                                         @foreach ($subcategories as $subcategory)
                                             @if ($subcategory->parent_id == $allcategory->id)
                                                 <li>
-                                                    <a href="#" onclick="selectCategory(event, this)">{{ $subcategory->name }}</a>
+                                                    <a href="{{ route('product.library.filter', ['subcategory_id' => $subcategory->id]) }}"
+                                                        class="sub-category" onclick="selectCategory(event, this)">
+                                                        {{ $subcategory->name }}
+                                                    </a>
                                                 </li>
                                             @endif
                                         @endforeach
@@ -53,30 +57,15 @@
                             <i class="fas fa-chevron-up"></i>
                         </div>
                         <ul class="location-list">
-                            <li>
-                                <a href="#" onclick="selectLocation(event, this)">
-                                    Kathmandu
-                                    <i class="fas fa-check location-check"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="selectLocation(event, this)">
-                                    Bhaktapur
-                                    <i class="fas fa-check location-check"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="selectLocation(event, this)">
-                                    Lalitpur
-                                    <i class="fas fa-check location-check"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" onclick="selectLocation(event, this)">
-                                    Pokhara
-                                    <i class="fas fa-check location-check"></i>
-                                </a>
-                            </li>
+                            @foreach ($cities as $city)
+                                <li>
+                                    <a href="{{ route('product.library.filter', ['city_id' => $city->id]) }}"
+                                        onclick="selectLocation(event, this)">
+                                        {{ $city->name }}
+                                        <i class="fas fa-check location-check"></i>
+                                    </a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
 
@@ -106,36 +95,7 @@
                 <div class="col-md-9">
                     <div class="content">
                         <div class="col">
-                            @foreach ($products as $product)
-                                <div class="card">
 
-                                    <a href="#" class="card-link">
-                                        <div class="card">
-                                            <div class="card-image">
-                                                <img src="{{ asset($product->image) }}" alt="Product" loading="lazy">
-                                                <span class="image-count"><i class="fas fa-camera"></i>       {{ 
-                                                    (isset($product->image) && !empty($product->image) ? 1 : 0) +
-                                                    (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
-                                                    (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
-                                                    (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
-                                                    (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
-                                                    (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
-                                                    (isset($product->image6) && !empty($product->image6) ? 1 : 0)
-                                                }}</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="category">
-                                                    <i class="fas fa-car"></i>{{ $product->short_desc }}
-                                                </div>
-                                                <h5>{{ $product->name }}</h5>
-                                                <p class="price">{{ $product->price }}Rs</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endforeach
-
-                      
                         </div>
                     </div>
                 </div>
@@ -144,4 +104,109 @@
     </div>
 
     <script src="{{ asset('front1/js/nextpg.js') }}"></script>
+    <script>
+        const csrfToken = '{{ csrf_token() }}';
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryLinks = document.querySelectorAll('.main-category, .sub-category');
+            const locationLinks = document.querySelectorAll('.location-list a');
+            const priceSlider = document.getElementById('priceRange');
+            const minPriceInput = document.getElementById('minPrice');
+            const maxPriceInput = document.getElementById('maxPrice');
+            const productContainer = document.querySelector('.content .col');
+
+            let filterData = {
+                category_id: null,
+                subcategory_id: null,
+                min_price: 0,
+                max_price: 1000000,
+                city_id: null
+            };
+
+            // Handle category & subcategory clicks
+            categoryLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = new URL(this.href);
+                    filterData.category_id = url.searchParams.get("category_id");
+                    filterData.subcategory_id = url.searchParams.get("subcategory_id");
+                    applyFilter();
+                });
+            });
+
+            // Handle location clicks
+            locationLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const url = new URL(this.href);
+                    filterData.city_id = url.searchParams.get("city_id");
+                    locationLinks.forEach(l => l.querySelector('.location-check').style.display =
+                        'none');
+                    this.querySelector('.location-check').style.display = 'inline-block';
+
+                    applyFilter();
+                });
+            });
+
+            // Handle price range slider
+            priceSlider.addEventListener('input', function() {
+                document.getElementById('currentRange').textContent = `₨ ${this.value}`;
+                filterData.max_price = parseInt(this.value);
+                applyFilter();
+            });
+
+            // Handle manual price inputs
+            minPriceInput.addEventListener('change', function() {
+                filterData.min_price = parseInt(this.value || 0);
+                applyFilter();
+            });
+
+            maxPriceInput.addEventListener('change', function() {
+                filterData.max_price = parseInt(this.value || 1000000);
+                applyFilter();
+            });
+
+            function applyFilter() {
+                fetch("{{ route('product.library.filter') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': csrfToken
+                        },
+                        body: JSON.stringify(filterData)
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        productContainer.innerHTML = '';
+                        if(data.category){
+                            document.getElementById('category_name').innerHTML = data.category.name;
+                        }
+                        if (data.success) {
+                            data.products.forEach(product => {
+                                productContainer.innerHTML += `
+                                <div class="card">
+                                    <a href="#" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="/${product.image}" alt="Product" loading="lazy">
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car"></i> ${product.short_desc}
+                                                </div>
+                                                <h5>${product.name}</h5>
+                                                <p class="price">${product.price}Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            `;
+                            });
+                        } else {
+                            productContainer.innerHTML = `<p>${data.message}</p>`;
+                        }
+                    });
+            }
+        });
+    </script>
 @endsection
