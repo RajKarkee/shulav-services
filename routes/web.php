@@ -44,7 +44,7 @@ use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
 Route::prefix('product')->name('product.')->group(function () {
-
+    Route::get('/library/{id}', [FrontController::class, 'categoryIndex'])->name('library');
     Route::get('/{name}/{id}', [FrontController::class, 'categorySingle'])->name('show');
 });
 Route::name('serviceCategory')->name('serviceCategory')->group(function () {

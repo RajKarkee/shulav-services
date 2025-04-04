@@ -16,7 +16,7 @@
         <div class="container">
             <section class="categories">
                 @foreach ($serviceCategories as $category)
-                    <a href="" class="category">
+                    <a href="{{route('product.library',$category->id)}}" class="category">
                         <div class="pic"><img src="{{ asset($category->image) }}" alt="Cars"></div>
                         {{ $category->name }}
                     </a>
