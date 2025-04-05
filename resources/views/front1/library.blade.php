@@ -5,6 +5,7 @@
             <div class="row">
                 <div class="heading">
                     <nav aria-label="breadcrumb">
+                        +
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Library</li>
@@ -185,7 +186,7 @@
                             data.products.forEach(product => {
                                 productContainer.innerHTML += `
                                 <div class="card">
-                                    <a href="#" class="card-link">
+                                         <a href="/product/${encodeURIComponent(product.name)}/${product.id}" class="card-link">
                                         <div class="card">
                                             <div class="card-image">
                                                 <img src="/${product.image}" alt="Product" loading="lazy">
