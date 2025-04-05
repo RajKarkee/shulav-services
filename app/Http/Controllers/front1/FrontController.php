@@ -100,7 +100,7 @@ class FrontController extends Controller
         }
     
         // Apply city filter if provided
-        if ($request->city_id) {
+        if ($request->city_id && $request->city_id !== 'all') {
             $query->where('products.city_id', $request->city_id);
         }
     

@@ -5,7 +5,7 @@
             <div class="row">
                 <div class="heading">
                     <nav aria-label="breadcrumb">
-                        
+
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Library</li>
@@ -140,10 +140,26 @@
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
                     const url = new URL(this.href);
-                    filterData.city_id = url.searchParams.get("city_id");
-                    locationLinks.forEach(l => l.querySelector('.location-check').style.display =
-                        'none');
-                    this.querySelector('.location-check').style.display = 'inline-block';
+                    const selectedCityId = url.searchParams.get("city_id");
+
+                    // Toggle logic
+                    if (filterData.city_id === selectedCityId) {
+                        filterData.city_id = "all"; // <-- Send "all" when deselected
+
+                        // Hide all check marks
+                        locationLinks.forEach(l => l.querySelector('.location-check').style
+                            .display = 'none');
+
+                    } else {
+                        filterData.city_id = selectedCityId;
+
+                        // Hide all check marks
+                        locationLinks.forEach(l => l.querySelector('.location-check').style
+                            .display = 'none');
+
+                        // Show current one
+                        this.querySelector('.location-check').style.display = 'inline-block';
+                    }
 
                     applyFilter();
                 });
@@ -179,7 +195,7 @@
                     .then(res => res.json())
                     .then(data => {
                         productContainer.innerHTML = '';
-                        if(data.category){
+                        if (data.category) {
                             document.getElementById('category_name').innerHTML = data.category.name;
                         }
                         if (data.success) {
