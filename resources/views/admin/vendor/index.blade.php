@@ -23,7 +23,7 @@
                             City
                         </th>
                         <th>
-                            Service
+                            Category
                         </th>
 
                         <th>
@@ -40,25 +40,30 @@
                 </thead>
                 <tbody>
                     @foreach ($vendors as $vendor)
+                    @php
+                        $city = \App\Models\City::where('id',$vendor->city_id)->first(['name']);
+                        $category = \App\Models\Category::where('id',$vendor->category_id)->first(['name','active']);
+                        $user = \App\Models\User::find($vendor->user_id);
+                    @endphp
                     <tr>
                         <td>
-                            {{$vendor->name}}
+                            {{$user->name}}
                         </td>
                         <td>
-                            {{$vendor->city}}
+                            {{$city->name}}
                         </td>
                         <td>
-                            {{$vendor->service}}
+                            {{$category->name}}
                         </td>
 
                         <td>
-                            {{$vendor->email}}
+                            {{$user->email}}
                         </td>
                         <td>
                             {{$vendor->phone}}
                         </td>
                         <td>
-                            {{$vendor->active==1?'Active':'InActive'}}
+                            {{$category->active==1?'Active':'InActive'}}
                         </td>
                         <td>
                             <a href="{{route('admin.vendor.detail',['vendor'=>$vendor->id])}}" class="btn btn-success">Detail</a>

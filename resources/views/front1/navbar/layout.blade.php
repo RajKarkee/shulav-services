@@ -16,22 +16,13 @@
 
 <body>
     @php
-        $data = App\Helper::getSetting('minor') ??
-            (object) [
-                'logo' => '',
-            ];
         $serviceCategories = DB::table('categories')->whereNull('parent_id')->get(['id', 'name']);
         $cities = DB::table('cities')->get(['id', 'name']);
 
     @endphp
     <header>
         <div class="main-header">
-            <div class="logo">
-                <a href="{{ route('index') }}">
-                    <img src="{{ $data->logo }}" alt="">
-                </a>
-            </div>
-
+            @includeIf('front.index.menu_logo')
             <div class="search-container">
                 <input type="text" placeholder="Search 'Cars'" class="search-input" />
                 <button class="search-button" aria-label="Search">
@@ -67,7 +58,7 @@
             <nav>
                 <ul>
                     @foreach ($serviceCategories as $category )
-                    <li><a href="aaa.html">  {{ $category->name }}</a></li>
+                    <li><a href="{{route('product.library',$category->id)}}">  {{ $category->name }}</a></li>
                     @endforeach
                 
                 </ul>
@@ -87,11 +78,6 @@
                         @foreach($cities as $city)
                         <li><a href="#">{{$city->name}}</a></li>
                         @endforeach
-                        {{-- <li><a href="#">Biratnagar</a></li>
-                        <li><a href="#">Dharan</a></li>
-                        <li><a href="#">Ithari</a></li>
-                        <li><a href="#">Jhapa</a></li>
-                        <li><a href="#">Damak</a></li> --}}
                     </ul>
                 </div>
 

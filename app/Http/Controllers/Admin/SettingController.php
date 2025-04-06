@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -297,7 +298,7 @@ class SettingController extends Controller
                 'others' => $others
             ];
             setSetting('contact', $data);
-            // dd($data
+            Helper::putCache('logo', view('admin.setting.template.menu-logo')->render());
             return redirect()->back()->with('message', "Setting Saved Sucessfully");
         }
     }

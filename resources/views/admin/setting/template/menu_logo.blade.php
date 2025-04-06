@@ -1,3 +1,5 @@
-<div class="menu-section">
-    <img onclick="window.location.href='/';" src="{{asset($logo)}}" alt="" class="logo">
+<div class="logo">
+     <a href="{{ route('index') }}">
+         <img  src="{{asset($logo)}}" alt="">
+     </a>
 </div>

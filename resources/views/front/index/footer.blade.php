@@ -47,7 +47,7 @@
                 To get latest new and updates from us please Subscribe our newsletter.
             </div>
                 <form id="subscribe" action="http://127.0.0.1:8000/subscribe" class="subscribe shadow">
-                    <input type="hidden" name="_token" value="jEaII4BZdZ7tG3BXr2gvQyEnMoW0qWpQFcg8JMV5" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
+                    <input type="hidden" name="_token" value="zkAkSWYqujJQ2tQbRtBvaZTFoIkJqekzzzEgJDVQ" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
                     <button>
                         <i class="fas px-2 fa-arrow-right">
                         </i>

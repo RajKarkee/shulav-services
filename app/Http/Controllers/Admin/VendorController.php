@@ -15,12 +15,15 @@ class VendorController extends Controller
     //
     public function index()
     {
-        $vendors=DB::table('vendors')
-        ->join('users','users.id','=','vendors.user_id')
-        ->join('cities','cities.id','=','vendors.city_id')
-        ->join('services','services.id','=','vendors.service_id')
-        ->select(DB::raw('vendors.id,users.name ,users.email,vendors.phone,vendors.address,cities.name as city,services.name as service,vendors.gender,vendors.is_org,vendors.active'))
-        ->get();
+        // $vendors=DB::table('vendors')
+        // ->join('users','users.id','=','vendors.user_id')
+        // ->join('cities','cities.id','=','vendors.city_id')
+        // ->join('categories','categories.id','=','vendors.category_id')
+        // ->where('categories.parent_id',null)
+        // ->select(DB::raw('vendors.id,users.name ,users.email,vendors.phone,vendors.address,cities.name as city,categories.name as category_name,vendors.gender,vendors.is_org,vendors.active'))
+        // ->get();
+
+        $vendors = DB::table('vendors')->get();
         return view('admin.vendor.index',compact('vendors'));
     }
 
@@ -38,10 +41,8 @@ class VendorController extends Controller
                 $u->password=bcrypt($request->phone);
                 $u->save();
 
-                // $v->name=$request->name;
-                $v->service_id=$request->service_id;
+                $v->category_id=$request->category_id;
                 $v->city_id=$request->city_id;
-                // $v->email=$request->email;
                 $v->phone=$request->phone;
                 $v->dob=$request->dob;
                 $v->desc=$request->desc;
@@ -60,8 +61,12 @@ class VendorController extends Controller
                 throw $th;
             }
         }else{
-            $data=DB::select("select (select GROUP_CONCAT(id,concat(':',name)) from services) as services,(select GROUP_CONCAT(id,concat(':',name)) from cities) as cities");
-            return view('admin.vendor.add',compact('data'));
+            $data = DB::select("
+            select 
+                (select GROUP_CONCAT(id, concat(':', name)) from categories) as categories,
+                (select GROUP_CONCAT(id, concat(':', name)) from cities) as cities
+        ");
+        return view('admin.vendor.add', compact('data'));
         }
     }
 

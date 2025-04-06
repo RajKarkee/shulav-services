@@ -4,26 +4,25 @@
         <div class="banner">
             <div class="owl-carousel">
                 @foreach ($sliders as $slider)
-                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner" loading="lazy">
                 @endforeach
             </div>
             <div class="custom-nav">
                 <button class="custom-prev"><i class="fas fa-chevron-left"></i></button>
                 <button class="custom-next"><i class="fas fa-chevron-right"></i></button>
             </div>
-
         </div>
         <div class="container">
             <section class="categories">
                 @foreach ($serviceCategories as $category)
                     <a href="{{route('product.library',$category->id)}}" class="category">
-                        <div class="pic"><img src="{{ asset($category->image) }}" alt="Cars"></div>
+                        <div class="pic"><img src="{{ asset($category->image) }}" alt="{{ $category->name }}" loading="lazy" width="100" height="100"></div>
                         {{ $category->name }}
                     </a>
                 @endforeach
             </section>
-
         </div>
+        
         @foreach ($sections as $section)
             @if ($section->design_type == '1')
                 <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
@@ -31,36 +30,20 @@
                         <div class="header">
                             <h4>{{ $section->section_name }}</h4>
                             <div class="slider-controls">
-                                <button class="slider-prev" title="Previous slide"><i
-                                        class="fas fa-chevron-left"></i></button>
+                                <button class="slider-prev" title="Previous slide"><i class="fas fa-chevron-left"></i></button>
                                 <button class="slider-next" title="Next slide"><i class="fas fa-chevron-right"></i></button>
                             </div>
                         </div>
 
                         <div class="slider">
                             <div class="slider-wrapper">
-                                <!-- Card 1 -->
                                 @foreach ($section->products as $product)
                                     <div class="card">
-                                        {{-- <div class="card-header">
-                                            <div class="user-info">
-                                                <div class="avatar">
-                                                    <img src="media/avatar.jpg" alt="User">
-                                                </div>
-                                                <div class="details">
-                                                    <div class="username">Ramesh</div>
-                                                    <div class="time">Time</div>
-                                                </div>
-                                            </div>
-                                            <div class="premium-tag">
-                                                <i class="fas fa-star"></i> Premium
-                                            </div>
-                                        </div> --}}
                                         <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                             <div class="card">
                                                 <div class="card-image">
-                                                    <img src="{{ asset($product->image) }}" alt="Product">
-                                                    <span class="image-count"><i class="fas fa-camera"></i>       {{ 
+                                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" loading="lazy" width="200" height="150">
+                                                    <span class="image-count"><i class="fas fa-camera"></i> {{ 
                                                         (isset($product->image) && !empty($product->image) ? 1 : 0) +
                                                         (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
                                                         (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
@@ -86,6 +69,7 @@
                     </div>
                 </div>
             @endif
+
             @if ($section->design_type == '2')
             <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
                     <h4>{{ $section->section_name }}</h4>
@@ -93,22 +77,11 @@
                         @foreach ($section->products as $product)
                             <div class="col">
                                 <div class="card">
-                                    {{-- <div class="card-header">
-                                        <div class="user-info">
-                                            <div class="avatar">
-                                                <img src="media/avatar1.jpg" alt="User">
-                                            </div>
-                                            <div class="details">
-                                                <div class="username">Ramesh</div>
-                                                <div class="time">Time</div>
-                                            </div>
-                                        </div>
-                                    </div> --}}
                                     <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
                                         <div class="card">
                                             <div class="card-image">
-                                                <img src="{{ asset($product->image) }}" alt="Product">
-                                                <span class="image-count"><i class="fas fa-camera"></i>       {{ 
+                                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" loading="lazy" width="200" height="150">
+                                                <span class="image-count"><i class="fas fa-camera"></i> {{ 
                                                     (isset($product->image) && !empty($product->image) ? 1 : 0) +
                                                     (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
                                                     (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
@@ -132,22 +105,18 @@
                         @endforeach
                     </div>
                 </div>
-                @endif
+            @endif
         @endforeach
-      
-
     </div>
 @endsection
-@section('script')
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('front1/js/main.js') }}"></script>
-    <script>
-        $(document).ready(function() {
 
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Owl Carousel
             var owl = $('.owl-carousel').owlCarousel({
                 loop: true,
                 margin: 10,
-                // nav: true,
                 dots: true,
                 autoplay: true,
                 autoplayTimeout: 10000,
@@ -155,48 +124,89 @@
                 animateOut: 'fadeOut',
                 autoplayHoverPause: true,
                 responsive: {
-                    0: {
-                        items: 1
-                    },
-                    600: {
-                        items: 1
-                    },
-                    1000: {
-                        items: 1
-                    }
+                    0: { items: 1 },
+                    600: { items: 1 },
+                    1000: { items: 1 }
                 }
             });
 
-            $('.owl-carousel .owl-prev, .owl-carousel .owl-next').click(function() {
-                owl.trigger('stop.owl.autoplay');
-                owl.trigger('play.owl.autoplay', [10000]);
-            });
-
-
-            $('.custom-prev').click(function() {
+            // Custom navigation for carousel
+            document.querySelector('.custom-prev').addEventListener('click', function() {
                 owl.trigger('prev.owl.carousel');
-                owl.trigger('stop.owl.autoplay');
-                owl.trigger('play.owl.autoplay', [10000]);
+                resetCarouselAutoplay();
             });
 
-            $('.custom-next').click(function() {
+            document.querySelector('.custom-next').addEventListener('click', function() {
                 owl.trigger('next.owl.carousel');
+                resetCarouselAutoplay();
+            });
+
+            function resetCarouselAutoplay() {
                 owl.trigger('stop.owl.autoplay');
                 owl.trigger('play.owl.autoplay', [10000]);
+            }
+
+            // Optimize slider scrolling with requestAnimationFrame
+            const sliderPrevButtons = document.querySelectorAll('.slider-prev');
+            const sliderNextButtons = document.querySelectorAll('.slider-next');
+            
+            sliderPrevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const sliderWrapper = this.closest('.section').querySelector('.slider-wrapper');
+                    smoothScroll(sliderWrapper, -300);
+                });
             });
 
-
-            $('.slider-prev').click(function() {
-                $('.slider-wrapper').animate({
-                    scrollLeft: '-=300'
-                }, 500);
+            sliderNextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const sliderWrapper = this.closest('.section').querySelector('.slider-wrapper');
+                    smoothScroll(sliderWrapper, 300);
+                });
             });
 
-            $('.slider-next').click(function() {
-                $('.slider-wrapper').animate({
-                    scrollLeft: '+=300'
-                }, 500);
-            });
+            function smoothScroll(element, amount) {
+                const start = element.scrollLeft;
+                const target = start + amount;
+                const duration = 300;
+                let startTime = null;
+
+                function animation(currentTime) {
+                    if (startTime === null) startTime = currentTime;
+                    const timeElapsed = currentTime - startTime;
+                    const progress = Math.min(timeElapsed / duration, 1);
+                    const ease = easeOutCubic(progress);
+                    
+                    element.scrollLeft = start + (target - start) * ease;
+                    
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                    }
+                }
+
+                function easeOutCubic(t) {
+                    return 1 - Math.pow(1 - t, 3);
+                }
+
+                requestAnimationFrame(animation);
+            }
+
+            // Lazy load images
+            const lazyImages = document.querySelectorAll('img[loading="lazy"]');
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src || img.src;
+                            imageObserver.unobserve(img);
+                        }
+                    });
+                });
+
+                lazyImages.forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
         });
     </script>
 @endsection

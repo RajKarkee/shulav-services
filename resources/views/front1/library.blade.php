@@ -96,7 +96,25 @@
                 <div class="col-md-9">
                     <div class="content">
                         <div class="col">
-
+                            @foreach ($products as $product )
+                            <div class="card">
+                                <a href="{{route('product.show',[$product->name,$product->id])}}" class="card-link">
+                               <div class="card">
+                                   <div class="card-image">
+                                       <img src="{{asset($product->image)}}" alt="Product" loading="lazy">
+                                   </div>
+                                   <div class="card-body">
+                                       <div class="category">
+                                           <i class="fas fa-car"></i> {{ $product->short_desc }}
+                                       </div>
+                                       <h5>{{$product->name}}</h5>
+                                       <p class="price">{{$product->price}}Rs</p>
+                                   </div>
+                               </div>
+                           </a>
+                       </div>
+                                                
+                            @endforeach
                         </div>
                     </div>
                 </div>
