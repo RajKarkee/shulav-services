@@ -31,12 +31,14 @@ use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\FrontPageController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\User\LoginController;
 
 use App\Mail\ProductAdded;
 use App\Mail\UserJoined;
 use App\Models\User;
 use App\Models\VendorBill;
 use Faker\Guesser\Name;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +53,9 @@ Route::prefix('product')->name('product.')->group(function () {
 Route::name('serviceCategory')->name('serviceCategory')->group(function () {
     Route::get('/index', [FrontController::class, 'categoryIndex'])->name('index');
     Route::get('/single/{category_id}', [FrontController::class, 'categorySingle'])->name('single');
+});
+Route::prefix('User')->name('User.')->group(function () {
+ Route::post('/login',[LoginController::class,'login'])->name('login');
 });
 
 

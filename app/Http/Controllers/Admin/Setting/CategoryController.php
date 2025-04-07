@@ -48,6 +48,9 @@ class CategoryController extends Controller
         }
 
         $category->save();
+        cache()->forget('service_categories');
+        cache()->forget('all_categories');
+        cache()->forget('subcategories');
         Helper::clearCategoriesCache();
 
         return response()->json($category);
@@ -63,6 +66,9 @@ class CategoryController extends Controller
             $category->image = $request->image->store('uploads/category');
         }
         $category->save();
+        cache()->forget('service_categories');
+        cache()->forget('all_categories');
+        cache()->forget('subcategories');
         Helper::clearCategoriesCache();
 
         return response()->json($category);
@@ -70,6 +76,9 @@ class CategoryController extends Controller
 
     public function delete(Request $request){
         Category::where('id',$request->id)->delete();
+        cache()->forget('service_categories');
+        cache()->forget('all_categories');
+        cache()->forget('subcategories');
         Helper::clearCategoriesCache();
     }
 }

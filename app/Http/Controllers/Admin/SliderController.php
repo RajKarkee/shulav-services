@@ -6,11 +6,13 @@ use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
+use App\Services\CacheService;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class SliderController extends Controller
 {
+
     public function index()
     {
         $sliders=Slider::all();
@@ -27,6 +29,7 @@ class SliderController extends Controller
             $slider->link=$request->link;
             $slider->index=$request->index;
             $slider->save();
+            cache()->forget('sliders');
             $this->render() ;
             return response()->json(['status'=>true]);
         }else{
@@ -48,6 +51,7 @@ class SliderController extends Controller
             $slider->link=$request->link;
             $slider->index=$request->index;
             $slider->save();
+            cache()->forget('sliders');
             $this->render() ;
             return response()->json(['status'=>true]);
         }else{
@@ -57,6 +61,7 @@ class SliderController extends Controller
 
     public function del(Request $request,Slider $slider){
         $slider->delete() ;
+        cache()->forget('sliders');
         $this->render() ;
         return redirect()->back()->with('message','Slider Deleted');
     }

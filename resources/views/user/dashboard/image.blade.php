@@ -1,6 +1,6 @@
 <div class="p-4" id="first-selector-image">
     <div  class="image">
-        <img id="image-display" src="{{asset($user->vendor->image)}}" alt="">
+        <img id="image-display" src="#" alt="">
         <div id="overlay-image" class="overlay" onclick="$('#image-input')[0].click();">
             <img class="overlay-image" src="/front/camera.svg" alt="" id="image-display">
 

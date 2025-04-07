@@ -18,6 +18,7 @@ class FrontPageController extends Controller
             $frontsection->design_type = $request->design_type;
             $frontsection->position = $request->position;
             $frontsection->save();
+            cache()->forget('front_page_sections');
         } else {
             $sections = DB::table('front_page_sections')->get(['id', 'section_name', 'design_type', 'position']);
             return view('admin.frontpage.index', compact('sections'));
@@ -30,6 +31,7 @@ class FrontPageController extends Controller
         $frontsection->design_type = $request->design_type;
         $frontsection->position = $request->position;
         $frontsection->save();
+        cache()->forget('front_page_sections');
     }
     public function del($section_id)
     {
@@ -53,6 +55,8 @@ class FrontPageController extends Controller
             $sectionProduct->front_page_section_id = $section_id;
             $sectionProduct->product_id = $request->product_id;
             $sectionProduct->save();
+            cache()->forget('front_page_sections');
+            
             return redirect()->back()->with('message', 'Section Product Added Successfully');
         } else {
             $products = DB::table('products')->get(['id', 'name']);

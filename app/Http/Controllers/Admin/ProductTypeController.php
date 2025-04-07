@@ -24,6 +24,9 @@ class ProductTypeController extends Controller
         ]);
 
         ProductType::create(['name' => $request->name]);
+        cache()->forget('front_page_sections');
+        cache()->forget('service_categories');
+
 
         return redirect()->route('admin.product_types.create')->with('success', 'Product type added successfully!');
     }
@@ -31,6 +34,8 @@ class ProductTypeController extends Controller
     public function destroy(ProductType $productType)
     {
         $productType->delete();
+        cache()->forget('front_page_sections');
+        cache()->forget('service_categories');
         return redirect()->route('admin.product_types.index')->with('success', 'Product type deleted!');
     }
 }

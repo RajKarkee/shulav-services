@@ -47,6 +47,7 @@ class ServiceController extends Controller
             $service->image = $request->file('image')->store('uploads/service');
         }
         $service->save();
+        cache()->forget('services');
 
         return redirect()->route('admin.service.index')->with('success', 'Service added successfully.');
     }

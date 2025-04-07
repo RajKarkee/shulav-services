@@ -8,9 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductType;
 use App\Models\Vendor;
 use App\Models\City;
+use App\Services\CacheService;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class AdminProductController extends Controller
 {
@@ -31,6 +33,7 @@ class AdminProductController extends Controller
         $products = $query->get(['id', 'name', 'short_desc',  'price', 'on_sale', 'image', 'category_id', 'city_id']);
         return response()->json($products);
     }
+
     public function create()
     {
         $serviceCategories = Helper::getCategoriesMini();
@@ -73,16 +76,22 @@ class AdminProductController extends Controller
             }
         }
         $product->save();
+
+   
+        $subKey = $subcategoryId ?? 'none';
+        Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
+
         return redirect()->back()->with('success', 'Product added successfully!');
     }
+
     public function edit(Request $request, $product_id)
     {
         $product = Product::where('id', $product_id)->first();
-        if($request->getMethod() == 'GET'){
+        if ($request->getMethod() == 'GET') {
             $serviceCategories = DB::table('categories')->where('type', 2)->get(['id', 'name']);
             $cities = DB::table('cities')->get(['id', 'name']);
             return view('admin.product.edit', compact('product', 'serviceCategories', 'cities'));
-        }else{
+        } else {
             $product->name = $request->name;
             $product->short_desc = $request->short_desc;
             $product->desc = $request->desc;
@@ -103,14 +112,25 @@ class AdminProductController extends Controller
                 }
             }
             $product->save();
+
+            $subKey = $subcategoryId ?? 'none';
+            Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
+
             return redirect()->back()->with('success', 'Product updated successfully!');
         }
     }
 
     // Delete product
-    public function del( $product_id)
+    public function del($product_id)
     {
-        Product::where('id', $product_id)->delete();
+        $product = Product::find($product_id);
+        if ($product) {
+            $product->delete();
+
+          
+            $subKey = $subcategoryId ?? 'none';
+            Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
+        }
         return redirect()->back()->with('success', 'Product deleted successfully!');
     }
 }
