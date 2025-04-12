@@ -7,8 +7,9 @@
     <title>Sulav trades</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
 
     <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
@@ -20,8 +21,12 @@
         $serviceCategories = DB::table('categories')
             ->whereNull('parent_id')
             ->get(['id', 'name']);
-        $cities = DB::table('cities')->limit(5)->get(['id', 'name']);
-        $locations= DB::table('locations')->limit(5)->get(['id', 'name']);
+        $cities = DB::table('cities')
+            ->limit(5)
+            ->get(['id', 'name']);
+        $locations = DB::table('locations')
+            ->limit(5)
+            ->get(['id', 'name']);
     @endphp
 
     <header>
@@ -42,15 +47,19 @@
                 <i class="far fa-heart"></i>
             </div> --}}
             @if (Auth::check())
-                
-          
                 <div class="user-profile" style="position: relative">
                     <div class="dropdown user-dropdown" style="cursor: pointer">
-                        <img src="{{ asset('media/user.png') }}" class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
-                        <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon" style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
+                        <img src="{{ asset('media/user.png') }}" class="profile-pic dropdown-toggle" id="userDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false"
+                            style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
+                        <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown"
+                            aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
+                            style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
                             <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -96,14 +105,14 @@
                     </style>
 
                     <script>
-                        document.addEventListener('DOMContentLoaded', function () {
+                        document.addEventListener('DOMContentLoaded', function() {
                             const dropdownToggle = document.getElementById('userDropdown');
-                            dropdownToggle.addEventListener('click', function (e) {
+                            dropdownToggle.addEventListener('click', function(e) {
                                 e.stopPropagation();
                                 this.nextElementSibling.classList.toggle('show');
                             });
 
-                            document.addEventListener('click', function () {
+                            document.addEventListener('click', function() {
                                 const dropdownMenu = document.querySelector('.user-dropdown .dropdown-menu');
                                 if (dropdownMenu.classList.contains('show')) {
                                     dropdownMenu.classList.remove('show');
@@ -113,14 +122,10 @@
                     </script>
                     <span class="username">{{ Auth::user()->name }}</span>
                 </div>
-                
             @else
-
                 <a href="#" class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-                
-
             @endif
-   
+
 
 
         </div>
@@ -155,7 +160,7 @@
                 <div class="footer-column">
                     <h5>TRENDING LOCATIONS</h5>
                     <ul>
-                        @foreach($locations as $location)
+                        @foreach ($locations as $location)
                             <li><a href="#">{{ $location->name }}</a></li>
                         @endforeach
                         {{-- <li><a href="#">Tarahara</a></li>
@@ -198,7 +203,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="brand-logos">
+            {{-- <div class="brand-logos">
                 <div class="logo-item"><img src="{{ asset('media/car22.jpg') }}" alt="CarTrade Tech Group"></div>
                 <div class="logo-item"><img src="{{ asset('media/bike22.png') }}" alt="Bike"></div>
                 <div class="logo-item"><img src="{{ asset('media/electronics22.png') }}" alt="Electronic"></div>
@@ -206,7 +211,7 @@
                 <div class="logo-item"><img src="{{ asset('media/cartrade.png') }}" alt="CarTrade"></div>
                 <div class="logo-item"><img src="{{ asset('media/mobility-outlook.png') }}" alt="Mobility Outlook">
                 </div>
-            </div>
+            </div> --}}
             <div class="copyright">
                 <p>All rights reserved © Needtechnosoft</p>
                 <a href="#">Help - Sitemap</a>
@@ -215,7 +220,8 @@
     </footer>
 
     <!-- Location Modal -->
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-header">
