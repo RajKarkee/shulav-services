@@ -20,7 +20,8 @@
         $serviceCategories = DB::table('categories')
             ->whereNull('parent_id')
             ->get(['id', 'name']);
-        $cities = DB::table('cities')->get(['id', 'name']);
+        $cities = DB::table('cities')->limit(5)->get(['id', 'name']);
+        $locations= DB::table('locations')->limit(5)->get(['id', 'name']);
     @endphp
 
     <header>
@@ -154,10 +155,13 @@
                 <div class="footer-column">
                     <h5>TRENDING LOCATIONS</h5>
                     <ul>
-                        <li><a href="#">Tarahara</a></li>
+                        @foreach($locations as $location)
+                            <li><a href="#">{{ $location->name }}</a></li>
+                        @endforeach
+                        {{-- <li><a href="#">Tarahara</a></li>
                         <li><a href="#">Bhedetar</a></li>
                         <li><a href="#">Hile</a></li>
-                        <li><a href="#">Soman</a></li>
+                        <li><a href="#">Soman</a></li> --}}
                     </ul>
                 </div>
                 <div class="footer-column">
