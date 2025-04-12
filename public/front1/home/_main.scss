@@ -1,10 +1,10 @@
-.homepage{
-    .categories{
+.homepage {
+    .categories {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        .category{
-            width:20%;
+        .category {
+            width: 20%;
             padding: 10px;
             display: flex;
             flex-direction: column;
@@ -40,6 +40,44 @@
             &:hover .pic {
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
                 transform: scale(1.05);
+            }
+        }
+    }
+    #banner {
+        .slick-prev:before,
+        .slick-next:before {
+            display: none;
+        }
+        .top-banner-slider {
+            position: relative;
+            i {
+                display: inline-block;
+            }
+            .custom-prev {
+                border: none;
+                height: 38px;
+                width: 38px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                border-radius: 50%;
+                // background-color: #fff;
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translateY(-50%);
+                z-index: 99;
+            }
+            .custom-next {
+                border: none;
+                height: 38px;
+                width: 38px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                border-radius: 50%;
+                // background-color: #fff;
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+                z-index: 99;
             }
         }
     }
@@ -109,7 +147,6 @@
     //         }
     //     }
     // }
-
 
     .section {
         margin: 30px 0;
@@ -346,8 +383,6 @@
                         }
                     }
                 }
-
-
             }
 
             .card-link {

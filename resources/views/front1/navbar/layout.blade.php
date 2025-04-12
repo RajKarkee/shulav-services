@@ -4,13 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OLX</title>
+    <title>Sulav trades</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+
     <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
     @yield('css')
 </head>
 
@@ -42,10 +43,11 @@
             @if (Auth::check())
                 
           
-                <div class="user-profile">
-                    <div class="dropdown user-dropdown">
-                        <img src="{{ asset('media/user.png') }}" class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc;">
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <div class="user-profile" style="position: relative">
+                    <div class="dropdown user-dropdown" style="cursor: pointer">
+                        <img src="{{ asset('media/user.png') }}" class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
+                        <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown" aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon" style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
@@ -55,6 +57,16 @@
                                 </form>
                             </li>
                         </ul>
+                        {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul> --}}
                     </div>
 
                     <style>
@@ -285,6 +297,8 @@
 
     <!-- Bootstrap JS Bundle - Required for modals to work -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
     <!-- Your custom JavaScript files -->
     <script src="{{ asset('front1/js/main.js') }}"></script>

@@ -622,6 +622,40 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
+.homepage #banner .slick-prev:before,
+.homepage #banner .slick-next:before {
+  display: none;
+}
+.homepage #banner .top-banner-slider {
+  position: relative;
+}
+.homepage #banner .top-banner-slider i {
+  display: inline-block;
+}
+.homepage #banner .top-banner-slider .custom-prev {
+  border: none;
+  height: 38px;
+  width: 38px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 99;
+}
+.homepage #banner .top-banner-slider .custom-next {
+  border: none;
+  height: 38px;
+  width: 38px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 99;
+}
 .homepage .section {
   margin: 30px 0;
 }

@@ -1,36 +1,40 @@
 @extends('front1.navbar.layout')
 @section('content')
     <div class="homepage">
-        <div class="banner">
-            <div class="owl-carousel">
+        <div class="banner" id="banner">
+            <div class="top-banner-slider">
                 @foreach ($sliders as $slider)
-                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner" loading="lazy">
+                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner"
+                        loading="lazy">
                 @endforeach
             </div>
-            <div class="custom-nav">
+            {{-- <div class="custom-nav">
                 <button class="custom-prev"><i class="fas fa-chevron-left"></i></button>
                 <button class="custom-next"><i class="fas fa-chevron-right"></i></button>
-            </div>
+            </div> --}}
         </div>
         <div class="container">
             <section class="categories">
                 @foreach ($serviceCategories as $category)
-                    <a href="{{route('product.library',$category->id)}}" class="category">
-                        <div class="pic"><img src="{{ asset($category->image) }}" alt="{{ $category->name }}" loading="lazy" width="100" height="100"></div>
+                    <a href="{{ route('product.library', $category->id) }}" class="category">
+                        <div class="pic"><img src="{{ asset($category->image) }}" alt="{{ $category->name }}"
+                                loading="lazy" width="100" height="100"></div>
                         {{ $category->name }}
                     </a>
                 @endforeach
             </section>
         </div>
-        
+
         @foreach ($sections as $section)
             @if ($section->design_type == '1')
-                <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
+                <div class="container dynamic-container" id="section-{{ $section->position }}"
+                    data-position="{{ $section->position }}">
                     <div class="section">
                         <div class="header">
                             <h4>{{ $section->section_name }}</h4>
                             <div class="slider-controls">
-                                <button class="slider-prev" title="Previous slide"><i class="fas fa-chevron-left"></i></button>
+                                <button class="slider-prev" title="Previous slide"><i
+                                        class="fas fa-chevron-left"></i></button>
                                 <button class="slider-next" title="Next slide"><i class="fas fa-chevron-right"></i></button>
                             </div>
                         </div>
@@ -39,19 +43,20 @@
                             <div class="slider-wrapper">
                                 @foreach ($section->products as $product)
                                     <div class="card">
-                                        <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
+                                        <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
+                                            class="card-link">
                                             <div class="card">
                                                 <div class="card-image">
-                                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" loading="lazy" width="200" height="150">
-                                                    <span class="image-count"><i class="fas fa-camera"></i> {{ 
-                                                        (isset($product->image) && !empty($product->image) ? 1 : 0) +
-                                                        (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
-                                                        (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
-                                                        (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
-                                                        (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
-                                                        (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
-                                                        (isset($product->image6) && !empty($product->image6) ? 1 : 0)
-                                                    }}</span>
+                                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                                        loading="lazy" width="200" height="150">
+                                                    <span class="image-count"><i class="fas fa-camera"></i>
+                                                        {{ (isset($product->image) && !empty($product->image) ? 1 : 0) +
+                                                            (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
+                                                            (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
+                                                            (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
+                                                            (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
+                                                            (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
+                                                            (isset($product->image6) && !empty($product->image6) ? 1 : 0) }}</span>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="category">
@@ -71,25 +76,27 @@
             @endif
 
             @if ($section->design_type == '2')
-            <div class="container dynamic-container" id="section-{{ $section->position }}" data-position="{{ $section->position }}">
+                <div class="container dynamic-container" id="section-{{ $section->position }}"
+                    data-position="{{ $section->position }}">
                     <h4>{{ $section->section_name }}</h4>
-                    <div class="row row-cols-4"> 
+                    <div class="row row-cols-4">
                         @foreach ($section->products as $product)
                             <div class="col">
                                 <div class="card">
-                                    <a href="{{route('product.show',['name'=>$product->name,'id' =>$product->id])}}" class="card-link">
+                                    <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
+                                        class="card-link">
                                         <div class="card">
                                             <div class="card-image">
-                                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" loading="lazy" width="200" height="150">
-                                                <span class="image-count"><i class="fas fa-camera"></i> {{ 
-                                                    (isset($product->image) && !empty($product->image) ? 1 : 0) +
-                                                    (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
-                                                    (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
-                                                    (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
-                                                    (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
-                                                    (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
-                                                    (isset($product->image6) && !empty($product->image6) ? 1 : 0)
-                                                }}</span>
+                                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                                    loading="lazy" width="200" height="150">
+                                                <span class="image-count"><i class="fas fa-camera"></i>
+                                                    {{ (isset($product->image) && !empty($product->image) ? 1 : 0) +
+                                                        (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
+                                                        (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
+                                                        (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
+                                                        (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
+                                                        (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
+                                                        (isset($product->image6) && !empty($product->image6) ? 1 : 0) }}</span>
                                             </div>
                                             <div class="card-body">
                                                 <div class="category">
@@ -113,56 +120,20 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Owl Carousel
-            var owl = $('.owl-carousel').owlCarousel({
-                loop: true,
-                margin: 10,
+            var slickSlider = $('.top-banner-slider').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
                 dots: true,
-                autoplay: true,
-                autoplayTimeout: 10000,
-                animateIn: 'fadeIn',
-                animateOut: 'fadeOut',
-                autoplayHoverPause: true,
-                responsive: {
-                    0: { items: 1 },
-                    600: { items: 1 },
-                    1000: { items: 1 }
-                }
+                prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
+                nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
             });
 
-            // Custom navigation for carousel
-            document.querySelector('.custom-prev').addEventListener('click', function() {
-                owl.trigger('prev.owl.carousel');
-                resetCarouselAutoplay();
-            });
 
-            document.querySelector('.custom-next').addEventListener('click', function() {
-                owl.trigger('next.owl.carousel');
-                resetCarouselAutoplay();
-            });
+           
 
-            function resetCarouselAutoplay() {
-                owl.trigger('stop.owl.autoplay');
-                owl.trigger('play.owl.autoplay', [10000]);
-            }
-
-            // Optimize slider scrolling with requestAnimationFrame
-            const sliderPrevButtons = document.querySelectorAll('.slider-prev');
-            const sliderNextButtons = document.querySelectorAll('.slider-next');
-            
-            sliderPrevButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const sliderWrapper = this.closest('.section').querySelector('.slider-wrapper');
-                    smoothScroll(sliderWrapper, -300);
-                });
-            });
-
-            sliderNextButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const sliderWrapper = this.closest('.section').querySelector('.slider-wrapper');
-                    smoothScroll(sliderWrapper, 300);
-                });
-            });
+          
 
             function smoothScroll(element, amount) {
                 const start = element.scrollLeft;
@@ -175,9 +146,9 @@
                     const timeElapsed = currentTime - startTime;
                     const progress = Math.min(timeElapsed / duration, 1);
                     const ease = easeOutCubic(progress);
-                    
+
                     element.scrollLeft = start + (target - start) * ease;
-                    
+
                     if (timeElapsed < duration) {
                         requestAnimationFrame(animation);
                     }

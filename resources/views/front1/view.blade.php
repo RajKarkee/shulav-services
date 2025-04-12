@@ -167,12 +167,16 @@
                                 style="width: 80px; height: 80px;">
                                 <span class="fs-1 fw-bold">M</span>
                             </div>
-                            <h5 class="mb-3">Rajesh hamal</h5>
+                            <h5 class="mb-3">Rajesh Hamal</h5>
                             <button class="btn btn-outline-dark w-100 mb-3">Chat with seller</button>
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-phone me-2"></i>
-                                <span>** *** ***</span>
-                                <a href="#" class="ms-2 text-primary">Show number</a>
+                                @auth
+                                    <span>{{ $vendor->phone }}</span>
+                                @else
+                                    <span>** *** ***</span>
+                                    <a href="{{ route('login') }}" class="ms-2 text-primary">Login to show number</a>
+                                @endauth
                             </div>
                         </div>
                     </div>
