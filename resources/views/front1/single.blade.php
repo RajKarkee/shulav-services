@@ -16,26 +16,40 @@
             </div>
         </div>
     </div>
-    <div class="homepage">
+
+    <div class="image-slider">
+        <div class="product-image active">
+            <img src="{{ asset($product->image) }}" alt="Product" >
+        </div>
+        @for ($i = 1; $i <= 6; $i++)
+            @php $imageNo= "image{$i}"; @endphp
+            @if ($product->$imageNo)
+            <div class="product-image">
+                <img src="{{ asset($product->$imageNo) }}" alt="Product" >
+            </div>
+            @endif
+        @endfor
 
     </div>
-    <div class="image">
+    <div class="thumbnail-nav">
+        @php $index=1; @endphp
+        <div class="thumbnail active" data-index="0">
+            <img src="{{ asset($product->image) }}" alt="Thumbnail 1">
+        </div>
+        @for ($i = 1; $i <= 6; $i++)
+            @php $imageNo= "image{$i}"; @endphp
+            @if ($product->$imageNo)
+                <div class="thumbnail" data-index="{{ $index }}">
+                    <img src="{{ asset($product->$imageNo) }}" alt="Thumbnail {{ $index }}">
+                </div>
+                @php $index++; @endphp
+            @endif
+        @endfor
+
+    </div>
+    {{-- <div class="image">
         <div class="image-gallery">
             <div class="image-container">
-                <div class="image-slider">
-                    <div class="product-image active">
-                        <img src="{{ asset($product->image) }}" alt="Product" >
-                    </div>
-                    @for ($i = 1; $i <= 6; $i++)
-                        @php $imageNo= "image{$i}"; @endphp
-                        @if ($product->$imageNo)
-                        <div class="product-image">
-                            <img src="{{ asset($product->$imageNo) }}" alt="Product" >
-                        </div>
-                        @endif
-                    @endfor
-
-                </div>
                 <div class="image-actions">
                     <button class="action-btn share" title="Share">
                         <i class="fas fa-share-nodes"></i>
@@ -47,24 +61,9 @@
 
             </div>
 
-            <div class="thumbnail-nav">
-                @php $index=1; @endphp
-                <div class="thumbnail active" data-index="0">
-                    <img src="{{ asset($product->image) }}" alt="Thumbnail 1">
-                </div>
-                @for ($i = 1; $i <= 6; $i++)
-                    @php $imageNo= "image{$i}"; @endphp
-                    @if ($product->$imageNo)
-                        <div class="thumbnail" data-index="{{ $index }}">
-                            <img src="{{ asset($product->$imageNo) }}" alt="Thumbnail {{ $index }}">
-                        </div>
-                        @php $index++; @endphp
-                    @endif
-                @endfor
-
-            </div>
+            
         </div>
-    </div>
+    </div> --}}
     <div class="view-container">
         <hr>
         <div class="product-details">
@@ -190,6 +189,16 @@
                 dots: true,
                 prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
                 nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
+            });
+
+            $('.thumbnail-nav').slick({
+                infinite: false,
+                slidesToShow: 7,
+                slidesToScroll: 7,
+                asNavFor: '.image-slider',
+                dots: false,
+                centerMode: true,
+                focusOnSelect: true
             });
         });
     </script>

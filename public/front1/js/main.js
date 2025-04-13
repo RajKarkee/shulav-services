@@ -54,146 +54,79 @@ document.querySelectorAll('.location-option').forEach(option => {
  * </div>
  */
 
-// Function to initialize a single slider
-function initializeSlider(section) {
-    // Skip if already initialized
-    if (section.dataset.initialized === 'true') {
-        return;
-    }
+// Function to initialize a single slider function initializeSlickSlider(section) {
+    //     const wrapper = $(section).find('.slider-wrapper');
+    //     const prevBtn = $(section).find('.slider-prev');
+    //     const nextBtn = $(section).find('.slider-next');
 
-    const sliderWrapper = section.querySelector('.slider-wrapper');
-    const prevButton = section.querySelector('.slider-prev');
-    const nextButton = section.querySelector('.slider-next');
+    //     // Skip if already initialized
+    //     if (wrapper.hasClass('slick-initialized')) return;
 
-    // Use either .slider-card or .card for backwards compatibility
-    const cards = section.querySelectorAll('.slider-card, .card');
+    //     // Initialize Slick Slider
+    //     wrapper.slick({
+    //         slidesToShow: 4,
+    //         slidesToScroll: 1,
+    //         infinite: false,
+    //         arrows: false,
+    //         dots: false,
+    //         swipeToSlide: true,
+    //         lazyLoad: 'ondemand',
+    //         responsive: [
+    //             {
+    //                 breakpoint: 1200,
+    //                 settings: { slidesToShow: 3 }
+    //             },
+    //             {
+    //                 breakpoint: 992,
+    //                 settings: { slidesToShow: 2 }
+    //             },
+    //             {
+    //                 breakpoint: 768,
+    //                 settings: { slidesToShow: 1.2 }
+    //             }
+    //         ]
+    //     });
 
-    if (!sliderWrapper || !prevButton || !nextButton || cards.length === 0) {
-        console.error('Missing required elements for slider in section:', section);
-        return;
-    }
+    //     // Custom Navigation
+    //     prevBtn.on('click', () => {
+    //         wrapper.slick('slickPrev');
+    //     });
 
-    // Mark as initialized to prevent duplicate initialization
-    section.dataset.initialized = 'true';
+    //     nextBtn.on('click', () => {
+    //         wrapper.slick('slickNext');
+    //     });
 
-    // Store the slider state in the section's dataset
-    section.dataset.currentPosition = '0';
-    section.dataset.cardWidth = '316'; // Default card width + gap
+    //     // Enable/Disable navigation buttons
+    //     wrapper.on('afterChange', function (event, slick, currentSlide) {
+    //         const totalSlides = slick.slideCount;
+    //         const visibleSlides = slick.options.slidesToShow;
 
-    // Calculate visible cards and max position
-    const cardWidth = parseInt(section.dataset.cardWidth);
-    const visibleCards = Math.floor(sliderWrapper.parentElement.offsetWidth / cardWidth);
-    const maxPosition = Math.max(0, (cards.length - visibleCards) * cardWidth);
+    //         prevBtn.prop('disabled', currentSlide === 0);
+    //         nextBtn.prop('disabled', currentSlide >= totalSlides - visibleSlides);
+    //     });
 
-    section.dataset.maxPosition = maxPosition.toString();
+    //     // Trigger initial button state
+    //     wrapper.trigger('afterChange', [wrapper.slick('getSlick'), 0]);
+    // }
 
-    // Initialize slider position
-    sliderWrapper.style.transform = `translateX(0px)`;
+    // function initializeAllSlickSliders() {
+    //     $('.section').each(function () {
+    //         initializeSlickSlider(this);
+    //     });
+    // }
 
-    // Previous button click
-    prevButton.addEventListener('click', function() {
-        const currentPosition = parseInt(section.dataset.currentPosition);
-        const cardWidth = parseInt(section.dataset.cardWidth);
+    // function setupSliderObserver() {
+    //     const observer = new MutationObserver(() => {
+    //         initializeAllSlickSliders();
+    //     });
 
-        if (currentPosition > 0) {
-            const newPosition = currentPosition - cardWidth;
-            section.dataset.currentPosition = newPosition.toString();
-            sliderWrapper.style.transform = `translateX(-${newPosition}px)`;
-        }
-    });
+    //     observer.observe(document.body, {
+    //         childList: true,
+    //         subtree: true
+    //     });
+    // }
 
-    // Next button click
-    nextButton.addEventListener('click', function() {
-        const currentPosition = parseInt(section.dataset.currentPosition);
-        const cardWidth = parseInt(section.dataset.cardWidth);
-        const maxPosition = parseInt(section.dataset.maxPosition);
-
-        if (currentPosition < maxPosition) {
-            const newPosition = currentPosition + cardWidth;
-            section.dataset.currentPosition = newPosition.toString();
-            sliderWrapper.style.transform = `translateX(-${newPosition}px)`;
-        }
-    });
-
-    console.log('Slider initialized:', section);
-}
-
-// Function to initialize all sliders on the page
-function initializeAllSliders() {
-    // Get all slider sections (support both old .section and new .slider-section classes)
-    const sliderSections = document.querySelectorAll('.section, .slider-section');
-
-    // Initialize each slider independently
-    sliderSections.forEach(section => {
-        initializeSlider(section);
-    });
-}
-
-// Function to recalculate slider dimensions on window resize
-function recalculateSliders() {
-    const sliderSections = document.querySelectorAll('.section, .slider-section');
-
-    sliderSections.forEach(section => {
-        if (section.dataset.initialized !== 'true') return;
-
-        const sliderWrapper = section.querySelector('.slider-wrapper');
-        const cards = section.querySelectorAll('.slider-card, .card');
-        const cardWidth = parseInt(section.dataset.cardWidth);
-        const currentPosition = parseInt(section.dataset.currentPosition);
-
-        // Recalculate max position
-        const visibleCards = Math.floor(sliderWrapper.parentElement.offsetWidth / cardWidth);
-        const maxPosition = Math.max(0, (cards.length - visibleCards) * cardWidth);
-        section.dataset.maxPosition = maxPosition.toString();
-
-        // Reset position if needed
-        if (currentPosition > maxPosition) {
-            section.dataset.currentPosition = maxPosition.toString();
-            sliderWrapper.style.transform = `translateX(-${maxPosition}px)`;
-        }
-    });
-}
-
-// Set up MutationObserver to detect new slider sections
-function setupSliderObserver() {
-    // Create a MutationObserver to watch for new slider sections
-    const observer = new MutationObserver(mutations => {
-        let shouldInitialize = false;
-
-        mutations.forEach(mutation => {
-            if (mutation.type === 'childList') {
-                mutation.addedNodes.forEach(node => {
-                    // Check if the added node is an element and has the slider-section class
-                    if (node.nodeType === 1 &&
-                        (node.classList.contains('slider-section') || node.classList.contains('section'))) {
-                        shouldInitialize = true;
-                    }
-
-                    // Check if the added node contains slider sections
-                    if (node.nodeType === 1) {
-                        const nestedSections = node.querySelectorAll('.slider-section, .section');
-                        if (nestedSections.length > 0) {
-                            shouldInitialize = true;
-                        }
-                    }
-                });
-            }
-        });
-
-        if (shouldInitialize) {
-            initializeAllSliders();
-        }
-    });
-
-    // Start observing the document body for changes
-    observer.observe(document.body, { childList: true, subtree: true });
-}
-
-// Initialize everything when the DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initializeAllSliders();
-    setupSliderObserver();
-
-    // Handle window resize
-    window.addEventListener('resize', recalculateSliders);
-});
+    // $(document).ready(function () {
+    //     initializeAllSlickSliders();
+    //     setupSliderObserver();
+    // });

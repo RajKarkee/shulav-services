@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sulav trades</title>
+    <title>Shulav trades</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
@@ -43,55 +43,55 @@
                 <div class="language-selector" data-bs-toggle="modal" data-bs-target="#locationModal">
                     Location <i class="fas fa-chevron-down"></i>
                 </div>
+                @if (Auth::check())
+                    <div class="user-profile" style="position: relative">
+                        <div class="dropdown user-dropdown" style="cursor: pointer">
+                            <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? Auth::user()->profile->profile_picture : asset('media/user.png') }}"
+                                class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
+                            <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="margin-left: 5px; cursor: pointer;"></i>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
+                                style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        <span class="username">{{ Auth::user()->name }}</span>
+                    </div>
+                @else
+                    <div class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</div>
+                @endif
+
+
+
+
+
             </div>
-            {{-- <div class="favorites">
-                <i class="far fa-heart"></i>
-            </div> --}}
-            @if (Auth::check())
-            <div class="user-profile" style="position: relative">
-                <div class="dropdown user-dropdown" style="cursor: pointer">
-                    <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? Auth::user()->profile->profile_picture : asset('media/user.png') }}" 
-                        class="profile-pic dropdown-toggle" id="userDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false"
-                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
-                    <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown"
-                        aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
-                        style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
-                            </form>
-                        </li>
-                    </ul>
+        </div>
+            <div class="categories-bar">
+                <div class="all-categories">
+                    ALL CATEGORIES <i class="fas fa-chevron-down"></i>
                 </div>
-                <span class="username">{{ Auth::user()->name }}</span>
+                <nav>
+                    <ul>
+                        @foreach ($serviceCategories as $category)
+                            <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </nav>
             </div>
-        @else
-            <div class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</div>
-        @endif
-
-
-
-        </div>
-
-        <div class="categories-bar">
-            <div class="all-categories">
-                ALL CATEGORIES <i class="fas fa-chevron-down"></i>
-            </div>
-            <nav>
-                <ul>
-                    @foreach ($serviceCategories as $category)
-                        <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
-                    @endforeach
-                </ul>
-            </nav>
-        </div>
+  
     </header>
 
     @yield('content')
@@ -240,7 +240,7 @@
                         <a href="{{ route('loginGoogle') }}" class="btn btn-google w-100 mb-3">
                             <i class="fab fa-google me-2"></i> Continue with Google
                         </a>
-                        
+
                         <div class="login-footer text-center mt-3">
                             <p class="small text-muted">All your personal details are safe with us.</p>
                             <p class="small terms-text">
@@ -262,7 +262,7 @@
     <!-- Your custom JavaScript files -->
     <script src="{{ asset('front1/js/main.js') }}"></script>
     <script src="{{ asset('front1/js/nextpg.js') }}"></script>
-   
+
 
     @yield('script')
 </body>

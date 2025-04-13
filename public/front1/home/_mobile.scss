@@ -51,20 +51,30 @@ body {
                 margin: 10px 0;
             }
             
-            .user-actions, .favorites, .login {
-                margin-top: 10px;
+            .user-actions{
+                display: flex;
+                justify-content: space-between; 
+                width:100%;
+             
+                .login {
+                  margin-right: 0;
+                  
+               }
+               .location{
+                   margin-left:0;
+               }
             }
         }
         
         .categories-bar {
-            flex-direction: column;
+            display: none;
             
-            .all-categories {
-                width: 100%;
-                text-align: center;
-                padding: 10px 0;
-                border-bottom: 1px solid #e0e0e0;
-            }
+            // .all-categories {
+            //     width: 100%;
+            //     text-align: center;
+            //     padding: 10px 0;
+            //     border-bottom: 1px solid #e0e0e0;
+            // }
             
             nav {
                 width: 100%;

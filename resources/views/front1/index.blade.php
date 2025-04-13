@@ -47,8 +47,8 @@
                                             class="card-link">
                                             <div class="card">
                                                 <div class="card-image">
-                                                    <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
-                                                        loading="lazy" width="200" height="150">
+                                                    <img data-lazy="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                                         width="200" height="150">
                                                     <span class="image-count"><i class="fas fa-camera"></i>
                                                         {{ (isset($product->image) && !empty($product->image) ? 1 : 0) +
                                                             (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
@@ -188,4 +188,60 @@
             }
         });
     </script>
+    <script>
+        function initializeSlickSlider(section) {
+            const $wrapper = $(section).find('.slider-wrapper');
+            const $prev = $(section).find('.slider-prev');
+            const $next = $(section).find('.slider-next');
+    
+            if ($wrapper.hasClass('slick-initialized')) return;
+    
+            $wrapper.slick({
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: false,
+                infinite: false,
+                lazyLoad: 'ondemand',
+                swipeToSlide: true,
+                responsive: [
+                    { breakpoint: 1200, settings: { slidesToShow: 3 } },
+                    { breakpoint: 992,  settings: { slidesToShow: 2 } },
+                    { breakpoint: 768,  settings: { slidesToShow: 1.2 } }
+                ]
+            });
+    
+            // Custom Prev/Next Buttons
+            $prev.on('click', () => $wrapper.slick('slickPrev'));
+            $next.on('click', () => $wrapper.slick('slickNext'));
+    
+            // Handle enabling/disabling buttons
+            $wrapper.on('afterChange', function (event, slick, currentSlide) {
+                const maxSlide = slick.slideCount - slick.options.slidesToShow;
+                $prev.prop('disabled', currentSlide === 0);
+                $next.prop('disabled', currentSlide >= maxSlide);
+            });
+    
+            // Trigger once to set initial button state
+            $wrapper.trigger('afterChange', [$wrapper.slick('getSlick'), 0]);
+        }
+    
+        function initializeAllSliders() {
+            $('.section').each(function () {
+                initializeSlickSlider(this);
+            });
+        }
+    
+        function observeSliders() {
+            const observer = new MutationObserver(() => {
+                initializeAllSliders();
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+    
+        $(document).ready(function () {
+            initializeAllSliders();
+            observeSliders();
+        });
+    </script>
+    
 @endsection

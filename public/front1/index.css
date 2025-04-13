@@ -713,46 +713,8 @@ body {
   overflow: hidden;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-.homepage .section .slider .card .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-.homepage .section .slider .card .card-header .user-info {
-  display: flex;
-  align-items: center;
-}
-.homepage .section .slider .card .card-header .user-info .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 8px;
-}
-.homepage .section .slider .card .card-header .user-info .avatar img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.homepage .section .slider .card .card-header .user-info .details .username {
-  font-weight: 500;
-  font-size: 14px;
-  color: #002f34;
-}
-.homepage .section .slider .card .card-header .user-info .details .time {
-  font-size: 12px;
-  color: #777;
-}
-.homepage .section .slider .card .card-header .premium-tag {
-  color: #ff8800;
-  font-size: 13px;
-  font-weight: 500;
-}
-.homepage .section .slider .card .card-header .premium-tag i {
-  margin-right: 3px;
+  margin-right: 16px;
+  transition: all 0.3s ease;
 }
 .homepage .section .slider .card .card-link {
   text-decoration: none !important;
@@ -826,38 +788,6 @@ body {
   overflow: hidden;
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-}
-.homepage .row-cols-4 .card .card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-}
-.homepage .row-cols-4 .card .card-header .user-info {
-  display: flex;
-  align-items: center;
-}
-.homepage .row-cols-4 .card .card-header .user-info .avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 8px;
-}
-.homepage .row-cols-4 .card .card-header .user-info .avatar img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-.homepage .row-cols-4 .card .card-header .user-info .details .username {
-  font-weight: 500;
-  font-size: 14px;
-  color: #002f34;
-}
-.homepage .row-cols-4 .card .card-header .user-info .details .time {
-  font-size: 12px;
-  color: #777;
 }
 .homepage .row-cols-4 .card .card-link {
   text-decoration: none !important;
@@ -941,17 +871,19 @@ body {
     width: 100%;
     margin: 10px 0;
   }
-  header .main-header .user-actions, header .main-header .favorites, header .main-header .login {
-    margin-top: 10px;
+  header .main-header .user-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  header .main-header .user-actions .login {
+    margin-right: 0;
+  }
+  header .main-header .user-actions .location {
+    margin-left: 0;
   }
   header .categories-bar {
-    flex-direction: column;
-  }
-  header .categories-bar .all-categories {
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #e0e0e0;
+    display: none;
   }
   header .categories-bar nav {
     width: 100%;
@@ -1726,6 +1658,34 @@ footer .footer-bottom .copyright a:hover {
   transform: translateY(-2px);
 }
 
+.image-slider {
+  position: relative;
+}
+.image-slider .product-image {
+  max-height: 450px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #635542;
+}
+.image-slider .product-image img {
+  max-height: 450px;
+}
+
+.thumbnail-nav .thumbnail {
+  width: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F2F1F6;
+}
+.thumbnail-nav .thumbnail img {
+  height: 75px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
 .image {
   width: 100%;
   height: auto;
@@ -1745,18 +1705,6 @@ footer .footer-bottom .copyright a:hover {
   margin: 0 auto;
   height: 450px;
   overflow: hidden;
-}
-.image .image-container .image-slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.image .image-container .image-slider .product-image img {
-  height: 100%;
-}
-.image .image-container .image-slider .product-image img.active {
-  margin-top: 20px;
-  opacity: 1;
 }
 .image .navigation-arrows {
   position: absolute;
@@ -1835,36 +1783,6 @@ footer .footer-bottom .copyright a:hover {
   width: 60px;
   height: auto;
   opacity: 0.7;
-}
-.image .thumbnail-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 10px;
-}
-.image .thumbnail-nav .thumbnail {
-  flex: 0 0 80px;
-  height: 60px;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0.7;
-}
-.image .thumbnail-nav .thumbnail:hover {
-  opacity: 1;
-}
-.image .thumbnail-nav .thumbnail.active {
-  border-color: #3a77ff;
-  opacity: 1;
-}
-.image .thumbnail-nav .thumbnail img {
-  width: 100%;
-  height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .view-container {
