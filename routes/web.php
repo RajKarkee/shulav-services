@@ -26,6 +26,7 @@ use App\Http\Controllers\Front\JobController as FrontJobController;
 use App\Http\Controllers\Front\RestaurantController as FrontRestaurantController;
 use App\Http\Controllers\Front\UserController;
 use App\Http\Controllers\Front\VendorController as FrontVendorController;
+use App\Http\Controllers\front1\PhoneLoginController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
@@ -45,6 +46,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
+Route::get('/phone',[PhoneLoginController::class,'index'])->name('phonelogin');
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/library/{id}', [FrontController::class, 'categoryIndex'])->name('library');
     Route::post('/library/filter', [FrontController::class, 'filterProducts'])->name('library.filter');
@@ -87,7 +89,7 @@ Route::match(['GET', 'POST'], '/chooseCity', [HomeController::class, 'chooseCity
 
 Route::post('/indexData', [HomeController::class, 'indexData'])->name('indexData');
 Route::get('homepage/{id}', [HomeController::class, 'append']);
-Route::post('/register-token', [HomeController::class, 'registerToken'])->name('registerToken');
+Route::post('/register-token', [HomeController::class, 'registerToken'])->name(name: 'registerToken');
 Route::get('/@{username}', [HomeController::class, 'share'])->name('share');
 Route::get('/product/{product}', [HomeController::class, 'pshare'])->name('pshare');
 Route::match(['GET', 'POST'], '/cities', [HomeController::class, 'cities'])->name('cities');
@@ -366,19 +368,19 @@ Route::get('users/{username}', function ($username) {
 // "password" : "admin",
 // "scope" : "*"
 
-function getTokenAndRefreshToken(Client $oClient, $email, $password)
-{
-    $oClient = Client::where('password_client', 1)->first();
-    $http = new Client;
-    $response = $http->request('POST', 'http://mylemp-nginx/oauth/token', [
-        'form_params' => [
-            'grant_type' => 'password',
-            'client_id' => $oClient->id,
-            'client_secret' => $oClient->secret,
-            'username' => $email,
-            'password' => $password,
-            'scope' => '*',
-        ],
-    ]);
-    $result = json_decode((string) $response->getBody(), true);
-}
+// function getTokenAndRefreshToken(Client $oClient, $email, $password)
+// {
+//     $oClient = Client::where('password_client', 1)->first();
+//     $http = new Client;
+//     $response = $http->request('POST', 'http://mylemp-nginx/oauth/token', [
+//         'form_params' => [
+//             'grant_type' => 'password',
+//             'client_id' => $oClient->id,
+//             'client_secret' => $oClient->secret,
+//             'username' => $email,
+//             'password' => $password,
+//             'scope' => '*',
+//         ],
+//     ]);
+//     $result = json_decode((string) $response->getBody(), true);
+// }

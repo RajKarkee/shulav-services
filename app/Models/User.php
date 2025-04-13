@@ -69,4 +69,13 @@ class User extends Authenticatable implements MustVerifyEmail
                 break;
         }
     }
+    public function profile()
+{
+    return $this->hasOne(UserProfile::class);
+}
+
+public function getProfileImageAttribute()
+{
+  
+}
 }

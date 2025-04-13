@@ -27,6 +27,7 @@
         $locations = DB::table('locations')
             ->limit(5)
             ->get(['id', 'name']);
+
     @endphp
 
     <header>
@@ -47,84 +48,33 @@
                 <i class="far fa-heart"></i>
             </div> --}}
             @if (Auth::check())
-                <div class="user-profile" style="position: relative">
-                    <div class="dropdown user-dropdown" style="cursor: pointer">
-                        <img src="{{ asset('media/user.png') }}" class="profile-pic dropdown-toggle" id="userDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false"
-                            style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
-                        <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown"
-                            aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
-                            style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                        {{-- <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </li>
-                        </ul> --}}
-                    </div>
-
-                    <style>
-                        .user-dropdown .dropdown-menu {
-                            min-width: 150px;
-                            padding: 10px;
-                            border-radius: 8px;
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-                            background-color: #fff;
-                        }
-
-                        .user-dropdown .dropdown-item {
-                            font-size: 14px;
-                            color: #333;
-                            padding: 8px 12px;
-                            transition: background-color 0.3s ease;
-                        }
-
-                        .user-dropdown .dropdown-item:hover {
-                            background-color: #f8f9fa;
-                        }
-
-                        .user-dropdown .dropdown-divider {
-                            margin: 5px 0;
-                        }
-                    </style>
-
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function() {
-                            const dropdownToggle = document.getElementById('userDropdown');
-                            dropdownToggle.addEventListener('click', function(e) {
-                                e.stopPropagation();
-                                this.nextElementSibling.classList.toggle('show');
-                            });
-
-                            document.addEventListener('click', function() {
-                                const dropdownMenu = document.querySelector('.user-dropdown .dropdown-menu');
-                                if (dropdownMenu.classList.contains('show')) {
-                                    dropdownMenu.classList.remove('show');
-                                }
-                            });
-                        });
-                    </script>
-                    <span class="username">{{ Auth::user()->name }}</span>
+            <div class="user-profile" style="position: relative">
+                <div class="dropdown user-dropdown" style="cursor: pointer">
+                    <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? Auth::user()->profile->profile_picture : asset('media/user.png') }}" 
+                        class="profile-pic dropdown-toggle" id="userDropdown"
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
+                    <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon" data-bs-toggle="dropdown"
+                        aria-expanded="false" style="margin-left: 5px; cursor: pointer;"></i>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
+                        style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
-            @else
-                <a href="#" class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
-            @endif
+                <span class="username">{{ Auth::user()->name }}</span>
+            </div>
+        @else
+            <div class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</div>
+        @endif
 
 
 
@@ -220,8 +170,7 @@
     </footer>
 
     <!-- Location Modal -->
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-header">
@@ -285,13 +234,13 @@
                             <button type="submit" class="btn btn-login w-100">Login with Email</button>
                         </form>
                         <div class="or-divider"><span>OR</span></div>
-                        <button class="btn btn-phone w-100 mb-3">
+                        <a href="{{ route('loginPhone') }}"class="btn btn-phone w-100 mb-3">
                             <i class="fas fa-phone-alt"></i> Continue with phone
-                        </button>
-                        <button class="btn btn-google w-100 mb-3">
-                            <img src="{{ asset('media/google.png') }}" alt="Google" class="google-icon"> Continue
-                            with Google
-                        </button>
+                        </a>
+                        <a href="{{ route('loginGoogle') }}" class="btn btn-google w-100 mb-3">
+                            <i class="fab fa-google me-2"></i> Continue with Google
+                        </a>
+                        
                         <div class="login-footer text-center mt-3">
                             <p class="small text-muted">All your personal details are safe with us.</p>
                             <p class="small terms-text">
@@ -313,7 +262,7 @@
     <!-- Your custom JavaScript files -->
     <script src="{{ asset('front1/js/main.js') }}"></script>
     <script src="{{ asset('front1/js/nextpg.js') }}"></script>
-    <script src="{{ asset('front1/js/imageSlider.js') }}"></script>
+   
 
     @yield('script')
 </body>

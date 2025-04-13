@@ -1,24 +1,21 @@
-.main-aa {  
+.main-aa {
     padding: 30px;
-    
+
     .heading {
-       
         .breadcrumb {
             .breadcrumb-item {
-                a{
+                a {
                     color: #82A7AB;
                     text-decoration: none;
                 }
-                a:hover{
+                a:hover {
                     color: #000;
                     text-decoration: none;
                 }
-              
-                &.active{
+                &.active {
                     color: #000;
                 }
             }
-
         }
         h1 {
             margin-top: -15px;
@@ -29,7 +26,7 @@
 
     .categories-wrapper {
         margin-top: 20px;
-        
+
         .category-title {
             display: flex;
             justify-content: space-between;
@@ -64,7 +61,7 @@
 
             li {
                 margin: 8px 0;
-                
+
                 a {
                     color: #002f34;
                     text-decoration: none;
@@ -130,7 +127,7 @@
 
     .locations-wrapper {
         margin-top: 30px;
-        
+
         .location-title {
             display: flex;
             justify-content: space-between;
@@ -157,15 +154,15 @@
             list-style: none;
             padding: 0;
             margin: 0;
-            display: none; // Hidden by default
+            display: none;
 
             &.show {
-                display: block; // Show when active
+                display: block;
             }
 
             li {
                 margin: 8px 0;
-                
+
                 a {
                     color: #002f34;
                     text-decoration: none;
@@ -202,7 +199,7 @@
 
     .filters-wrapper {
         margin-top: 30px;
-        
+
         .filters-title {
             color: #002f34;
             font-weight: 600;
@@ -340,7 +337,11 @@
             }
 
             @media (max-width: 576px) {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr); // Show 2 items per row on mobile
+            }
+
+            @media (max-width: 400px) {
+                grid-template-columns: 1fr; // Fall back to 1 item per row on extra small screens
             }
 
             .card {
@@ -350,39 +351,39 @@
                 background-color: white;
                 box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
                 transition: all 0.2s ease;
-                
+
                 .card-header {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     padding: 10px;
                     border-bottom: 1px solid #ebeef0;
-                    
+
                     .user-info {
                         display: flex;
                         align-items: center;
-                        
+
                         .avatar {
                             width: 32px;
                             height: 32px;
                             border-radius: 50%;
                             overflow: hidden;
                             margin-right: 8px;
-                            
+
                             img {
                                 width: 100%;
                                 height: 100%;
                                 object-fit: cover;
                             }
                         }
-                        
+
                         .details {
                             .username {
                                 font-weight: 500;
                                 font-size: 14px;
                                 color: #002f34;
                             }
-                            
+
                             .time {
                                 font-size: 12px;
                                 color: #777;
@@ -390,24 +391,24 @@
                         }
                     }
                 }
-                
+
                 .card-link {
                     text-decoration: none;
                     color: inherit;
                     display: block;
-                    
+
                     .card {
                         border: none;
                         margin: 0;
                         box-shadow: none;
                         width: 100%;
-                        
+
                         .card-image {
                             position: relative;
                             height: 220px;
                             width: 100%;
                             overflow: hidden;
-                            
+
                             img {
                                 width: 100%;
                                 height: 100%;
@@ -415,7 +416,7 @@
                                 object-position: center;
                                 display: block;
                             }
-                            
+
                             .image-count {
                                 position: absolute;
                                 bottom: 8px;
@@ -427,10 +428,10 @@
                                 font-size: 12px;
                             }
                         }
-                        
+
                         .card-body {
                             padding: 12px;
-                            
+
                             .category {
                                 font-size: 12px;
                                 color: #777;
@@ -438,12 +439,12 @@
                                 white-space: nowrap;
                                 overflow: hidden;
                                 text-overflow: ellipsis;
-                                
+
                                 i {
                                     margin-right: 4px;
                                 }
                             }
-                            
+
                             h5 {
                                 font-size: 16px;
                                 font-weight: 500;
@@ -453,7 +454,7 @@
                                 overflow: hidden;
                                 text-overflow: ellipsis;
                             }
-                            
+
                             .price {
                                 font-size: 18px;
                                 font-weight: bold;
@@ -463,7 +464,7 @@
                         }
                     }
                 }
-                
+
                 &:hover {
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                     transform: translateY(-2px);

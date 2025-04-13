@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Vendor;
 use App\Models\VendorBill;
 use App\Models\VendorServices;
+use App\Models\UserProfile;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class AuthController extends Controller
     {
 
         Auth::logout();
-        return redirect()->route('loginFirst');
+        return redirect()->route('index');
     }
 
 
@@ -54,13 +55,19 @@ class AuthController extends Controller
                 if ($request->filled('redirect')) {
                     return redirect($request->redirect);
                 } else {
-
-                    return redirect()->route($user->getRole() . '.dashboard');
+                    if($user->getRole()== 'user'){
+                        $user->role=2;
+                        return redirect()->route('index');
+                    }
+                    else{
+                        
+                        return redirect()->route($user->getRole() . 'index');
+                    }
                 }
             } else {
                 return redirect()->back()->with('err', 'Email password combination missmatch')->withInput(['email' => $request->email]);
             }
-            dd($data);
+            // dd($data);
         } else {
             return view('front.auth.login');
         }
@@ -372,18 +379,20 @@ class AuthController extends Controller
         }
     }
 
-    public function callback(Request $request)
+    public function callback(Request $request) 
     {
-        $user = Socialite::driver('google')->user();
-        $localUser = User::where('email', $user->email)->first();
-        $needsetup=false;
+        $user = Socialite::driver('google')->user(); 
+        $localUser = User::where('email', $user->email)->first(); 
+        
         if ($localUser == null) {
+           
             $i = 1;
             $localUser = new User();
             $localUser->name = $user->name;
+            
+         
             if ($user->nickname == null) {
-
-                $tempusername = str_replace(' ', '.', $request->name);
+                $tempusername = str_replace(' ', '.', $user->name);
                 $username = $tempusername;
                 while (User::where('username', $username)->count() > 0) {
                     $username = $tempusername . $i++;
@@ -391,40 +400,47 @@ class AuthController extends Controller
             } else {
                 $username = $user->nickname;
             }
-            $localUser->auth_source = 2;
+            
+            $localUser->auth_source = 2; 
             $localUser->username = strtolower($username);
             $localUser->email = $user->email;
-            $localUser->role = 2;
+            $localUser->role = 3;
             $localUser->google_id = $user->id;
-            $localUser->password = bcrypt('pass' . mt_rand('0', 999999));
+            $localUser->password = bcrypt('pass' . mt_rand(0, 999999));
+            $localUser->email_verified_at = now(); 
+            $localUser->verified = 1;
             $localUser->save();
-
-            $vendor = new vendor();
-            $vendor->type = 1;
-            $vendor->img_type = 2;
-            $vendor->image = $user->avatar;
-            $vendor->user_id = $localUser->id;
-            $vendor->save();
-            $needsetup=true;
-        }else{
-            $vendor=$localUser->vendor;
-            $needsetup=$vendor->city_id==null;
+            
+            $profile = new UserProfile();
+           
+            $profile->user_id = $localUser->id;
+            $profile->profile_picture = $user->avatar;
+            $profile->save();
+        } else {
+        
+            if ($localUser->google_id == null) {
+                $localUser->google_id = $user->id;
+                $localUser->auth_source = 2; 
+                $localUser->save();
+            }
+            
+         
+            $profile = UserProfile::firstOrNew(['user_id' => $localUser->id]);
+            $profile->profile_picture = $user->avatar;
+            $profile->save();
         }
-        if($needsetup){
-            Session::Put('google_id', $user->id);
-            Session::Put('email', $user->email);
-            Session::put('setup',2);
-            Session::save();
-            return redirect()->route('setupUser');
-        }
+        
+       
         Auth::login($localUser, true);
+        
+       
         if (Session::exists('redirect')) {
-            $redirect=session('redirect','/');
+            $redirect = session('redirect', '/');
             Session::forget('redirect');
             Session::save();
             return redirect($redirect);
         } else {
-            return redirect()->route('vendor.dashboard');
+            return redirect()->route('index'); 
         }
     }
 }

@@ -21,25 +21,17 @@
     </div>
     <div class="image">
         <div class="image-gallery">
-
-            <div class="navigation-arrows">
-                <button class="nav-arrow left" title="Previous image" id="prevImage">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                <button class="nav-arrow right" title="Next image" id="nextImage">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-
             <div class="image-container">
                 <div class="image-slider">
-
-                    <img src="{{ asset($product->image) }}" alt="Product" class="product-image active">
-
+                    <div class="product-image active">
+                        <img src="{{ asset($product->image) }}" alt="Product" >
+                    </div>
                     @for ($i = 1; $i <= 6; $i++)
                         @php $imageNo= "image{$i}"; @endphp
                         @if ($product->$imageNo)
-                            <img src="{{ asset($product->$imageNo) }}" alt="Product" class="product-image">
+                        <div class="product-image">
+                            <img src="{{ asset($product->$imageNo) }}" alt="Product" >
+                        </div>
                         @endif
                     @endfor
 
@@ -185,6 +177,20 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('front1/js/imageSlider.js') }}"></script>
+    
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('.image-slider').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: true,
+                prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
+                nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
+            });
+        });
+    </script>
 @endsection

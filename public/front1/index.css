@@ -622,6 +622,9 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
 }
+.homepage #banner {
+  margin: 0;
+}
 .homepage #banner .slick-prev:before,
 .homepage #banner .slick-next:before {
   display: none;
@@ -1604,6 +1607,11 @@ footer .footer-bottom .copyright a:hover {
 }
 @media (max-width: 576px) {
   .main-aa .content .col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 400px) {
+  .main-aa .content .col {
     grid-template-columns: 1fr;
   }
 }
@@ -1733,9 +1741,6 @@ footer .footer-bottom .copyright a:hover {
 .image .image-container {
   position: relative;
   background-color: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100%;
   margin: 0 auto;
   height: 450px;
@@ -1745,20 +1750,11 @@ footer .footer-bottom .copyright a:hover {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
 }
-.image .image-container .product-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+.image .image-container .image-slider .product-image img {
   height: 100%;
-  -o-object-fit: contain;
-     object-fit: contain;
-  opacity: 0;
-  transition: opacity 0.5s ease;
 }
-.image .image-container .product-image.active {
+.image .image-container .image-slider .product-image img.active {
   margin-top: 20px;
   opacity: 1;
 }

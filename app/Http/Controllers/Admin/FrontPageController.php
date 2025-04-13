@@ -37,6 +37,8 @@ class FrontPageController extends Controller
     {
         FrontPageSectionProduct::where('front_page_section_id', $section_id)->delete();
         FrontPageSection::where('id', $section_id)->delete();
+        cache()->forget('front_page_sections');
+        cache()->forget('service_categories');
         return redirect()->back()->with('message', 'Section Deleted Successfully');
     }
 
@@ -67,6 +69,7 @@ class FrontPageController extends Controller
     public function productDel($sectionProduct_id)
     {
         FrontPageSectionProduct::where('id', $sectionProduct_id)->delete();
+        cache()->forget('front_page_sections');
         return redirect()->back()->with('message', 'Section Product Deleted Successfully');
     }
 }

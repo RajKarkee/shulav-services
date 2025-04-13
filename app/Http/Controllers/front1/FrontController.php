@@ -89,7 +89,7 @@ class FrontController extends Controller
             abort(404);
         }
 
-        return view('front1.view', compact('product'));
+        return view('front1.single', compact('product'));
     }
 
     public function filterProducts(Request $request)

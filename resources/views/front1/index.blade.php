@@ -42,7 +42,7 @@
                         <div class="slider">
                             <div class="slider-wrapper">
                                 @foreach ($section->products as $product)
-                                    <div class="card">
+                                    <div class="card sectionSlider">
                                         <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
                                             class="card-link">
                                             <div class="card">
@@ -120,7 +120,7 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var slickSlider = $('.top-banner-slider').slick({
+            $('.top-banner-slider').slick({
                 infinite: true,
                 slidesToShow: 1,
                 slidesToScroll: 1,
@@ -130,7 +130,15 @@
                 nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
             });
 
-
+            $('.top-banner-slider').slick({
+                infinite: false,
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: true,
+                prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
+                nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
+            });
            
 
           
