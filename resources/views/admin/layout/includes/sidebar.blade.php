@@ -103,6 +103,9 @@
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.location.index') }}">Locations</a>
                     </li>
+                    <li class="sub-item">
+                        <a href="{{ route('admin.busServices.type.index') }}">Bus type</a>
+                    </li>
                 </ul>
             </li>
             <li>
