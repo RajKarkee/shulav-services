@@ -30,6 +30,7 @@ use App\Http\Controllers\front1\PhoneLoginController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\BusServiceController;
 use App\Http\Controllers\Admin\FrontPageController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\User\LoginController;
@@ -226,8 +227,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('edit/{pricing}', [PricingController::class, 'edit'])->name('edit');
             Route::get('del/{pricing}', [PricingController::class, 'del'])->name('del');
         });
-        Route::prefix('service')->name('busServices.')->group(function () {
-            Route::get('', [ServiceController::class, 'index'])->name('index');
+        Route::prefix('busServices')->name('busServices.')->group(function () {
+            Route::get('', [BusServiceController::class, 'index'])->name('index');
+            Route::prefix('location')->name('location.')->group(function () {
+                Route::get('', [BusServiceController::class, 'location'])->name('index');
+                Route::post('add', [BusServiceController::class, 'locationStore'])->name('add');
+          
+                Route::get('del/{location}', [BusServiceController::class, 'del'])->name('del');
+            });
+            // Route::get('location',[BusServiceController::class, 'location'])->name('locations');
             Route::post('add', [ServiceController::class, 'add'])->name('add');
             Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
             Route::get('del/{service}', [ServiceController::class, 'del'])->name('del');

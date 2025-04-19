@@ -93,11 +93,15 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class='material-icons'>Bus</i>Bus
+                <a href="#"><i class='material-icons'>settings</i>Bus
                 <i class="material-icons has-sub-menu">add</i></a>
                 <ul class="sub-menu">
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.index') }}">Bus Services</a>
+                     
+                    </li>
+                    <li class="sub-item">
+                        <a href="{{ route('admin.busServices.location.index') }}">Locations</a>
                     </li>
                 </ul>
             </li>
