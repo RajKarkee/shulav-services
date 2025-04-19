@@ -46,7 +46,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Passport\Client;
 
 Route::get('/', [FrontController::class, 'index'])->name('index');
-Route::get('/phone',[PhoneLoginController::class,'index'])->name('phonelogin');
+Route::get('/phone', [PhoneLoginController::class, 'index'])->name('phonelogin');
 Route::prefix('product')->name('product.')->group(function () {
     Route::get('/library/{id}', [FrontController::class, 'categoryIndex'])->name('library');
     Route::post('/library/filter', [FrontController::class, 'filterProducts'])->name('library.filter');
@@ -57,7 +57,7 @@ Route::name('serviceCategory')->name('serviceCategory')->group(function () {
     Route::get('/single/{category_id}', [FrontController::class, 'categorySingle'])->name('single');
 });
 Route::prefix('User')->name('User.')->group(function () {
- Route::post('/login',[LoginController::class,'login'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
 
 

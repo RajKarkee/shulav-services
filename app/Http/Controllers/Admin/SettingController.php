@@ -131,9 +131,11 @@ class SettingController extends Controller
 
             ];
             setSetting("minor", $data);
-            // dd(view('admin.setting.template.footer')->render());
             writeView('front.index.footer', 'admin.setting.template.footer');
-            writeView('front.index.menu_logo', 'admin.setting.template.menu_logo',['logo'=>$logo]);
+            writeView('front.index.menu_logo', 'admin.setting.template.menu_logo', [
+                'logo' => $logo,
+                'footer_logo' => $footer_logo
+            ]);
             return redirect()->back();
         }
     }
@@ -142,53 +144,53 @@ class SettingController extends Controller
     {
         if ($request->getMethod() == "GET") {
             $data = getSetting('website') ?? (object)([
-              'type'=>0,
-              'price'=>0,
-              'meta_description'=>"",
-              'meta_banner'=>"",
+                'type' => 0,
+                'price' => 0,
+                'meta_description' => "",
+                'meta_banner' => "",
             ]);
 
             // dd($data);
             return view('admin.setting.website', compact('data'));
         } else {
             $olddata = getSetting('website') ?? (object)([
-                'type'=>0,
-                'price'=>0,
-                'meta_description'=>"",
-                'meta_banner'=>"",
-              ]);
+                'type' => 0,
+                'price' => 0,
+                'meta_description' => "",
+                'meta_banner' => "",
+            ]);
 
-            $data =[
-                'type'=>$request->type,
-                'price'=>$request->price,
-                'meta_description'=>$request->meta_description,
-                'meta_banner'=>($request->hasFile('meta_banner')?$request->meta_banner->store('uploads/setting'):$olddata->meta_banner),
-              ];
+            $data = [
+                'type' => $request->type,
+                'price' => $request->price,
+                'meta_description' => $request->meta_description,
+                'meta_banner' => ($request->hasFile('meta_banner') ? $request->meta_banner->store('uploads/setting') : $olddata->meta_banner),
+            ];
 
-            setSetting('website',$data);
+            setSetting('website', $data);
             writeView('front.index.meta', 'admin.setting.template.meta');
 
             return redirect()->back();
         }
     }
 
-    public function payment(Request $request){
-        if($request->getMethod()=="POST"){
-            $data=[];
-            if($request->has('payment')){
+    public function payment(Request $request)
+    {
+        if ($request->getMethod() == "POST") {
+            $data = [];
+            if ($request->has('payment')) {
                 foreach ($request->payment as $key => $value) {
-                    array_push($data,[
-                        'title'=>$request->input('title_'.$value),
-                        'id'=>$request->input('id_'.$value),
+                    array_push($data, [
+                        'title' => $request->input('title_' . $value),
+                        'id' => $request->input('id_' . $value),
                     ]);
                 }
-
             }
-            setSetting('payment',$data);
+            setSetting('payment', $data);
             return redirect()->back();
-        }else{
-            $data=getSetting('payment')??(object)[];
-            return view('admin.setting.payment',compact('data'));
+        } else {
+            $data = getSetting('payment') ?? (object)[];
+            return view('admin.setting.payment', compact('data'));
         }
     }
     private function renderHow()
@@ -282,19 +284,19 @@ class SettingController extends Controller
             $others = [];
             if ($request->filled('others')) {
                 foreach ($request->others as $key => $other) {
-                    array_push($others,[
-                        'name'=>$request->input('name_'.$other)??'',
-                        'phone'=>$request->input('phone_'.$other)??'',
-                        'designation'=>$request->input('designation_'.$other)??'',
-                        'email'=>$request->input('email_'.$other)??'',
+                    array_push($others, [
+                        'name' => $request->input('name_' . $other) ?? '',
+                        'phone' => $request->input('phone_' . $other) ?? '',
+                        'designation' => $request->input('designation_' . $other) ?? '',
+                        'email' => $request->input('email_' . $other) ?? '',
                     ]);
                 }
             }
             $data = [
-                'map' => $request->map??'',
-                'email' => $request->email??'',
-                'phone' => $request->phone??'',
-                'addr' => $request->addr??'',
+                'map' => $request->map ?? '',
+                'email' => $request->email ?? '',
+                'phone' => $request->phone ?? '',
+                'addr' => $request->addr ?? '',
                 'others' => $others
             ];
             setSetting('contact', $data);
