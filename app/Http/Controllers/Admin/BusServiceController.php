@@ -90,4 +90,6 @@ class BusServiceController extends Controller
         $bus_type->delete();
         return redirect()->route('admin.busServices.type.index')->with('success', 'Bus Type deleted successfully.');
     }
+
+    
 }

@@ -241,6 +241,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('delete/{id}', [BusServiceController::class,'typeDel'])->name('delete');
             });
             // Route::get('location',[BusServiceController::class, 'location'])->name('locations');
+            Route::prefix('route')->name('route.')->group(function () {           
+                Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
+                Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
+            });
             Route::post('add', [ServiceController::class, 'add'])->name('add');
             Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
             // Route::get('del/{service}', [ServiceController::class, 'del'])->name('del');
