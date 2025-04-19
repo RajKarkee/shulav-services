@@ -32,12 +32,7 @@
 
     <header>
         <div class="main-header">
-            <div class="logo">
-                <a href="http://127.0.0.1:8000">
-                    <img  src="http://127.0.0.1:8000/uploads/setting/NK5vqqSsOkihHDFnKDpesfge3qSvTWA81FSTUkEm.png" alt="">
-                </a>
-           </div>
-            {{-- @includeIf('front.index.menu_logo') --}}
+            @includeIf('front.index.menu_logo')
             <div class="search-container">
                 <input type="text" placeholder="Search 'Cars'" class="search-input" />
                 <button class="search-button" aria-label="Search">
