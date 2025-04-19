@@ -718,20 +718,36 @@ body {
 }
 .homepage .section .slider .card .card-link {
   text-decoration: none !important;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 .homepage .section .slider .card .card-link .card {
   border: none;
   margin-bottom: 0;
+  flex: 0 0 auto;
+  width: 300px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: all 0.3s ease;
 }
 .homepage .section .slider .card .card-link .card .card-image {
   position: relative;
   height: 200px;
+  width: 100%;
+  overflow: hidden;
+  min-height: 200px;
+  background-color: #a79e9e;
 }
 .homepage .section .slider .card .card-link .card .card-image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+  display: block;
 }
 .homepage .section .slider .card .card-link .card .card-image .image-count {
   position: absolute;
@@ -1117,6 +1133,12 @@ body {
   --gradient-hover-start: #15b0bc;
   --gradient-hover-end: #029595;
   --white: #fff;
+  --primary-color: $text-primary;
+  --hover-color: $accent;
+  --light-gray: $bg-light;
+  --border-color: $border-light;
+  --shadow-light: 0 1px 4px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 footer {

@@ -226,6 +226,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('edit/{pricing}', [PricingController::class, 'edit'])->name('edit');
             Route::get('del/{pricing}', [PricingController::class, 'del'])->name('del');
         });
+        Route::prefix('service')->name('busServices.')->group(function () {
+            Route::get('', [ServiceController::class, 'index'])->name('index');
+            Route::post('add', [ServiceController::class, 'add'])->name('add');
+            Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
+            Route::get('del/{service}', [ServiceController::class, 'del'])->name('del');
+        });
 
 
         Route::prefix('producttype')->group(function () {

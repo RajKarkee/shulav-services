@@ -132,4 +132,9 @@ class FrontController extends Controller
 
         return response()->json($response);
     }
+
+    public function busServices()
+    {
+        return view('front.bus_services');
+    }
 }

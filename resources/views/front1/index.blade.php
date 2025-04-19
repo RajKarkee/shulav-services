@@ -197,7 +197,7 @@
             if ($wrapper.hasClass('slick-initialized')) return;
     
             $wrapper.slick({
-                slidesToShow: 3,
+                slidesToShow: 3.5,
                 slidesToScroll: 1,
                 arrows: false,
                 infinite: false,

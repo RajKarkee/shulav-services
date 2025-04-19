@@ -10,4 +10,12 @@
     --gradient-hover-start: #15b0bc;
     --gradient-hover-end: #029595;
     --white: #fff;
+
+
+    --primary-color: $text-primary;
+    --hover-color: $accent;
+    --light-gray: $bg-light;
+    --border-color: $border-light;
+    --shadow-light: 0 1px 4px rgba(0, 0, 0, 0.05);
+    --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
