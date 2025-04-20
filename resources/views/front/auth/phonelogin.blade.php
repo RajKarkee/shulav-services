@@ -40,12 +40,13 @@
                         <span class="icon">
                             <i class="fas fa-lock"></i>
                         </span>
-                        <input type="number" name="otp" placeholder="Enter Otp" aria-label="Otp"
-                            aria-describedby="otp" id="otp">
+                        <input type="number" name="otp" placeholder="Enter Otp" aria-label="Otp" aria-describedby="otp"
+                            id="otp">
 
                     </div>
                     <div class="text-end">
-                        <button id="finish" class="btn btn-red" data-step="{{ $phone == null ? 1 : 2 }}">
+                        <button id="finish" class="btn btn-red" data-step="{{ $phone == null ? 1 : 2 }}"
+                            onclick="{{ $phone == null ? 'javascript:requestOTP($(\'#phone\').val(), this)' : '' }}">
                             {{ $phone == null ? 'Next' : 'Login' }}
                         </button>
                     </div>
@@ -86,42 +87,48 @@
                     phone: no
                 })
                 .then((res) => {
-                    console.log(res);
-                    $(ele).show();
-                    valid = Date(res.data.validtill);
-                    $('#otp-holder').css('display', 'flex');
-                    $(ele).text("Login");
-                    ele.dataset.step= 2;
-                    window.requestOTP = () => {
-                        alert('Otp Already Sent');
+                    if (res.data.status == true) {
+                        $(ele).show();
+                        valid = Date(res.data.validtill);
+                        $('#otp-holder').css('display', 'flex');
+                        $(ele).text("Login");
+                        ele.dataset.step = 2;
                     }
                 })
                 .catch((err) => {
+                    console.log(err.response);
+                    if (err.response) {
+                        alert(err.response.data.message);
+                    } else {
+                        alert('Some error occured please try again');
+                    }
                     $(ele).show();
                 })
 
         }
 
         function login(ele) {
-            const opt=parseInt($('#otp').val());
-            axios.post('{{route('loginOTP')}}',{otp:opt})
-            .then((res)=>{
-                $(ele).show();
-                localStorage.setItem('myCat', res.data.redirect);
+            const opt = parseInt($('#otp').val());
+            axios.post('{{ route('loginOTP') }}', {
+                    otp: opt
+                })
+                .then((res) => {
+                    $(ele).show();
+                    localStorage.setItem('myCat', res.data.redirect);
 
-                window.location.href = res.data.redirect;
+                    window.location.href = res.data.redirect;
 
-            })
-            .catch((err)=>{
-                console.log(err.response);
-                if(err.response){
-                    alert(err.response.data.message);
-                }else{
-                    alert('Some error occured please try again');
-                }
-                $(ele).show();
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                    if (err.response) {
+                        alert(err.response.data.message);
+                    } else {
+                        alert('Some error occured please try again');
+                    }
+                    $(ele).show();
 
-            });
+                });
         }
     </script>
 @endsection

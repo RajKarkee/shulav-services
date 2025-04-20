@@ -71,7 +71,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
 
-    <script src="{{asset('front/js/firebase.js')}}" ></script>
+    {{-- <script src="{{asset('front/js/firebase.js')}}" ></script> --}}
     <script>
         axios.defaults.headers.common = {
             'X-Requested-With': 'XMLHttpRequest',

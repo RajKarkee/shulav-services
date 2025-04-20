@@ -1,11 +1,14 @@
 <?php
+
 namespace App;
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 
-class Helper{
+class Helper
+{
     // public static function allDataToArray($data)
     // {
     //     $d=[];
@@ -20,15 +23,15 @@ class Helper{
     //         ]))
     //     }
     // }
-    public const iconmap=[
-        'Facebook'=> "fa-facebook-f",
-        'Twitter'=> "fa-twitter",
-        'Instagram'=> "fa-instagram",
-        'Youtube'=> "fa-youtube",
-        'LinkedIN'=> "fa-linkedin-in",
-        "Telegram">"fa-telegram"
+    public const iconmap = [
+        'Facebook' => "fa-facebook-f",
+        'Twitter' => "fa-twitter",
+        'Instagram' => "fa-instagram",
+        'Youtube' => "fa-youtube",
+        'LinkedIN' => "fa-linkedin-in",
+        "Telegram" > "fa-telegram"
     ];
-    public const ratings=[
+    public const ratings = [
         '',
         'Bad',
         'Modrate',
@@ -53,19 +56,19 @@ class Helper{
     const service_type_house_renting = 5;
     const service_type_venue_ticketing = 6;
 
-    public static function createImage($img,$path='')
+    public static function createImage($img, $path = '')
     {
         try {
 
-            $folderPath = public_path($path).DIRECTORY_SEPARATOR;
+            $folderPath = public_path($path) . DIRECTORY_SEPARATOR;
 
             $image_parts = explode(";base64,", $img);
             $image_type_aux = explode("image/", $image_parts[0]);
             $image_type = $image_type_aux[1];
             $image_base64 = base64_decode($image_parts[1]);
-            $filename = uniqid() . '. '.$image_type;
-            $filename=$path.DIRECTORY_SEPARATOR.uniqid() .$filename;
-            $file=$folderPath.$filename;
+            $filename = uniqid() . '. ' . $image_type;
+            $filename = $path . DIRECTORY_SEPARATOR . uniqid() . $filename;
+            $file = $folderPath . $filename;
             File::ensureDirectoryExists($folderPath);
             file_put_contents($file, $image_base64);
             return $filename;
@@ -73,7 +76,6 @@ class Helper{
             //throw $th;
             return null;
         }
-
     }
 
     //for category
@@ -92,14 +94,31 @@ class Helper{
     public static function getCategoriesMini()
     {
         return Cache::rememberForever('cache_categories_mini', function () {
-            return DB::table('categories')->get(['id','name','parent_id']);
+            return DB::table('categories')->get(['id', 'name', 'parent_id']);
         });
     }
+
+
 
     public static function clearCategoriesCache()
     {
         Cache::forget('cache_categories');
         Cache::forget('cache_categories_mini');
+    }
+
+    public static function sendOTP($phone, $otp)
+    {
+        $message = "Your OTP is: {$otp}";
+        $response = Http::post(config('app.sms_url'), [
+            'auth_token' => config('app.sms_token'),
+            'to' => $phone,
+            'text' => "Yout otp is ".$message,
+        ]);
+        return [
+            'success' => $response->successful(),
+            'message' => $response->body(),
+            'status' => $response->status()
+        ];
     }
 
     //for city
@@ -112,7 +131,7 @@ class Helper{
     public static function getCitiesMini()
     {
         return Cache::rememberForever('cache_cities_mini', function () {
-            return DB::table('cities')->get(['id','name']);
+            return DB::table('cities')->get(['id', 'name']);
         });
     }
     public static function clearCitiesCache()
@@ -127,18 +146,17 @@ class Helper{
 
     public static function putCache($_filePath, $content)
     {
-        $pathDatas=explode('.',$_filePath);
+        $pathDatas = explode('.', $_filePath);
         //append .balde.php to last element if not exists
-        if(count($pathDatas)>0){
-            $lastElement=$pathDatas[count($pathDatas)-1];
-            $pathDatas[count($pathDatas)-1].='.blade.php';
-
+        if (count($pathDatas) > 0) {
+            $lastElement = $pathDatas[count($pathDatas) - 1];
+            $pathDatas[count($pathDatas) - 1] .= '.blade.php';
         }
 
-        $filePath=implode('/',$pathDatas);
+        $filePath = implode('/', $pathDatas);
 
 
-        $filePath = resource_path("views/front1/cache/".$filePath);
+        $filePath = resource_path("views/front1/cache/" . $filePath);
         // Extract the directory path from the file path
         $directoryPath = dirname($filePath);
 

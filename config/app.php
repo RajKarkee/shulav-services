@@ -124,4 +124,7 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'sms_token'=> env('sms_token', ''),
+    'sms_url'=> env('sms_url', ''),
+
 ];

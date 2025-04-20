@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\Step;
 use App\Mail\UserJoined;
@@ -55,12 +56,11 @@ class AuthController extends Controller
                 if ($request->filled('redirect')) {
                     return redirect($request->redirect);
                 } else {
-                    if($user->getRole()== 'user'){
-                        $user->role=2;
+                    if ($user->getRole() == 'user') {
+                        $user->role = 2;
                         return redirect()->route('index');
-                    }
-                    else{
-                        
+                    } else {
+
                         return redirect()->route($user->getRole() . 'index');
                     }
                 }
@@ -186,11 +186,11 @@ class AuthController extends Controller
                     $token->user_id = $user->id;
                     $token->save();
                     if (Session::exists('redirect')) {
-                        $url=session('redirect','/');
+                        $url = session('redirect', '/');
                         Session::forget('redirect');
                         Session::save();
                         return redirect($url);
-                    }else{
+                    } else {
 
                         return redirect()->route($user->getRole() . '.dashboard');
                     }
@@ -223,79 +223,81 @@ class AuthController extends Controller
 
     public function loginPhone(Request $request)
     {
-
-        if ($request->getMethod() == "POST") {
-
+        if ($request->isMethod('POST')) {
             $phone = $request->phone;
-            $now = Carbon::now();
-            $otp = Otp::where('phone', $phone)->first();
-            $resend = false;
-            if ($otp != null) {
-                if ($now->gt($otp->validtill)) {
-                    $resend = true;
-                }
-            } else {
-                $otp = new Otp();
-                $otp->phone = $phone;
-                $resend = true;
-            }
-            if ($resend) {
-                $otp->otp = mt_rand(111111, 999999);
-                $otp->validtill = $now->addMinute(1);
-                $otp->send();
-            }
-            Session::Put('phone', $phone);
-            Session::save();
-            return response()->json(['resend' => $resend, 'validtill' => $otp->validtill]);
-        } else {
+            $now = now();
 
-            $phone = null;
-            return view('front.auth.phonelogin', compact('phone'));
+            $otp = Otp::firstOrNew(['phone' => $phone]);
+            $resend = !$otp->exists || $now->gt($otp->validtill);
+            $otp->otp = mt_rand(111111, 999999);
+            $otp->validtill = $now->addMinute(1);
+            $otp->save();
+           ;
+            return response()->json([
+                'status' => true,
+                'resend' => Helper::sendOTP($phone, $otp->otp, $otp->validtill),
+                'validtill' => $otp->validtill,
+            ]);
         }
+
+        return view('front.auth.phonelogin', ['phone' => null]);
     }
+
 
     public function loginOTP(Request $request)
     {
-        $phone = Session::get('phone');
-        if ($phone == null) {
-            throw new Exception('Some Error occured Please Try again');
-        } else {
+        try {
+            $phone = Session::get('phone');
+
+            if (!$phone) {
+                throw new \Exception('Session expired. Please try again.');
+            }
+
             $otp = Otp::where('phone', $phone)->first();
-            if ($otp == null) {
-                throw new Exception('Some Error occured Please Try again');
+
+            if (!$otp) {
+                throw new \Exception('OTP not found. Please request a new one.');
+            }
+
+            if ($otp->otp != $request->otp) {
+                throw new \Exception('Incorrect OTP. Please try again.');
+            }
+
+            // OTP matched
+            $vendor = Vendor::where('phone', $phone)->first();
+            $url = route('vendor.dashboard');
+
+            if (!$vendor) {
+                Session::put('setup', 3);
+                $url = route('setupUser');
             } else {
-                if ($otp->otp != $request->otp) {
-                    throw new Exception("OTP  didn't match");
+                if ($vendor->city_id === null) {
+                    Session::put('setup', 3);
+                    $url = route('setupUser');
                 } else {
-                    $url = route('vendor.dashboard');
-                    $vendor = Vendor::where('phone', $phone)->first();
-                    if ($vendor == null) {
-                        Session::put('setup',3);
-                        $url = route('setupUser');
-                    } else {
-                        if($vendor->city_id==null){
-                            $url = route('setupUser');
-                            Session::put('setup',3);
-                            Session::save();
-                        }else{
+                    Session::forget('phone');
+                    Session::save();
 
-                            Session::forget('phone');
-                            Session::Save();
-                            if (Session::exists('redirect')) {
-                                $url=session('redirect','/');
-                                Session::forget('redirect');
-                                Session::save();
-
-                            }
-                            Auth::login($vendor->user);
-                        }
+                    // Check if there's a redirect stored
+                    if (Session::has('redirect')) {
+                        $url = session('redirect', '/');
+                        Session::forget('redirect');
+                        Session::save();
                     }
 
-                    return response()->json(['status' => true, 'redirect' => $url]);
+                    Auth::login($vendor->user);
                 }
             }
+
+            return response()->json(['status' => true, 'redirect' => $url]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ], 422);
         }
     }
+
 
     public function setupUser(Request $request)
     {
@@ -304,12 +306,12 @@ class AuthController extends Controller
         $google_id = Session::get('google_id');
         $email = Session::get('email');
         $setup = Session::get('setup');
-        if($setup==null){
+        if ($setup == null) {
             return redirect()->route('loginFirst');
         }
         if ($request->getMethod() == "POST") {
             // dd($request->all());
-            if($setup==3){
+            if ($setup == 3) {
                 $localUser = new User();
                 $i = 1;
                 $localUser->name = $request->name;
@@ -323,28 +325,28 @@ class AuthController extends Controller
                 $localUser->username = strtolower($username);
 
 
-                    $localUser->role = $request->type;
+                $localUser->role = $request->type;
 
 
                 $localUser->password = bcrypt('_pass' . mt_rand(111111, 999999));
                 $localUser->save();
-            }else if($setup==2){
-                $localUser=User::where('email',$email)->first();
+            } else if ($setup == 2) {
+                $localUser = User::where('email', $email)->first();
             }
 
-            $vendor=$localUser->vendor;
-            if($vendor==null){
+            $vendor = $localUser->vendor;
+            if ($vendor == null) {
                 $vendor = new vendor();
-                if($request->type == 2){
+                if ($request->type == 2) {
                     $vendor->type = 1;
-                }else{
+                } else {
                     $vendor->type = 2;
                 }
-                $vendor->phone=$phone;
+                $vendor->phone = $phone;
                 $vendor->user_id = $localUser->id;
             }
-            $vendor->city_id=$request->city_id;
-            $vendor->address=$request->address;
+            $vendor->city_id = $request->city_id;
+            $vendor->address = $request->address;
 
             $vendor->location_id = $request->location_id;
             $vendor->service_id = $request->service_id;
@@ -358,39 +360,39 @@ class AuthController extends Controller
             Session::forget('redirect');
             Session::save();
             Auth::login($localUser);
-            if ($redirect!=null) {
+            if ($redirect != null) {
                 return redirect($redirect);
             } else {
                 return redirect()->route('vendor.dashboard');
             }
         } else {
-            if($setup==3){
+            if ($setup == 3) {
                 $localUser = new User();
-            }else{
-                $localUser=User::where('email',$email)->first();
+            } else {
+                $localUser = User::where('email', $email)->first();
             }
             // dd($localUser);
             $cities = DB::table('cities')->get(['id', 'name']);
-            $locations = DB::table('locations')->get(['id', 'name','city_id']);
-            $cats=DB::table('categories')->get(['id','name']);
-            $services=DB::table('services')->get(['id','name','category_id']);
+            $locations = DB::table('locations')->get(['id', 'name', 'city_id']);
+            $cats = DB::table('categories')->get(['id', 'name']);
+            $services = DB::table('services')->get(['id', 'name', 'category_id']);
 
-            return view('front.auth.phonesetup', compact('cities','locations','cats','services', 'phone', 'redirect','setup','email','localUser'));
+            return view('front.auth.phonesetup', compact('cities', 'locations', 'cats', 'services', 'phone', 'redirect', 'setup', 'email', 'localUser'));
         }
     }
 
-    public function callback(Request $request) 
+    public function callback(Request $request)
     {
-        $user = Socialite::driver('google')->user(); 
-        $localUser = User::where('email', $user->email)->first(); 
-        
+        $user = Socialite::driver('google')->user();
+        $localUser = User::where('email', $user->email)->first();
+
         if ($localUser == null) {
-           
+
             $i = 1;
             $localUser = new User();
             $localUser->name = $user->name;
-            
-         
+
+
             if ($user->nickname == null) {
                 $tempusername = str_replace(' ', '.', $user->name);
                 $username = $tempusername;
@@ -400,47 +402,47 @@ class AuthController extends Controller
             } else {
                 $username = $user->nickname;
             }
-            
-            $localUser->auth_source = 2; 
+
+            $localUser->auth_source = 2;
             $localUser->username = strtolower($username);
             $localUser->email = $user->email;
             $localUser->role = 3;
             $localUser->google_id = $user->id;
             $localUser->password = bcrypt('pass' . mt_rand(0, 999999));
-            $localUser->email_verified_at = now(); 
+            $localUser->email_verified_at = now();
             $localUser->verified = 1;
             $localUser->save();
-            
+
             $profile = new UserProfile();
-           
+
             $profile->user_id = $localUser->id;
             $profile->profile_picture = $user->avatar;
             $profile->save();
         } else {
-        
+
             if ($localUser->google_id == null) {
                 $localUser->google_id = $user->id;
-                $localUser->auth_source = 2; 
+                $localUser->auth_source = 2;
                 $localUser->save();
             }
-            
-         
+
+
             $profile = UserProfile::firstOrNew(['user_id' => $localUser->id]);
             $profile->profile_picture = $user->avatar;
             $profile->save();
         }
-        
-       
+
+
         Auth::login($localUser, true);
-        
-       
+
+
         if (Session::exists('redirect')) {
             $redirect = session('redirect', '/');
             Session::forget('redirect');
             Session::save();
             return redirect($redirect);
         } else {
-            return redirect()->route('index'); 
+            return redirect()->route('index');
         }
     }
 }
