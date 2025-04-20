@@ -1,6 +1,11 @@
 @extends('front.page')
 @section('css')
     <link rel="stylesheet" href="{{ asset('front/auth.css') }}">
+    <style>
+        label{
+            padding: 6px 6px;
+        }
+    </style>
 @endsection
 @section('title', 'Login')
 @section('jumbotron')
@@ -10,7 +15,6 @@
     <div id="page-login">
         <div class="holder">
             <div class="image">
-
             </div>
             <div class="login-form">
                 <div class="controls px-3">
@@ -21,7 +25,7 @@
                         <input type="phone" name="phone" id="phone" placeholder="Enter Phone No" aria-label="Phone"
                             aria-describedby="Email">
                     </div>
-                    <div class="control mb-3" id="otp-holder" style="display: {{ $phone == null ? 'none' : 'flex' }}">
+                    <div class="control mb-3" id="otp-holder">
                         <span class="icon">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -29,39 +33,42 @@
                             id="otp">
 
                     </div>
-                    <div class="text-end">
-                        <button id="finish" class="btn btn-red" data-step="{{ $phone == null ? 1 : 2 }}"
-                            onclick="{{ $phone == null ? 'javascript:requestOTP($(\'#phone\').val(), this)' : '' }}">
-                            {{ $phone == null ? 'Next' : 'Login' }}
+                    <div class="text-end" id="request_otp">
+                        <button class="btn btn-red" onclick="requestOTP()">
+                            Request OTP
                         </button>
                     </div>
-
-                    <div class="row" id="OTPForm">
-                        <div class="col-md-12 mb-2">
+                    <div class="text-end" id="login_opt">
+                        <button class="btn btn-red" id="finish" onclick="login()">
+                            Login
+                        </button>
+                    </div>
+                    <div  id="OTPForm">
+                        <div class="control mb-3">
                             <label for="name">Name</label>
-                            <input type="text" name="name" id="name" class="form-control" aria-label="Name"
+                            <input type="text" name="name" id="name" aria-label="Name"
                                 aria-describedby="Name">
                         </div>
-                        <div class="col-md-12 mb-2">
+                        <div class="control mb-3">
                             <label for="email">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" aria-label="Email"
+                            <input type="email" name="email" id="email" aria-label="Email"
                                 aria-describedby="Email">
                         </div>
-                        <div class="col-md-12 mb-2">
+                        <div class="control mb-3">
                             <label for="address">Address</label>
-                            <input type="text" name="address" id="address" class="form-control" aria-label="Address"
+                            <input type="text" name="address" id="address" aria-label="Address"
                                 aria-describedby="Address">
                         </div>
-                        <div class="col-md-12 mb-2">
+                        <div class="control mb-3">
                             <label for="city_id">City</label>
-                            <select name="city_id" id="city_id" class="form-control" aria-label="City"
+                            <select name="city_id" id="city_id" aria-label="City"
                                 aria-describedby="City">
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-12 mb-2">
+                        <div class="col-md-12 mb-3">
                             <button class="btn btn-primary" onclick="login()">
                                 Save
                             </button>
@@ -78,7 +85,7 @@
     <script>
         $(document).ready(function() {
             $('#OTPForm').hide();
-
+            $('#login_opt').hide();
             $('#finish').click(function(e) {
                 e.preventDefault();
                 if (this.dataset.step == 1) {
@@ -97,20 +104,18 @@
         });
         var valid = '';
 
-        function requestOTP(no, ele) {
+        function requestOTP() {
+            const phone = $('#phone').val();
             axios.post("{{ route('loginPhone') }}", {
-                    phone: no
+                    phone: phone
                 })
                 .then((res) => {
-                    if (res.data.status == true) {
-                        $(ele).show();
-                        valid = Date(res.data.validtill);
-                        $('#otp-holder').css('display', 'flex');
-                        $(ele).text("Login");
-                        ele.dataset.step = 2;
-                        if (res.data.status == true && res.data.user == false) {
-                            $('#OTPForm').show();
-                        }
+                    if (res.data.status == true && res.data.user == false) {
+                        $('#OTPForm').show();
+                        $('#request_otp').hide();
+                    } else if (res.data.status == true && res.data.user == true) {
+                        $('#login_opt').show();
+                        $('#request_otp').hide();
                     }
                 })
                 .catch((err) => {
@@ -120,20 +125,20 @@
                     } else {
                         alert('Some error occured please try again');
                     }
-                    $(ele).show();
+                    $('#request_otp button').show();
                 })
 
         }
 
         function login() {
-            const opt = parseInt($('#otp').val());
+            const otp = $('#otp').val();
             const name = $('#name').val();
             const email = $('#email').val();
             const address = $('#address').val();
             const city_id = $('#city_id').val();
 
             axios.post('{{ route('loginOTP') }}', {
-                    otp: opt,
+                    otp: otp,
                     name: name,
                     email: email,
                     address: address,
@@ -153,9 +158,33 @@
                     } else {
                         alert('Some error occured please try again');
                     }
-                    $(ele).show();
+                    $('#login_opt button').show();
 
                 });
         }
+
+        // function authUserLogin() {
+        //     const otp = $('#otp').val();
+        //     axios.post('{{ route('loginOTP') }}', {
+        //             otp: otp,
+        //         })
+        //         .then((res) => {
+        //             if (res.data.status == true) {
+        //                 console.log(res.data.message);
+        //             } else {
+        //                 alert(res.data.message);
+        //             }
+        //         })
+        //         .catch((err) => {
+        //             console.log(err.response);
+        //             if (err.response) {
+        //                 alert(err.response.data.message);
+        //             } else {
+        //                 alert('Some error occured please try again');
+        //             }
+        //             $('#login_opt button').show();
+
+        //         });
+        // }
     </script>
 @endsection

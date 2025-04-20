@@ -223,16 +223,23 @@ class AuthController extends Controller
     public function loginPhone(Request $request)
     {
         if ($request->isMethod('POST')) {
-            $phone = $request->phone;
             $now = now();
-            Session::put('phone', $phone);
+            $otp = Otp::where('phone', $request->phone)->first();
+            if(!$otp){
+                $otp = new Otp();
+                $otp->phone = $request->phone;
+                $otp->otp = mt_rand(111111, 999999);
+                $otp->validtill = $now->addMinute(3);
+                $otp->save();
+            }else{
+                $otp->otp = mt_rand(111111, 999999);
+                $otp->validtill = $now->addMinute(3);
+                $otp->save();
+            }
+            Session::put('phone', $otp->phone);
             Session::save();
-            $otp = Otp::firstOrNew(['phone' => $phone]);
-            $otp->otp = mt_rand(111111, 999999);
-            $otp->validtill = $now->addMinute(3);
-            $otp->save();
-            Helper::sendOTP($phone, $otp->otp, $otp->validtill);
-            $user = User::where('phone', $phone)->first();
+            Helper::sendOTP($otp->phone, $otp->otp, $otp->validtill);
+            $user = User::where('phone', $otp->phone)->first();
             if (!$user) {
                 return response()->json([
                     'status' => true,
@@ -245,10 +252,9 @@ class AuthController extends Controller
                 ]);
             }
         } else {
-            $redirect = session('redirect');
             $cities = Helper::getCitiesMini();
             $phone = Session::get('phone');
-            return view('front.auth.phonelogin', compact('cities', 'phone', 'redirect'));
+            return view('front.auth.phonelogin', compact('cities', 'phone'));
         }
     }
 
@@ -256,9 +262,8 @@ class AuthController extends Controller
     {
         $phone = Session::get('phone');
         $otp = Otp::where('phone', $phone)->first();
-
         if ($request->getMethod() == "POST") {
-            if($otp->otp == $request->input('otp') ){
+            if ($otp->otp == $request->otp) {
                 $user = User::where('phone', $phone)->first();
                 if ($user == null) {
                     $user = new User();
@@ -274,13 +279,13 @@ class AuthController extends Controller
                         'status' => true,
                         'message' => 'User created successfully',
                     ]);
-                } else {
+                } elseif ($user) {
                     return response()->json([
                         'status' => true,
                         'message' => 'User already exists'
                     ]);
                 }
-            }else{
+            } else {
                 return response()->json([
                     'status' => false,
                     'message' => 'Invalid OTP'
