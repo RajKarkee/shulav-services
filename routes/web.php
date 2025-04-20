@@ -233,7 +233,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('location')->name('location.')->group(function () {
                 Route::get('', [BusServiceController::class, 'location'])->name('index');
                 Route::post('add', [BusServiceController::class, 'locationStore'])->name('add');
-          
+
                 Route::get('del/{location}', [BusServiceController::class, 'del'])->name('del');
             });
             Route::prefix('type')->name('type.')->group(function () {
@@ -242,7 +242,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::delete('delete/{id}', [BusServiceController::class,'typeDel'])->name('delete');
             });
             // Route::get('location',[BusServiceController::class, 'location'])->name('locations');
-            Route::prefix('route')->name('route.')->group(function () {           
+            Route::prefix('route')->name('route.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
                 Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
             });

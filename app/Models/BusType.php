@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Bus_type extends Model
+class BusType extends Model
 {
+    protected $table = 'bus_types';
     protected $fillable =[
         'bus_type_name',
         'short_description',

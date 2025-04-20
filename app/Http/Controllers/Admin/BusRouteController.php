@@ -57,7 +57,7 @@ class BusRouteController extends Controller
     public function edit(Request $request)
     {
         $route = BusRoute::find($request->id);
-        
+
         if (!$route) {
             return response()->json([
                 'status' => false,
@@ -92,7 +92,7 @@ class BusRouteController extends Controller
         }
 
         $route = BusRoute::find($request->id);
-        
+
         if (!$route) {
             return response()->json([
                 'status' => false,
@@ -118,7 +118,7 @@ class BusRouteController extends Controller
     public function delete(Request $request)
     {
         $route = BusRoute::find($request->id);
-        
+
         if (!$route) {
             return response()->json([
                 'status' => false,
@@ -133,5 +133,4 @@ class BusRouteController extends Controller
             'message' => 'Route deleted successfully'
         ]);
     }
-}
 }

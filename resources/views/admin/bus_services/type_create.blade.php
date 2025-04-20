@@ -8,8 +8,6 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/plugins/drophify/css/dropify.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
-
-
     <style>
         #mass-image .dropify-wrapper {
             height: 150px;
@@ -42,8 +40,8 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-                
-            
+
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -51,8 +49,8 @@
                                     <input type="text" name="bus_type_name" class="form-control" id="name">
                                 </div>
                             </div>
-                     
-                     
+
+
 
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -96,7 +94,7 @@
         });
 
 
-       
-    
+
+
     </script>
 @endsection
