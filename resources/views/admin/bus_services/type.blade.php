@@ -2,7 +2,7 @@
 
 @section('s-title')
     <li class="breadcrumb-item">Bus</li>
-    <li class="breadcrumb-item">Bus Services</li>
+    <li class="breadcrumb-item">Bus Types</li>
 @endsection
 
 @section('css')

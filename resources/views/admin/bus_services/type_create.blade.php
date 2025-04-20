@@ -1,7 +1,8 @@
 @extends('admin.layout.app') <!-- Assuming you have a layout file for the admin -->
 
 @section('s-title')
-    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.index') }}">Bus Type</a></li>
+    <li class="breadcrumb-item">Bus</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.type.index') }}">Bus Type</a></li>
     <li class="breadcrumb-item">Add</li>
 @endsection
 
@@ -92,9 +93,5 @@
                 height: 200
             });
         });
-
-
-
-
     </script>
 @endsection

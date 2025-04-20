@@ -56,7 +56,7 @@
         $(function () {
             table=$('#cities').DataTable({
                 "columnDefs": [
-                    { "sortable":false,"searchable": false, "targets": 1 }
+                    { "sortable":false,"searchable": true, "targets": 1 }
                 ]
             });
         });
