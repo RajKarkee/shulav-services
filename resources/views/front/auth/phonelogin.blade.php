@@ -16,7 +16,6 @@
 
             </div>
             <div class="login-form">
-
                 <div class="controls px-3">
                     @if ($phone != null)
                         <div class="control mb-3">
@@ -52,6 +51,39 @@
                     </div>
 
                 </div>
+                <form action="{{ route('loginOTP') }}" method="POST" id="OTPForm">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12 mb-2">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" aria-label="Name"
+                                aria-describedby="Name">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" aria-label="Email"
+                                aria-describedby="Email">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address" class="form-control" aria-label="Address"
+                                aria-describedby="Address">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="city_id">City</label>
+                            <select name="city_id" id="city_id" class="form-control" aria-label="City"
+                                aria-describedby="City">
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn-prrimary"> Save </button>
+                        </div>
+
+                    </div>
+                </form>
             </div>
         </div>
 
@@ -61,6 +93,7 @@
 
     <script>
         $(document).ready(function() {
+            $('#OTPForm').hide();
 
             $('#finish').click(function(e) {
                 e.preventDefault();
@@ -77,9 +110,7 @@
                     login(this);
                 }
             });
-
         });
-
         var valid = '';
 
         function requestOTP(no, ele) {
@@ -113,10 +144,6 @@
                     otp: opt
                 })
                 .then((res) => {
-                    $(ele).show();
-                    localStorage.setItem('myCat', res.data.redirect);
-
-                    window.location.href = res.data.redirect;
 
                 })
                 .catch((err) => {

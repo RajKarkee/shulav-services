@@ -10,20 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class Helper
 {
-    // public static function allDataToArray($data)
-    // {
-    //     $d=[];
-    //     $d['cities']=[];
-    //     $d['services']=[];
 
-    //     foreach (explode(',',$data->cities) as  $value) {
-    //         $dd=explode(':',$value);
-    //         array_push($d['cities'],(object)([
-    //             'id'=>$dd[0],
-    //             'name'=>$dd[1]
-    //         ]))
-    //     }
-    // }
     public const iconmap = [
         'Facebook' => "fa-facebook-f",
         'Twitter' => "fa-twitter",
@@ -112,16 +99,8 @@ class Helper
         $message = "Your OTP is: {$otp}";
         $response = Http::asForm()->post(config('app.sms_url'),[
             'to' => $phone,
-            'message' => $message,
+            'text' => $message,
             'auth_token' => config('app.sms_token'),
-        ]);
-        Log::info('SMS Response:', [
-            'phone' => $phone,
-            'message' => $message,
-            'response' => $response->body(),
-            'status' => $response->status(),
-            'token'=> config('app.sms_token'),
-            'url'=> config('app.sms_url'),
         ]);
         return [
             'success' => $response->successful(),

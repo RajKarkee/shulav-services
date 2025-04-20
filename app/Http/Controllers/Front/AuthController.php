@@ -220,73 +220,64 @@ class AuthController extends Controller
             return view('front.auth.firstlogin', compact('redirect'));
         }
     }
-
     public function loginPhone(Request $request)
     {
         if ($request->isMethod('POST')) {
             $phone = $request->phone;
             $now = now();
 
+            // Store phone in session for verification in loginOTP
+            Session::put('phone', $phone);
+            Session::save();
+
+            // Generate and store OTP
             $otp = Otp::firstOrNew(['phone' => $phone]);
             $otp->otp = mt_rand(111111, 999999);
             $otp->validtill = $now->addMinute(1);
             $otp->save();
+
+            // Send OTP to user's phone
+            Helper::sendOTP($phone, $otp->otp, $otp->validtill);
+
             return response()->json([
                 'status' => true,
-                'resend' => Helper::sendOTP($phone, $otp->otp, $otp->validtill),
-                'validtill' => $otp->validtill,
+                'validtill' => $otp->validtill->toDateTimeString(),
+            ]);
+        } else {
+            $redirect = session('redirect');
+            $cities  = Helper::getCitiesMini();
+            return view('front.auth.phonelogin', [
+                'phone' => Session::get('phone'),
+                'redirect' => $redirect
             ]);
         }
-
-        return view('front.auth.phonelogin', ['phone' => null]);
     }
-
 
     public function loginOTP(Request $request)
     {
-        try {
-            $phone = Session::get('phone');
-            if (!$phone) {
-                throw new \Exception('Session expired. Please try again.');
-            }
-            $otp = Otp::where('phone', $phone)->first();
-            if (!$otp) {
-                throw new \Exception('OTP not found. Please request a new one.');
-            }
-            if ($otp->otp != $request->otp) {
-                throw new \Exception('Incorrect OTP. Please try again.');
-            }
-            $vendor = Vendor::where('phone', $phone)->first();
-            $url = route('vendor.dashboard');
+        $phone = Session::get('phone');
+        $otp = Otp::where('phone', $phone)->first();
 
-            if (!$vendor) {
-                Session::put('setup', 3);
-                $url = route('setupUser');
-            } else {
-                if ($vendor->city_id === null) {
-                    Session::put('setup', 3);
-                    $url = route('setupUser');
-                } else {
+        if ($request->getMethod() == "POST") {
+            $data = $request->validate([
+                'otp' => 'required|numeric'
+            ]);
+            if ($otp->validtill < now()) {
+                return redirect()->back()->with('err', 'OTP Expired')->withInput(['phone' => $request->phone]);
+            }
+            if ($otp->otp == $request->otp) {
+                $user = Vendor::where('phone', $phone)->first();
+                if ($user != null) {
+                    Auth::login($user->user, true);
                     Session::forget('phone');
                     Session::save();
-
-
-                    if (Session::has('redirect')) {
-                        $url = session('redirect', '/');
-                        Session::forget('redirect');
-                        Session::save();
-                    }
-
-                    Auth::login($vendor->user);
+                    return redirect()->route($user->user->getRole() . '.dashboard');
+                } else {
+                    return redirect()->back()->with('err', 'User Not Found')->withInput(['phone' => $request->phone]);
                 }
+            } else {
+                return redirect()->back()->with('err', 'Invalid OTP')->withInput(['phone' => $request->phone]);
             }
-
-            return response()->json(['status' => true, 'redirect' => $url]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => $e->getMessage(),
-            ], 422);
         }
     }
 

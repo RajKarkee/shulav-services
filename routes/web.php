@@ -241,7 +241,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['get', 'post'], 'add', [BusServiceController::class, 'typeStore'])->name('add');
                 Route::delete('delete/{id}', [BusServiceController::class,'typeDel'])->name('delete');
             });
-            // Route::get('location',[BusServiceController::class, 'location'])->name('locations');
             Route::prefix('route')->name('route.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
                 Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
@@ -254,9 +253,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('/update', [BusRouteController::class, 'update'])->name('update');
                 Route::post('/delete', [BusRouteController::class, 'delete'])->name('delete');
             });
-            // Route::post('add', [ServiceController::class, 'add'])->name('add');
-            // Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
-            // Route::get('del/{service}', [ServiceController::class, 'del'])->name('del');
         });
 
 
@@ -335,13 +331,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 route::post('update', [CategoryController::class, 'update'])->name('update');
                 route::post('delete', [CategoryController::class, 'delete'])->name('delete');
             });
-            // Route::prefix('category')->name('category.')->group(function () {
-            //     route::get('', [CategoryController::class, 'index'])->name('index');
-            //     route::get('/cat/{cat}', [CategoryController::class, 'category'])->name('category');
-            //     route::post('add', [CategoryController::class, 'add'])->name('add');
-            //     route::post('update', [CategoryController::class, 'update'])->name('update');
-            //     route::post('delete', [CategoryController::class, 'delete'])->name('delete');
-            // });
             Route::prefix('city')->name('city.')->group(function () {
                 route::get('', [CityController::class, 'index'])->name('index');
                 route::match(['GET', 'POST'], 'add', [CityController::class, 'add'])->name('add');
@@ -381,38 +370,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         });
     });
 });
-// Route::prefix('admin')->name('admin.')->group(function () {
-//     Route::resource('service', ServiceController::class);
-// });
-
 
 Route::get('users/{username}', function ($username) {
     $user = User::where('username', $username)->first();
 
     dd($user->createToken($username));
 });
-// Client ID: 4
-// Client secret: FP9rBEpFNgVYl9LakaHBOgdfIZR3ZUgsVM0jdcw9
-// "grant_type" : "password",
-// "client_id" : "4",
-// "client_secret" : "FP9rBEpFNgVYl9LakaHBOgdfIZR3ZUgsVM0jdcw9",
-// "username" : "komal2@gmail.com",
-// "password" : "admin",
-// "scope" : "*"
-
-// function getTokenAndRefreshToken(Client $oClient, $email, $password)
-// {
-//     $oClient = Client::where('password_client', 1)->first();
-//     $http = new Client;
-//     $response = $http->request('POST', 'http://mylemp-nginx/oauth/token', [
-//         'form_params' => [
-//             'grant_type' => 'password',
-//             'client_id' => $oClient->id,
-//             'client_secret' => $oClient->secret,
-//             'username' => $email,
-//             'password' => $password,
-//             'scope' => '*',
-//         ],
-//     ]);
-//     $result = json_decode((string) $response->getBody(), true);
-// }
