@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BusRouteLocation;
 use App\Models\Bus_type;
+use Illuminate\Support\Facades\Bus;
 
 class BusServiceController extends Controller
 {
     public function index()
     {
-        return view('admin.bus_services.index');
+        $locations = BusRouteLocation::all();
+        $busTypes = Bus_Type::all();
+        return view('admin.bus_services.busRoutes.index', compact('locations', 'busTypes'));
     }
 
     public function location()
@@ -91,5 +94,5 @@ class BusServiceController extends Controller
         return redirect()->route('admin.busServices.type.index')->with('success', 'Bus Type deleted successfully.');
     }
 
-    
+
 }

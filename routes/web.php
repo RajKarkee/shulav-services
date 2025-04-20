@@ -32,6 +32,7 @@ use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\BusServiceController;
 use App\Http\Controllers\Admin\FrontPageController;
+use App\Http\Controllers\Admin\BusRouteController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\User\LoginController;
 
@@ -245,8 +246,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
                 Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
             });
-            Route::post('add', [ServiceController::class, 'add'])->name('add');
-            Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
+            Route::prefix('busRoutes')->name('busRoutes.')->group(function () {
+                Route::get('/', [BusRouteController::class, 'index'])->name('index');
+                Route::get('/loadData', [BusRouteController::class, 'loadData'])->name('loadData');
+                Route::post('/add', [BusRouteController::class, 'add'])->name('add');
+                Route::post('/edit', [BusRouteController::class, 'edit'])->name('edit');
+                Route::post('/update', [BusRouteController::class, 'update'])->name('update');
+                Route::post('/delete', [BusRouteController::class, 'delete'])->name('delete');
+            });
+            // Route::post('add', [ServiceController::class, 'add'])->name('add');
+            // Route::post('edit/{service}', [ServiceController::class, 'edit'])->name('edit');
             // Route::get('del/{service}', [ServiceController::class, 'del'])->name('del');
         });
 
