@@ -229,23 +229,19 @@ class AuthController extends Controller
             Session::save();
             $otp = Otp::firstOrNew(['phone' => $phone]);
             $otp->otp = mt_rand(111111, 999999);
-            $otp->validtill = $now->addMinute(1);
+            $otp->validtill = $now->addMinute(3);
             $otp->save();
             Helper::sendOTP($phone, $otp->otp, $otp->validtill);
-
-            Session::forget('phone');
             $user = User::where('phone', $phone)->first();
             if (!$user) {
                 return response()->json([
                     'status' => true,
                     'user' => false,
-                    'validtill' => $otp->validtill,
                 ]);
             } else {
                 return response()->json([
                     'status' => true,
                     'user' => true,
-                    'validtill' => $otp->validtill,
                 ]);
             }
         } else {
@@ -262,35 +258,33 @@ class AuthController extends Controller
         $otp = Otp::where('phone', $phone)->first();
 
         if ($request->getMethod() == "POST") {
-            $data = $request->validate([
-                'otp' => 'required|numeric'
-            ]);
-            if ($otp->validtill < now()) {
-                return redirect()->back()->with('err', 'OTP Expired')->withInput(['phone' => $request->phone]);
-            }
-            if ($otp->otp == $request->otp) {
+            if($otp->otp == $request->input('otp') ){
                 $user = User::where('phone', $phone)->first();
                 if ($user == null) {
                     $user = new User();
                     $user->phone = $phone;
                     $user->role = 2;
-                    $user->name = $request->name;
-                    $user->email = $request->email;
-                    $user->city_id = $request->city_id;
+                    $user->name = $request->input('name');
+                    $user->email = $request->input('email');
+                    $user->city_id = $request->input('city_id');
                     $user->password = bcrypt($phone);
                     $user->save();
+                    Session::forget('phone');
                     return response()->json([
                         'status' => true,
                         'message' => 'User created successfully',
                     ]);
                 } else {
                     return response()->json([
-                        'status' => false,
+                        'status' => true,
                         'message' => 'User already exists'
                     ]);
                 }
-            } else {
-                return redirect()->back()->with('err', 'Invalid OTP')->withInput(['phone' => $request->phone]);
+            }else{
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid OTP'
+                ]);
             }
         }
     }

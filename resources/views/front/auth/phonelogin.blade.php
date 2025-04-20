@@ -1,9 +1,6 @@
 @extends('front.page')
 @section('css')
     <link rel="stylesheet" href="{{ asset('front/auth.css') }}">
-    <style>
-
-    </style>
 @endsection
 @section('title', 'Login')
 @section('jumbotron')
@@ -17,24 +14,13 @@
             </div>
             <div class="login-form">
                 <div class="controls px-3">
-                    @if ($phone != null)
-                        <div class="control mb-3">
-
-                            <span class="icon">
-                                <i class="fas fa-phone"></i>
-                            </span>
-                            <span id="phone" style="display: flex;align-items: center;">{{ $phone }}</span>
-                        </div>
-                    @else
-                        <div class="control mb-3">
-
-                            <span class="icon">
-                                <i class="fas fa-phone"></i>
-                            </span>
-                            <input type="phone" name="phone" id="phone" placeholder="Enter Phone No"
-                                aria-label="Phone" aria-describedby="Email">
-                        </div>
-                    @endif
+                    <div class="control mb-3">
+                        <span class="icon">
+                            <i class="fas fa-phone"></i>
+                        </span>
+                        <input type="phone" name="phone" id="phone" placeholder="Enter Phone No" aria-label="Phone"
+                            aria-describedby="Email">
+                    </div>
                     <div class="control mb-3" id="otp-holder" style="display: {{ $phone == null ? 'none' : 'flex' }}">
                         <span class="icon">
                             <i class="fas fa-lock"></i>
@@ -50,36 +36,36 @@
                         </button>
                     </div>
 
-                </div>
-                <div class="row" id="OTPForm">
-                    <div class="col-md-12 mb-2">
-                        <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" aria-label="Name"
-                            aria-describedby="Name">
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" aria-label="Email"
-                            aria-describedby="Email">
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" id="address" class="form-control" aria-label="Address"
-                            aria-describedby="Address">
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <label for="city_id">City</label>
-                        <select name="city_id" id="city_id" class="form-control" aria-label="City"
-                            aria-describedby="City">
-                            @foreach ($cities as $city)
-                                <option value="{{ $city->id }}">{{ $city->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-md-12 mb-2">
-                        <button class="btn btn-primary">
-                            Save
-                        </button>
+                    <div class="row" id="OTPForm">
+                        <div class="col-md-12 mb-2">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" aria-label="Name"
+                                aria-describedby="Name">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" aria-label="Email"
+                                aria-describedby="Email">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="address">Address</label>
+                            <input type="text" name="address" id="address" class="form-control" aria-label="Address"
+                                aria-describedby="Address">
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <label for="city_id">City</label>
+                            <select name="city_id" id="city_id" class="form-control" aria-label="City"
+                                aria-describedby="City">
+                                @foreach ($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-12 mb-2">
+                            <button class="btn btn-primary" onclick="login()">
+                                Save
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,13 +102,13 @@
                     phone: no
                 })
                 .then((res) => {
-                    if (res.data.status == true ) {
+                    if (res.data.status == true) {
                         $(ele).show();
                         valid = Date(res.data.validtill);
                         $('#otp-holder').css('display', 'flex');
                         $(ele).text("Login");
                         ele.dataset.step = 2;
-                        if(res.data.user == false){
+                        if (res.data.status == true && res.data.user == false) {
                             $('#OTPForm').show();
                         }
                     }
@@ -139,7 +125,7 @@
 
         }
 
-        function login(ele) {
+        function login() {
             const opt = parseInt($('#otp').val());
             const name = $('#name').val();
             const email = $('#email').val();
@@ -155,7 +141,7 @@
                 })
                 .then((res) => {
                     if (res.data.status == true) {
-                        console.log(res.data);
+                        console.log(res.data.message);
                     } else {
                         alert(res.data.message);
                     }

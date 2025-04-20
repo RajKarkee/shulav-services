@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PhoneLoginController extends Controller
 {
-  public function index{
-    return view('front.auth.phonelogin')
+  public function index(){
+    return view('front.auth.phonelogin');
   }
 }
