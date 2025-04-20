@@ -228,11 +228,9 @@ class AuthController extends Controller
             $now = now();
 
             $otp = Otp::firstOrNew(['phone' => $phone]);
-            $resend = !$otp->exists || $now->gt($otp->validtill);
             $otp->otp = mt_rand(111111, 999999);
             $otp->validtill = $now->addMinute(1);
             $otp->save();
-           ;
             return response()->json([
                 'status' => true,
                 'resend' => Helper::sendOTP($phone, $otp->otp, $otp->validtill),
@@ -248,22 +246,16 @@ class AuthController extends Controller
     {
         try {
             $phone = Session::get('phone');
-
             if (!$phone) {
                 throw new \Exception('Session expired. Please try again.');
             }
-
             $otp = Otp::where('phone', $phone)->first();
-
             if (!$otp) {
                 throw new \Exception('OTP not found. Please request a new one.');
             }
-
             if ($otp->otp != $request->otp) {
                 throw new \Exception('Incorrect OTP. Please try again.');
             }
-
-            // OTP matched
             $vendor = Vendor::where('phone', $phone)->first();
             $url = route('vendor.dashboard');
 
@@ -278,7 +270,7 @@ class AuthController extends Controller
                     Session::forget('phone');
                     Session::save();
 
-                    // Check if there's a redirect stored
+
                     if (Session::has('redirect')) {
                         $url = session('redirect', '/');
                         Session::forget('redirect');

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class Helper
 {
@@ -109,10 +110,18 @@ class Helper
     public static function sendOTP($phone, $otp)
     {
         $message = "Your OTP is: {$otp}";
-        $response = Http::post(config('app.sms_url'), [
-            'auth_token' => config('app.sms_token'),
+        $response = Http::asForm()->post(config('app.sms_url'),[
             'to' => $phone,
-            'text' => "Yout otp is ".$message,
+            'message' => $message,
+            'auth_token' => config('app.sms_token'),
+        ]);
+        Log::info('SMS Response:', [
+            'phone' => $phone,
+            'message' => $message,
+            'response' => $response->body(),
+            'status' => $response->status(),
+            'token'=> config('app.sms_token'),
+            'url'=> config('app.sms_url'),
         ]);
         return [
             'success' => $response->successful(),
