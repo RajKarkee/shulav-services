@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Bus;
 
@@ -32,7 +33,6 @@ class BusRoute extends Model
 
     public function busType()
     {
-        return $this->belongsTo(Bus_Type::class);
+        return $this->belongsTo(BusType::class);
     }
 }
-

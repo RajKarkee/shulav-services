@@ -16,7 +16,6 @@
             <table class="table bordered" id="cities">
                 <thead>
                     <tr>
-
                         <th>
                             Name
                         </th>

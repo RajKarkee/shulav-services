@@ -16,28 +16,14 @@ class BusRouteController extends Controller
     public function loadData()
     {
         $routes = BusRoute::with(['fromLocation', 'toLocation', 'busType'])->get();
-        return view('admin.bus_services.busRoutes.data', compact('routes'))->render();
+        return response()->json([
+            'status' => true,
+            'routes' => $routes
+        ]);
     }
 
     public function add(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'from_location_id' => 'required|exists:route_locations,id',
-            'to_location_id' => 'required|exists:route_locations,id|different:from_location_id',
-            'bus_type_id' => 'required|exists:bus_types,id',
-            'distance' => 'required|numeric|min:0',
-            'estimated_time' => 'required|numeric|min:0',
-            'fare' => 'required|numeric|min:0',
-            'description' => 'nullable|string',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
         $route = new BusRoute();
         $route->from_location_id = $request->from_location_id;
         $route->to_location_id = $request->to_location_id;

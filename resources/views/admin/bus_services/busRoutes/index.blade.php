@@ -6,7 +6,8 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" onclick="showAdd()">Add Route</button>
 @endsection
 @section('s-title')
-    <li class="breadcrumb-item">Bus Routes</li>
+    <li class="breadcrumb-item">Bus</li>
+    <li class="breadcrumb-item">Bus Service</li>
 @endsection
 @section('content')
     <div class="card shadow">
@@ -17,7 +18,6 @@
                         <th>From</th>
                         <th>To</th>
                         <th>Bus Type</th>
-                        <th>Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,7 +45,6 @@
 
         // API Routes
         const routes = {
-            loadData: '{{ route('admin.busServices.busRoutes.loadData') }}',
             delete: '{{ route('admin.busServices.busRoutes.delete') }}',
             add: '{{ route('admin.busServices.busRoutes.add') }}',
             edit: '{{ route('admin.busServices.busRoutes.edit') }}',
@@ -54,9 +53,31 @@
 
         // CRUD Functions
         function loadData() {
-            axios.get(routes.loadData)
+            axios.get('{{ route('admin.busServices.busRoutes.loadData') }}')
                 .then(res => {
-                    $('#data').html(res.data);
+                    if (res.data.status) {
+                        let html = '';
+                        if (res.data.routes.length > 0) {
+                            res.data.routes.forEach(route => {
+                                html += `<tr>
+                                    <td>${route.from_location?.location_name ?? 'N/A'}</td>
+                                    <td>${route.to_location?.location_name ?? 'N/A'}</td>
+                                    <td>${route.bus_type?.bus_type_name ?? 'N/A'}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-primary" onclick="editData(${route.id})">Edit</button>
+                                        <button class="btn btn-sm btn-danger" onclick="delData(${route.id})">Delete</button>
+                                    </td>
+                                </tr>`;
+                            });
+                        } else {
+                            html = `<tr>
+                                <td colspan="5" class="text-center">No Bus Services found</td>
+                            </tr>`;
+                        }
+                        $('#data').html(html);
+                    } else {
+                        toastr.error("Failed to load data");
+                    }
                 })
                 .catch(err => {
                     toastr.error("Please Try Again.");
@@ -65,8 +86,10 @@
         }
 
         function delData(id) {
-            if(confirm('Are you sure you want to delete this route?')) {
-                axios.post(routes.delete, {id})
+            if (confirm('Are you sure you want to delete this route?')) {
+                axios.post(routes.delete, {
+                        id
+                    })
                     .then(() => {
                         toastr.success('Route Deleted Successfully');
                         loadData();
@@ -100,7 +123,9 @@
         }
 
         function editData(id) {
-            axios.post(routes.edit, {id})
+            axios.post(routes.edit, {
+                    id
+                })
                 .then(res => {
                     if (res.data.status) {
                         const route = res.data.route;
