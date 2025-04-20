@@ -225,31 +225,34 @@ class AuthController extends Controller
         if ($request->isMethod('POST')) {
             $phone = $request->phone;
             $now = now();
-
-            // Store phone in session for verification in loginOTP
             Session::put('phone', $phone);
             Session::save();
-
-            // Generate and store OTP
             $otp = Otp::firstOrNew(['phone' => $phone]);
             $otp->otp = mt_rand(111111, 999999);
             $otp->validtill = $now->addMinute(1);
             $otp->save();
-
-            // Send OTP to user's phone
             Helper::sendOTP($phone, $otp->otp, $otp->validtill);
 
-            return response()->json([
-                'status' => true,
-                'validtill' => $otp->validtill->toDateTimeString(),
-            ]);
+            Session::forget('phone');
+            $user = User::where('phone', $phone)->first();
+            if (!$user) {
+                return response()->json([
+                    'status' => true,
+                    'user' => false,
+                    'validtill' => $otp->validtill,
+                ]);
+            } else {
+                return response()->json([
+                    'status' => true,
+                    'user' => true,
+                    'validtill' => $otp->validtill,
+                ]);
+            }
         } else {
             $redirect = session('redirect');
-            $cities  = Helper::getCitiesMini();
-            return view('front.auth.phonelogin', [
-                'phone' => Session::get('phone'),
-                'redirect' => $redirect
-            ]);
+            $cities = Helper::getCitiesMini();
+            $phone = Session::get('phone');
+            return view('front.auth.phonelogin', compact('cities', 'phone', 'redirect'));
         }
     }
 
@@ -266,14 +269,25 @@ class AuthController extends Controller
                 return redirect()->back()->with('err', 'OTP Expired')->withInput(['phone' => $request->phone]);
             }
             if ($otp->otp == $request->otp) {
-                $user = Vendor::where('phone', $phone)->first();
-                if ($user != null) {
-                    Auth::login($user->user, true);
-                    Session::forget('phone');
-                    Session::save();
-                    return redirect()->route($user->user->getRole() . '.dashboard');
+                $user = User::where('phone', $phone)->first();
+                if ($user == null) {
+                    $user = new User();
+                    $user->phone = $phone;
+                    $user->role = 2;
+                    $user->name = $request->name;
+                    $user->email = $request->email;
+                    $user->city_id = $request->city_id;
+                    $user->password = bcrypt($phone);
+                    $user->save();
+                    return response()->json([
+                        'status' => true,
+                        'message' => 'User created successfully',
+                    ]);
                 } else {
-                    return redirect()->back()->with('err', 'User Not Found')->withInput(['phone' => $request->phone]);
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'User already exists'
+                    ]);
                 }
             } else {
                 return redirect()->back()->with('err', 'Invalid OTP')->withInput(['phone' => $request->phone]);
@@ -293,7 +307,6 @@ class AuthController extends Controller
             return redirect()->route('loginFirst');
         }
         if ($request->getMethod() == "POST") {
-            // dd($request->all());
             if ($setup == 3) {
                 $localUser = new User();
                 $i = 1;
