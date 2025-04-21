@@ -123,23 +123,18 @@
         }
 
         function editData(id) {
-            axios.post(routes.edit, {
-                    id
-                })
+            axios.post(routes.edit, { id })
                 .then(res => {
                     if (res.data.status) {
                         const route = res.data.route;
-                        // Map route data to form fields
-                        const fields = [
-                            'id', 'from_location', 'to_location', 'bus_type',
-                            'distance', 'estimated_time', 'fare', 'description'
-                        ];
-
-                        fields.forEach(field => {
-                            const fieldId = field === 'id' ? field : field + '_id';
-                            $(`#edit_${field}`).val(route[fieldId] || route[field]);
-                        });
-
+                        $('#edit_id').val(route.id);
+                        $('#edit_from_location').val(route.from_location_id);
+                        $('#edit_to_location').val(route.to_location_id);
+                        $('#edit_bus_type').val(route.bus_type_id);
+                        $('#edit_distance').val(route.distance);
+                        $('#edit_estimated_time').val(route.estimated_time);
+                        $('#edit_fare').val(route.fare);
+                        $('#edit_description').val(route.description);
                         $('#editModal').modal('show');
                     } else {
                         toastr.error(res.data.message);
