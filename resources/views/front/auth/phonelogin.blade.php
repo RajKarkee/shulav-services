@@ -146,7 +146,8 @@
                 })
                 .then((res) => {
                     if (res.data.status == true) {
-                        console.log(res.data.message);
+                        console.log(res.data);
+                        window.location.href = "{{ route('setupUser') }}";
                     } else {
                         alert(res.data.message);
                     }
@@ -162,29 +163,5 @@
 
                 });
         }
-
-        // function authUserLogin() {
-        //     const otp = $('#otp').val();
-        //     axios.post('{{ route('loginOTP') }}', {
-        //             otp: otp,
-        //         })
-        //         .then((res) => {
-        //             if (res.data.status == true) {
-        //                 console.log(res.data.message);
-        //             } else {
-        //                 alert(res.data.message);
-        //             }
-        //         })
-        //         .catch((err) => {
-        //             console.log(err.response);
-        //             if (err.response) {
-        //                 alert(err.response.data.message);
-        //             } else {
-        //                 alert('Some error occured please try again');
-        //             }
-        //             $('#login_opt button').show();
-
-        //         });
-        // }
     </script>
 @endsection

@@ -163,7 +163,7 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
 });
 
 
-Route::name(value: 'vendor.')->prefix('vendor/dashboard')->middleware('role:vendor')->group(function () {
+Route::name(value: 'user.')->prefix('user.')->middleware('role:2')->group(function () {
     Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
     Route::match(['GET', 'POST'], 'reviews', [FrontVendorController::class, 'reviews'])->name('reviews');
     Route::match(['GET', 'POST'], 'bill/{bill}', [FrontVendorController::class, 'bill'])->name('bill');

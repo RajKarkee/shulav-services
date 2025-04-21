@@ -225,13 +225,13 @@ class AuthController extends Controller
         if ($request->isMethod('POST')) {
             $now = now();
             $otp = Otp::where('phone', $request->phone)->first();
-            if(!$otp){
+            if (!$otp) {
                 $otp = new Otp();
                 $otp->phone = $request->phone;
                 $otp->otp = mt_rand(111111, 999999);
                 $otp->validtill = $now->addMinute(3);
                 $otp->save();
-            }else{
+            } else {
                 $otp->otp = mt_rand(111111, 999999);
                 $otp->validtill = $now->addMinute(3);
                 $otp->save();
@@ -274,15 +274,19 @@ class AuthController extends Controller
                     $user->city_id = $request->input('city_id');
                     $user->password = bcrypt($phone);
                     $user->save();
-                    Session::forget('phone');
+                    Session::put('setup', 3);
+                    Session::save();
                     return response()->json([
                         'status' => true,
                         'message' => 'User created successfully',
+
                     ]);
-                } elseif ($user) {
+                } else {
+                    Session::put('setup', 3);
+                    Session::save();
                     return response()->json([
                         'status' => true,
-                        'message' => 'User already exists'
+                        'message' => 'Login successful',
                     ]);
                 }
             } else {
@@ -358,7 +362,7 @@ class AuthController extends Controller
             if ($redirect != null) {
                 return redirect($redirect);
             } else {
-                return redirect()->route('vendor.dashboard');
+                return redirect()->route('user.dashboard');
             }
         } else {
             if ($setup == 3) {
