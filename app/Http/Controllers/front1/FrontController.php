@@ -4,6 +4,7 @@ namespace App\Http\Controllers\front1;
 
 use App\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\BusRoute;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class FrontController extends Controller
         });
 
         $serviceCategories = Cache::rememberForever('service_categories',  function () {
-            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name', 'image']);
+            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name', 'image','type']);
         });
 
         $sections = Cache::rememberForever('front_page_sections',  function () {
@@ -26,8 +27,10 @@ class FrontController extends Controller
                 ->orderBy('position', 'asc')
                 ->get();
         });
-
-        return view('front1.index', compact('sliders', 'serviceCategories', 'sections'));
+        $routes = BusRoute::with(['fromLocation', 'toLocation']
+        )->get();
+// dd($routes);
+        return view('front1.index', compact('sliders', 'serviceCategories', 'sections','routes'));
     }
     public function categoryIndex(Request $request, $id)
     {

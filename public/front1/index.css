@@ -725,22 +725,12 @@ body {
 .homepage .section .slider .card .card-link .card {
   border: none;
   margin-bottom: 0;
-  flex: 0 0 auto;
-  width: 300px;
-  border-radius: 4px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  margin-right: 16px;
-  transition: all 0.3s ease;
 }
 .homepage .section .slider .card .card-link .card .card-image {
   position: relative;
   height: 200px;
   width: 100%;
   overflow: hidden;
-  min-height: 200px;
-  background-color: #a79e9e;
 }
 .homepage .section .slider .card .card-link .card .card-image img {
   width: 100%;
