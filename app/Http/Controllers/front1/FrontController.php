@@ -13,7 +13,7 @@ use App\Models\FrontPageSection;
 class FrontController extends Controller
 {
     public function index()
-    {  
+    {
         $sliders = Cache::rememberForever('sliders',function () {
             return DB::table('sliders')->get(['id', 'image', 'link']);
         });
@@ -29,23 +29,23 @@ class FrontController extends Controller
         });
         $routes = BusRoute::with(['fromLocation', 'toLocation']
         )->get();
-// dd($routes);
-        return view('front1.index', compact('sliders', 'serviceCategories', 'sections','routes'));
+        $popups = DB::table('popups')->get();
+        return view('front1.index', compact('sliders', 'serviceCategories','popups','sections','routes'));
     }
     public function categoryIndex(Request $request, $id)
     {
         $category = Cache::rememberForever("category_{$id}",  function () use ($id) {
             return DB::table('categories')->where('id', $id)->first();
         });
-    
+
         if (!$category) {
             abort(404);
         }
-    
+
         $categoryId = $id;
         $subcategoryId = $request->query('subcategory_id');
-        $subKey = $subcategoryId ?? 'none'; 
-    
+        $subKey = $subcategoryId ?? 'none';
+
         $products = Cache::rememberForever("products_category_{$categoryId}_subcategory_{$subKey}", function () use ($categoryId, $subcategoryId) {
             $query = DB::table('products')
                 ->join('categories', 'products.category_id', '=', 'categories.id')
@@ -53,29 +53,29 @@ class FrontController extends Controller
                 ->where('products.category_id', $categoryId)
                 ->where('products.active', 1)
                 ->orderBy('products.created_at', 'desc');
-    
+
             if ($subcategoryId) {
                 $query->where('products.subcategory_id', $subcategoryId);
             }
-    
+
             return $query->paginate(12);
         });
-    
+
         $cities = Cache::rememberForever('cities', function () {
             return Helper::getCities();
         });
-    
+
         $allcategories = Cache::rememberForever('all_categories', function () {
             return DB::table('categories')->whereNull('parent_id')->get(['id', 'name']);
         });
-    
+
         $subcategories = Cache::rememberForever('subcategories', function () {
             return DB::table('categories')->whereNotNull('parent_id')->get();
         });
-    
+
         return view('front1.library', compact('cities', 'products', 'allcategories', 'category', 'subcategories'));
     }
-    
+
 
     public function categorySingle($name, $id)
     {

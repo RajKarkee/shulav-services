@@ -52,12 +52,9 @@ class PopupController extends Controller
         return redirect()->back()->with('message','Popup Deleted');
     }
     public function status(Popup $popup,$status){
-        if($status==1){
-            Popup::where('id','>',0)->update(['active'=>0]);
-        }
         $popup->active=$status;
         $popup->save();
-        return redirect()->back()->with('message',"Popup". $status==1?'Activated':'Deactivated');
+        return redirect()->back()->with('message', "Popup " . ($status == 1 ? 'Activated' : 'Deactivated'));
     }
 
 }
