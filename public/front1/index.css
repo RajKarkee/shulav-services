@@ -1974,4 +1974,329 @@ hr {
   align-items: center;
   gap: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.route-page .container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.route-page .bus-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+.route-page .bus-card .bus-details {
+  flex-grow: 1;
+}
+.route-page .bus-card .bus-details .bus-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+}
+.route-page .bus-card .bus-details .bus-title .night-badge {
+  background-color: #333;
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+.route-page .bus-card .bus-details .bus-subtype {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+.route-page .bus-card .bus-details .journey-details {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+.route-page .bus-card .bus-details .journey-details .departure,
+.route-page .bus-card .bus-details .journey-details .arrival {
+  text-align: center;
+}
+.route-page .bus-card .bus-details .journey-details .departure.departure,
+.route-page .bus-card .bus-details .journey-details .arrival.departure {
+  text-align: left;
+}
+.route-page .bus-card .bus-details .journey-details .departure.arrival,
+.route-page .bus-card .bus-details .journey-details .arrival.arrival {
+  text-align: right;
+}
+.route-page .bus-card .bus-details .journey-details .departure .time,
+.route-page .bus-card .bus-details .journey-details .arrival .time {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+.route-page .bus-card .bus-details .journey-details .departure .location,
+.route-page .bus-card .bus-details .journey-details .arrival .location {
+  color: #666;
+  font-size: 14px;
+  margin-top: 5px;
+}
+.route-page .bus-card .bus-details .journey-details .journey-middle {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15px;
+  margin: 0 20px;
+}
+.route-page .bus-card .bus-details .journey-details .journey-middle .journey-duration {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+}
+.route-page .bus-card .bus-details .journey-details .journey-middle .journey-line {
+  width: 100%;
+  height: 1px;
+  background-color: #ddd;
+  position: relative;
+  margin: 10px 0;
+}
+.route-page .bus-card .bus-details .journey-details .journey-middle .bus-number {
+  font-size: 13px;
+  color: #666;
+  margin-top: 5px;
+}
+.route-page .bus-card .price-section {
+  text-align: right;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.route-page .bus-card .price-section .price {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+.route-page .bus-card .price-section .seats-available {
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+.route-page .bus-card .price-section .view-seats-btn {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.route-page .bus-card .price-section .view-seats-btn:hover {
+  background-color: #1557b0;
+}
+.route-page .bus-card .bus-features {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+.route-page .bus-card .bus-features .feature-icon {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  color: #666;
+  font-size: 14px;
+}
+.route-page .tabs {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #666;
+}
+.route-page .tabs .tab {
+  cursor: pointer;
+  padding: 3px 0;
+}
+.route-page .tabs .tab:hover {
+  color: #1a73e8;
+}
+.route-page .tabs .tab-separator {
+  color: #ddd;
+}
+.route-page .back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.route-page .modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  overflow: auto;
+  justify-content: center;
+  align-items: center;
+}
+.route-page .modal .modal-content {
+  background-color: white;
+  width: 80%;
+  max-width: 800px;
+  border-radius: 8px;
+  position: relative;
+  animation: modalFadeIn 0.3s;
+}
+.route-page .modal .modal-header {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.route-page .modal .modal-header .modal-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+.route-page .modal .modal-header .close-modal {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+.route-page .modal .modal-body {
+  padding: 20px;
+}
+.route-page .modal .modal-body .gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+}
+.route-page .modal .modal-body .gallery-container .gallery-image {
+  width: 100%;
+  height: 150px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.route-page .modal .modal-body .gallery-container .gallery-image:hover {
+  transform: scale(1.05);
+}
+.route-page .image-preview-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1100;
+  justify-content: center;
+  align-items: center;
+}
+.route-page .image-preview-modal .preview-image {
+  max-width: 90%;
+  max-height: 90%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.route-page .image-preview-modal .close-preview {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+.route-page .image-preview-modal .nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.route-page .image-preview-modal .nav-arrow.prev-image {
+  left: 20px;
+}
+.route-page .image-preview-modal .nav-arrow.next-image {
+  right: 20px;
+}
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .route-page .container {
+    padding: 0 10px;
+  }
+  .route-page .bus-card {
+    flex-direction: column;
+  }
+  .route-page .bus-card .price-section {
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 15px;
+  }
+  .route-page .bus-card .bus-details .journey-details {
+    flex-direction: column;
+  }
+  .route-page .bus-card .bus-details .journey-details .journey-middle {
+    margin: 15px 0;
+    padding: 0;
+  }
+  .route-page .bus-card .bus-details .journey-details .departure,
+  .route-page .bus-card .bus-details .journey-details .arrival {
+    text-align: center;
+  }
+  .route-page .bus-card .bus-features {
+    flex-wrap: wrap;
+  }
+  .route-page .modal-content {
+    width: 95%;
+  }
+  .route-page .modal-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .route-page .modal-header .close-modal {
+    align-self: flex-end;
+  }
+  .route-page .tabs {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
 }/*# sourceMappingURL=index.css.map */

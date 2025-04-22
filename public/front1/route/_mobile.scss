@@ -1,0 +1,55 @@
+@media (max-width: 768px) {
+    .route-page {
+        .container {
+            padding: 0 10px;
+        }
+
+        .bus-card {
+            flex-direction: column;
+
+            .price-section {
+                width: 100%;
+                align-items: flex-start;
+                margin-top: 15px;
+            }
+
+            .bus-details {
+                .journey-details {
+                    flex-direction: column;
+
+                    .journey-middle {
+                        margin: 15px 0;
+                        padding: 0;
+                    }
+
+                    .departure,
+                    .arrival {
+                        text-align: center;
+                    }
+                }
+            }
+
+            .bus-features {
+                flex-wrap: wrap;
+            }
+        }
+
+        .modal-content {
+            width: 95%;
+        }
+
+        .modal-header {
+            flex-direction: column;
+            align-items: flex-start;
+
+            .close-modal {
+                align-self: flex-end;
+            }
+        }
+
+        .tabs {
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    }
+}

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Models\FrontPageSection;
+use App\Models\BusRouteLocation; // Import the BusRouteLocation model
 
 class FrontController extends Controller
 {
@@ -29,8 +30,9 @@ class FrontController extends Controller
         });
         $routes = BusRoute::with(['fromLocation', 'toLocation']
         )->get();
+        $locations = BusRouteLocation::all();
         $popups = DB::table('popups')->get();
-        return view('front1.index', compact('sliders', 'serviceCategories','popups','sections','routes'));
+        return view('front1.index', compact('sliders', 'serviceCategories','popups','sections','routes','locations'));
     }
     public function categoryIndex(Request $request, $id)
     {
@@ -139,5 +141,29 @@ class FrontController extends Controller
     public function busServices()
     {
         return view('front.bus_services');
+    }
+    public function routeSearch(Request $request){
+        $from=$request->query('from');
+        $to=$request->query('to');
+        $routes=DB::table('bus_routes')
+        ->join('bus_types','bus_routes.bus_type_id','=','bus_types.id')
+       
+        ->where('from_location_id',$from)
+        ->where('to_location_id',$to)
+        ->get();
+        $locations = DB::table('bus_route_locations')
+        ->select('id', 'location_name')
+        ->whereIn('id', [$from, $to])
+        ->get()
+        ->mapWithKeys(function($location) use ($from, $to) {
+            if ($location->id == $from) {
+                return ['from_location' => $location->location_name];
+            } else {
+                return ['to_location' => $location->location_name];
+            }
+        });
+        
+      
+        return view('front1.busServices.route', compact('routes', 'locations'));
     }
 }

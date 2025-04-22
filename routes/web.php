@@ -58,6 +58,8 @@ Route::name('serviceCategory')->name('serviceCategory')->group(function () {
     Route::get('/index', [FrontController::class, 'categoryIndex'])->name('index');
     Route::get('/single/{category_id}', [FrontController::class, 'categorySingle'])->name('single');
 });
+Route::get('/bus/search', [FrontController::class, 'routeSearch'])->name('bus.search');
+
 Route::prefix('User')->name('User.')->group(function () {
     Route::post('/login', [LoginController::class, 'login'])->name('login');
 });

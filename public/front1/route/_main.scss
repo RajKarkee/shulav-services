@@ -1,0 +1,323 @@
+
+ 
+.route-page{
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  .bus-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+  
+    .bus-details {
+      flex-grow: 1;
+  
+      .bus-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+  
+        .night-badge {
+          background-color: #333;
+          color: white;
+          font-size: 12px;
+          padding: 2px 8px;
+          border-radius: 4px;
+          margin-left: 10px;
+        }
+      }
+  
+      .bus-subtype {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+  
+      .journey-details {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+  
+        .departure,
+        .arrival {
+          text-align: center;
+  
+          &.departure {
+            text-align: left;
+          }
+  
+          &.arrival {
+            text-align: right;
+          }
+  
+          .time {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+          }
+  
+          .location {
+            color: #666;
+            font-size: 14px;
+            margin-top: 5px;
+          }
+        }
+  
+        .journey-middle {
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 0 15px;
+          margin: 0 20px;
+  
+          .journey-duration {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+          }
+  
+          .journey-line {
+            width: 100%;
+            height: 1px;
+            background-color: #ddd;
+            position: relative;
+            margin: 10px 0;
+          }
+  
+          .bus-number {
+            font-size: 13px;
+            color: #666;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
+  
+    .price-section {
+      text-align: right;
+      min-width: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+  
+      .price {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+      }
+  
+      .seats-available {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+  
+      .view-seats-btn {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-top: 10px;
+  
+        &:hover {
+          background-color: #1557b0;
+        }
+      }
+    }
+  
+    .bus-features {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+  
+      .feature-icon {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        color: #666;
+        font-size: 14px;
+      }
+    }
+  }
+  
+  .tabs {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+  
+    .tab {
+      cursor: pointer;
+      padding: 3px 0;
+  
+      &:hover {
+        color: #1a73e8;
+      }
+    }
+  
+    .tab-separator {
+      color: #ddd;
+    }
+  }
+  
+  .back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #333;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  }
+  
+  // Modal
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 1000;
+    overflow: auto;
+    justify-content: center;
+    align-items: center;
+  
+    .modal-content {
+      background-color: white;
+      width: 80%;
+      max-width: 800px;
+      border-radius: 8px;
+      position: relative;
+      animation: modalFadeIn 0.3s;
+    }
+  
+    .modal-header {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+      }
+  
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #666;
+      }
+    }
+  
+    .modal-body {
+      padding: 20px;
+  
+      .gallery-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+  
+        .gallery-image {
+          width: 100%;
+          height: 150px;
+          object-fit: cover;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: transform 0.2s;
+  
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+      }
+    }
+  }
+  
+  // Image preview modal
+  .image-preview-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 1100;
+    justify-content: center;
+    align-items: center;
+  
+    .preview-image {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+  
+    .close-preview {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+  
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-size: 30px;
+      background: rgba(0,0,0,0.5);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+  
+      &.prev-image {
+        left: 20px;
+      }
+  
+      &.next-image {
+        right: 20px;
+      }
+    }
+  }
+  
+  @keyframes modalFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
