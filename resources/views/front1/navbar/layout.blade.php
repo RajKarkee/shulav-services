@@ -10,8 +10,6 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css"
         href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-
-
     <link rel="stylesheet" href="{{ asset('front1/index.css') }}">
     @yield('css')
 </head>
@@ -28,11 +26,24 @@
             ->limit(5)
             ->get(['id', 'name']);
 
+        $data = App\Helper::getSetting('minor') ??
+            (object) [
+                'logo' => '',
+                'footer_logo' => '',
+            ];
     @endphp
 
     <header>
         <div class="main-header">
-            @includeIf('front.index.menu_logo')
+            <div class="logo">
+                <a href="{{ route('index') }}">
+                    <picture>
+                        <source media="(min-width: 768px)" srcset="{{ $data->logo }}">
+                        <source media="(max-width: 767px)" srcset="{{ $data->footer_logo }}">
+                        <img class="logo" src="{{ $data->logo }}" alt="logo">
+                    </picture>
+                </a>
+            </div>
             <div class="search-container">
                 <input type="text" placeholder="Search 'Cars'" class="search-input" />
                 <button class="search-button" aria-label="Search">
@@ -79,19 +90,19 @@
 
             </div>
         </div>
-            <div class="categories-bar">
-                <div class="all-categories">
-                    ALL CATEGORIES <i class="fas fa-chevron-down"></i>
-                </div>
-                <nav>
-                    <ul>
-                        @foreach ($serviceCategories as $category)
-                            <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
-                        @endforeach
-                    </ul>
-                </nav>
+        <div class="categories-bar">
+            <div class="all-categories">
+                ALL CATEGORIES <i class="fas fa-chevron-down"></i>
             </div>
-  
+            <nav>
+                <ul>
+                    @foreach ($serviceCategories as $category)
+                        <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
+                    @endforeach
+                </ul>
+            </nav>
+        </div>
+
     </header>
 
     @yield('content')

@@ -4,12 +4,20 @@
   .container {
     max-width: 1000px;
     margin: 0 auto;
+    .no-routes-message{
+      text-align: center;
+      font-size: 18px;
+      color: #666;
+      margin-top: 50px;
+      margin-bottom: 100px;
+    }
   }
   
   .bus-card {
     background-color: #fff;
     border-radius: 8px;
     padding: 20px;
+    margin-top:10px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     display: flex;
@@ -58,13 +66,13 @@
             text-align: right;
           }
   
-          .time {
+          .location {
             font-size: 24px;
             font-weight: 600;
             color: #333;
           }
   
-          .location {
+          .path {
             color: #666;
             font-size: 14px;
             margin-top: 5px;

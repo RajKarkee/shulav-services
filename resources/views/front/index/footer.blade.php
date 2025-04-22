@@ -1,7 +1,7 @@
 <div class="footer">
     <div >
         <div style="max-width: 100%" class="logo mb-2">
-            <img src="http://192.168.1.8:8000/uploads/setting/UQ4LEfKUOR1GPvoQrB9VX9AyzS4aKrZPig4ADjsM.png" alt="">
+            <img src="http://192.168.254.29:8000/uploads/setting/EwQ09O0HwwMXofJUcejhZWH0HDIP4ERDPNoRXFNS.png" alt="">
         </div>
     </div>
     <hr>
@@ -9,7 +9,7 @@
         <div class="col-md-3 footer-single">
 
             <a href="https://play.google.com/store/games?hl=en" class="mobile-logo">
-                <img src="http://192.168.1.8:8000/front/palystore.svg" class="w-100" alt="">
+                <img src="http://192.168.254.29:8000/front/palystore.svg" class="w-100" alt="">
             </a>
             <hr class="d-block d-md-none">
         </div>
@@ -46,8 +46,8 @@
             <div class="subtitle mb-2 text-justify">
                 To get latest new and updates from us please Subscribe our newsletter.
             </div>
-                <form id="subscribe" action="http://192.168.1.8:8000/subscribe" class="subscribe shadow">
-                    <input type="hidden" name="_token" value="DVXP2DPl0SfsijyvjRkJo0cOPepjGfQGhO9VSRrJ" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
+                <form id="subscribe" action="http://192.168.254.29:8000/subscribe" class="subscribe shadow">
+                    <input type="hidden" name="_token" value="J7dJgkOsZXBdVBUXp4a8iNd0KQHHBwRpefVHDNqL" autocomplete="off">                    <input type="email" required placeholder="Enter Email Address">
                     <button>
                         <i class="fas px-2 fa-arrow-right">
                         </i>
