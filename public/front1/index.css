@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@200..700&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
@@ -768,6 +769,9 @@ body {
   font-weight: 500;
   color: #002f34;
   margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .homepage .section .slider .card .card-link .card .card-body .price {
   font-size: 18px;
@@ -786,8 +790,6 @@ body {
 .homepage .row-cols-4 .col {
   width: 100%;
   padding: 0;
-}
-.homepage .row-cols-4 .card {
   flex: 0 0 auto;
   width: 100%;
   border-radius: 4px;
@@ -795,26 +797,26 @@ body {
   background-color: white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
-.homepage .row-cols-4 .card .card-link {
+.homepage .row-cols-4 .col .card-link {
   text-decoration: none !important;
 }
-.homepage .row-cols-4 .card .card-link .card {
+.homepage .row-cols-4 .col .card-link .card {
   border: none;
   margin-bottom: 0;
   width: 100%;
   box-shadow: none;
 }
-.homepage .row-cols-4 .card .card-link .card .card-image {
+.homepage .row-cols-4 .col .card-link .card .card-image {
   position: relative;
   height: 200px;
 }
-.homepage .row-cols-4 .card .card-link .card .card-image img {
+.homepage .row-cols-4 .col .card-link .card .card-image img {
   width: 100%;
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
 }
-.homepage .row-cols-4 .card .card-link .card .card-image .image-count {
+.homepage .row-cols-4 .col .card-link .card .card-image .image-count {
   position: absolute;
   bottom: 8px;
   left: 8px;
@@ -824,10 +826,10 @@ body {
   border-radius: 4px;
   font-size: 12px;
 }
-.homepage .row-cols-4 .card .card-link .card .card-body {
+.homepage .row-cols-4 .col .card-link .card .card-body {
   padding: 12px;
 }
-.homepage .row-cols-4 .card .card-link .card .card-body .category {
+.homepage .row-cols-4 .col .card-link .card .card-body .category {
   font-size: 12px;
   color: #777;
   margin-bottom: 8px;
@@ -835,21 +837,24 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.homepage .row-cols-4 .card .card-link .card .card-body .category i {
+.homepage .row-cols-4 .col .card-link .card .card-body .category i {
   margin-right: 4px;
 }
-.homepage .row-cols-4 .card .card-link .card .card-body h5 {
+.homepage .row-cols-4 .col .card-link .card .card-body h5 {
   font-size: 16px;
   font-weight: 500;
   color: #002f34;
   margin-bottom: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.homepage .row-cols-4 .card .card-link .card .card-body .price {
+.homepage .row-cols-4 .col .card-link .card .card-body .price {
   font-size: 18px;
   font-weight: bold;
   color: #002f34;
 }
-.homepage .row-cols-4 .card:hover {
+.homepage .row-cols-4 .col:hover {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -1260,6 +1265,500 @@ footer .footer-bottom .copyright a:hover {
   }
 }
 
+#page-login {
+  min-height: 40vh;
+  max-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f9fc;
+}
+
+#page-login .holder {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 85%;
+  max-width: 1200px;
+  background: white;
+  position: relative;
+  display: flex;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#page-login .holder.join {
+  width: 70%;
+  max-width: 900px;
+}
+
+#page-login .holder .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+  z-index: 10;
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+
+#page-login .holder .overlay.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-login .holder .overlay .img {
+  height: 80px;
+  width: 80px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+#page-login .holder .image {
+  background-image: url("/front/auth/login.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  flex: 3;
+  position: relative;
+}
+
+#page-login .holder .image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+#page-login .holder .login-form {
+  background: white;
+  padding-top: 3rem;
+  flex: 2;
+  max-width: 100%;
+  transition: all 0.3s ease;
+}
+
+#page-login .holder .login-form.join {
+  padding: 2rem;
+}
+
+#page-login .holder .login-form.step {
+  padding: 2rem;
+}
+
+#page-login .holder .login-form .heading-logo {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+#page-login .holder .login-form .heading-logo img {
+  width: 180px;
+  transition: all 0.3s ease;
+}
+
+#page-login .holder .login-form .header {
+  display: flex;
+  text-align: center;
+  margin: 1.5rem 0;
+  font-size: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+#page-login .holder .login-form .header span {
+  flex: 1;
+  font-weight: 500;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form .header span:hover {
+  background-color: rgba(255, 90, 95, 0.08);
+}
+
+#page-login .holder .login-form .header span.active {
+  color: white;
+  background-color: var(--red-primary);
+  font-weight: 600;
+}
+
+#page-login .holder .login-form .header span .normal {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+#page-login .holder .login-form .controls {
+  margin-bottom: 1.5rem;
+}
+
+#page-login .holder .login-form .controls.join {
+  padding: 0 2rem;
+}
+
+#page-login .holder .login-form .controls .control {
+  border: 1px solid rgba(183, 183, 183, 0.2);
+  display: flex;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  color: var(--black-secondary);
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form .controls .control:focus-within {
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 2px rgba(255, 90, 95, 0.1);
+}
+
+#page-login .holder .login-form .controls .control .icon {
+  width: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9c9ea3;
+}
+
+#page-login .holder .login-form .controls .control .icon .material-icons {
+  font-size: 18px;
+}
+
+#page-login .holder .login-form .controls .control.join {
+  display: block;
+  border: none;
+  height: auto;
+}
+
+#page-login .holder .login-form .controls .control.join label {
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: #333;
+  display: block;
+}
+
+#page-login .holder .login-form .controls .control.join label.required::after {
+  content: "*";
+  color: var(--red-primary);
+  margin-left: 2px;
+}
+
+#page-login .holder .login-form .controls .control.join label .text-danger {
+  font-size: 0.85rem;
+  color: var(--red-primary);
+}
+
+#page-login .holder .login-form .controls .control.join select,
+#page-login .holder .login-form .controls .control.join input {
+  border: 1px solid rgba(183, 183, 183, 0.2);
+  border-radius: 8px;
+  width: 100%;
+  height: 48px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form .controls .control.join select:focus,
+#page-login .holder .login-form .controls .control.join input:focus {
+  border-color: var(--red-primary);
+  box-shadow: 0 0 0 2px rgba(255, 90, 95, 0.1);
+  outline: none;
+}
+
+#page-login .holder .login-form .controls .control select,
+#page-login .holder .login-form .controls .control input {
+  flex-grow: 1;
+  width: calc(100% - 48px);
+  border: none;
+  outline: transparent;
+  font-size: 15px;
+  padding: 0 1rem;
+}
+
+#page-login .holder .login-form .controls .control select::-moz-placeholder, #page-login .holder .login-form .controls .control input::-moz-placeholder {
+  color: #9c9ea3;
+  font-weight: 500;
+  font-family: "Lato", sans-serif;
+}
+
+#page-login .holder .login-form .controls .control select::placeholder,
+#page-login .holder .login-form .controls .control input::placeholder {
+  color: #9c9ea3;
+  font-weight: 500;
+  font-family: "Lato", sans-serif;
+}
+
+#page-login .holder .login-form .controls .control select::-webkit-outer-spin-button,
+#page-login .holder .login-form .controls .control select::-webkit-inner-spin-button,
+#page-login .holder .login-form .controls .control input::-webkit-outer-spin-button,
+#page-login .holder .login-form .controls .control input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#page-login .holder .login-form .controls .control select[type=number],
+#page-login .holder .login-form .controls .control input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Step form styling */
+#page-login .holder .login-form.step #first-selector {
+  cursor: pointer;
+  padding: 0 2rem;
+}
+
+#page-login .holder .login-form.step #first-selector span {
+  display: block;
+  height: 300px;
+  background-color: #f8f9fa;
+  text-align: center;
+  color: #7a7a7a;
+  border-radius: 10px;
+  border: 2px dashed #dde0e4;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form.step #first-selector span:hover {
+  background-color: #f1f3f5;
+  border-color: #c2c7d0;
+}
+
+#page-login .holder .login-form.step #first-selector span h6 {
+  font-size: 28px;
+  padding-top: 70px;
+}
+
+#page-login .holder .login-form.step #first-selector span h6 img {
+  width: 70px;
+  height: 70px;
+  margin-top: 15px;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form.step #first-selector span:hover h6 img {
+  opacity: 0.9;
+}
+
+#page-login .holder .login-form.step .img-loader {
+  width: 60px;
+  height: 60px;
+  margin: 1rem auto;
+}
+
+#page-login .holder .login-form.step .img-loader label {
+  padding: 10px;
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  background: #f1f3f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form.step .img-loader label:hover {
+  background: #e9ecef;
+}
+
+#page-login .holder .login-form.step .img-loader label.loaded {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--red-primary);
+}
+
+#page-login .holder .login-form.step .img-loader label img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#page-login .holder .login-form.step #image-holder {
+  padding: 0 2rem;
+}
+
+#page-login .holder .login-form.step .link {
+  color: var(--red-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form.step .link:hover {
+  color: #e63e44;
+  text-decoration: underline;
+}
+
+#page-login .holder .login-form .loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+/* Error messaging */
+#page-login .holder .login-form #errors {
+  display: none;
+  background: rgba(255, 90, 95, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+#page-login .holder .login-form #errors.active {
+  display: block;
+}
+
+#page-login .holder .login-form #errors .col-md-4 {
+  color: var(--red-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.25rem 0;
+}
+
+#page-login .holder .login-form #errors .col-md-4::before {
+  content: "•";
+  margin-right: 5px;
+}
+
+/* Links styling */
+#page-login .holder .login-form .link {
+  color: #6c757d;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form .link:hover {
+  color: var(--red-primary);
+}
+
+#page-login .holder .login-form a.where {
+  display: block;
+  padding: 0.9rem;
+  text-align: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  color: #5f6368;
+  transition: all 0.2s ease;
+}
+
+#page-login .holder .login-form a.where:hover {
+  color: var(--red-primary);
+  border-color: rgba(255, 90, 95, 0.3);
+  background-color: rgba(255, 90, 95, 0.03);
+}
+
+/* Button styling - to be added to your existing buttons */
+.btn-primary {
+  background-color: var(--red-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem 1.5rem;
+  margin-top: 20px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(255, 90, 95, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: #e63e44;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 90, 95, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(255, 90, 95, 0.2);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.85rem 1.5rem;
+  font-weight: 600;
+  color: #495057;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #f8f9fa;
+  border-color: #ced4da;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+  #page-login .holder {
+    width: 90%;
+    flex-direction: column;
+  }
+  #page-login .holder.join {
+    width: 90%;
+  }
+  #page-login .holder .image {
+    height: 180px;
+    flex: none;
+  }
+  #page-login .holder .login-form {
+    padding: 2rem 1.5rem;
+  }
+  #page-login .holder .login-form.join {
+    padding: 1.5rem 1rem;
+  }
+  #page-login .holder .login-form .controls.join {
+    padding: 0;
+  }
+  #page-login .holder .login-form .heading-logo img {
+    width: 150px;
+  }
+}
+@media (max-width: 426px) {
+  #page-login {
+    padding: 1rem;
+  }
+  #page-login .holder {
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
+  #page-login .holder .image {
+    height: 150px;
+  }
+  #page-login .holder .login-form.step #image-holder,
+  #page-login .holder .login-form.step #first-selector {
+    padding: 0;
+  }
+  #page-login .holder .login-form.step #first-selector span h6 {
+    font-size: 22px;
+  }
+  #page-login .holder .login-form.step #first-selector span {
+    height: 200px;
+  }
+  #page-login .holder .login-form.step #first-selector span h6 {
+    padding-top: 40px;
+  }
+  #page-login .holder .login-form .header span {
+    padding: 0.75rem 0.5rem;
+    font-size: 14px;
+  }
+}
 .main-aa {
   padding: 30px;
 }

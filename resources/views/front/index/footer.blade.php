@@ -1,29 +1,26 @@
 <div class="footer">
     <div >
         <div style="max-width: 100%" class="logo mb-2">
-            <img src="http://192.168.254.29:8000/uploads/setting/EwQ09O0HwwMXofJUcejhZWH0HDIP4ERDPNoRXFNS.png" alt="">
+            <img src="http://192.168.254.29:8000/uploads/setting/IEgfnK0MxEzFWOPS0t05LZSM8kjI5cW0eNTaxkMt.png" alt="">
         </div>
     </div>
     <hr>
     <div class="row">
         <div class="col-md-3 footer-single">
 
-            <a href="https://play.google.com/store/games?hl=en" class="mobile-logo">
+            <a href="" class="mobile-logo">
                 <img src="http://192.168.254.29:8000/front/palystore.svg" class="w-100" alt="">
             </a>
             <hr class="d-block d-md-none">
         </div>
         <div class="col-md-3 footer-single">
                 <div class="title mb-2">
-                    Anmol Rents
+                    
                 </div>
                 <div class="subtitle">
                     <address>
-                        Netflix<br>
-                        
-                        <a href="tel:984249298">984249298</a>,
+                        <br>
                                                  <br>
-                                                  <a href="mailto:new@gmail.com">new@gmail.com</a>,
                                              </address>
                 </div>
             <hr class="d-block d-md-none">
@@ -59,22 +56,7 @@
     </div>
     <hr class="mb-0">
                 <div class="social">
-                    <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-facebook-f"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-twitter"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-instagram"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-youtube"></i>
-        </a>
-                <a href="#https://netfree.cc/home" class="social-link">
-            <i class="fab fa-linkedin-in"></i>
-        </a>
-                        </div>
+                                    </div>
 </div>
 
 <div id="subscribe-modal" class="modal fade">

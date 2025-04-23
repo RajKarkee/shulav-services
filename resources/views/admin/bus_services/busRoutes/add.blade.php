@@ -14,7 +14,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="from_location">From</label>
-                                <select name="from_location_id" id="from_location" class="form-control" required>
+                                <select name="from_location_id" id="from_location" class="form-control select2" required>
                                     <option value="">Select Departure Location</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>
@@ -25,7 +25,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="to_location">To</label>
-                                <select name="to_location_id" id="to_location" class="form-control" required>
+                                <select name="to_location_id" id="to_location" class="form-control select2" required>
                                     <option value="">Select Destination Location</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>

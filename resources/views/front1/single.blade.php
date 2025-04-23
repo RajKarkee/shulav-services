@@ -163,7 +163,7 @@
                             <div class="d-flex align-items-center justify-content-center">
                                 <i class="fas fa-phone me-2"></i>
                                 @auth
-                                    <span>{{ $vendor->phone }}</span>
+                                    <span>09292929</span>
                                 @else
                                     <span>** *** ***</span>
                                     <a href="{{ route('login') }}" class="ms-2 text-primary">Login to show number</a>

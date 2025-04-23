@@ -1,12 +1,9 @@
 <div class="banner">
-        <img src="http://127.0.0.1:8000/uploads/slider/dLIqZtHZtTNtATvyd7YminWVUF7FgTXZK2qJBp6L.png" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+        <img src="http://192.168.254.29:8000/uploads/slider/xLbksd4fqrPvwa99ah7oVK49T8SHnsQ1Z9vhFaWN.jpg" alt="Color Your Way to Epic Rewards" class="full-width-banner">
     </div>
     <div class="banner">
-        <img src="http://127.0.0.1:8000/uploads/slider/2K9g3tHwHastuw84eYopxwqNiATUlfwfsrfgygaJ.png" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+        <img src="http://192.168.254.29:8000/uploads/slider/BwskcI9V3MTD2hzl1DQuvbjLpzQcQLrUfY9GiVXC.png" alt="Color Your Way to Epic Rewards" class="full-width-banner">
     </div>
     <div class="banner">
-        <img src="http://127.0.0.1:8000/uploads/slider/dp1pyxOAtXBmB4lq8T3Pz2QEC8wE5GX0t04PcjYN.png" alt="Color Your Way to Epic Rewards" class="full-width-banner">
-    </div>
-    <div class="banner">
-        <img src="http://127.0.0.1:8000/uploads/slider/oX54sik0PUg9e4MIGM5XX9wWpOMKwXtAsYLUgS10.jpg" alt="Color Your Way to Epic Rewards" class="full-width-banner">
+        <img src="http://192.168.254.29:8000/uploads/slider/ec8lxZqHh3HDMOs8nh8F5aYlLUkTiLpE87MoNvQC.png" alt="Color Your Way to Epic Rewards" class="full-width-banner">
     </div>

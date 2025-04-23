@@ -36,8 +36,11 @@
                             </div>
 
                             <div class="journey-middle">
+                                
                                 <div class="journey-duration">{{ $route->estimated_time }} Hours</div>
-                                <div class="journey-line"></div>
+                                <div class="seats-available">{{$route->estimated_time}}</div>
+                                <div class="journey-line"> </div>
+
                                 <div class="bus-number">{{ $route->description }}</div>
                             </div>
 
@@ -72,7 +75,7 @@
                     <div class="price-section">
                         <div>
                             <div class="price">Rs.{{ $route->fare }}</div>
-                            <div class="seats-available">46 Seats Available</div>
+                           
                         </div>
                         <button class="view-seats-btn">View Seats</button>
                     </div>

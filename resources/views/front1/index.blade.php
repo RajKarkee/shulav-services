@@ -43,6 +43,7 @@
                             <div class="bus-modal-col">
                                 <div class="bus-modal-label"><i class="fa fa-bus"></i></div>
                                 <select id="fromLocation" class="bus-modal-select" style="min-width:200px; width:220px;">
+                                    <option value="" disabled selected>Start your adventure at?</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>  
                                     @endforeach
@@ -54,6 +55,7 @@
                             <div class="bus-modal-col">
                                 <div class="bus-modal-label"><i class="fa fa-map-marker-alt"></i></div>
                                 <select id="toLocation" class="bus-modal-select" style="min-width:200px; width:220px;">
+                                    <option value="" disabled selected>Your destination awaits at?</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>
                                     @endforeach
@@ -129,7 +131,6 @@
                     <div class="row row-cols-4">
                         @foreach ($section->products as $product)
                             <div class="col">
-                                <div class="card">
                                     <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
                                         class="card-link">
                                         <div class="card">
@@ -154,7 +155,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                </div>
+                                
                             </div>
                         @endforeach
                     </div>
