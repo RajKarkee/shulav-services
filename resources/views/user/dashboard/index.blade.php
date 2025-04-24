@@ -14,7 +14,7 @@
                 <div class="col-md-8   ">
                     <div class="bg-white shadow mb-3" >
                         <div class="card-body " id="jumbotron">
-                            <a href="{{route('vendor.dashboard')}}">Dashboard</a>
+                            <a href="#">Dashboard</a>
 
                         </div>
                     </div>
@@ -32,13 +32,13 @@
                                     <div class="col-md-3 col-6 pb-3 mobile-sm">
                                         <a href="{{ route('search', ['ser_id' => $user->vendor->service_id]) }}"
                                             class="service h-100">
-                                            <img src="{{ asset($user->vendor->service->image) }}" alt="">
+                                            <img src="#" alt="">
                                             <div class="name">
-                                                {{ $user->vendor->service->name }}
+                                             Name
                                             </div>
                                         </a>
                                     </div>
-                                    @foreach ($otherServices as $otherService)
+                                    {{-- @foreach ($otherServices as $otherService)
                                     <div class="col-md-3 col-6 pb-3 mobile-sm">
                                         <a href="{{ route('search', ['ser_id' => $otherService->id]) }}"
                                             class="service h-100">
@@ -48,9 +48,9 @@
                                             </div>
                                         </a>
                                     </div>
-                                    @endforeach
+                                    @endforeach --}}
                                     <div class="col-md-3 col-6 pb-3 mobile-sm">
-                                        <a href="{{ route('vendor.subscribe') }}"
+                                        <a href="#"
                                             class="service h-100">
                                             <img src="{{ asset('front/add.svg') }}" alt="">
                                             <div class="name">
@@ -63,7 +63,7 @@
                             <div class="choice" id="reviews">
                                 <div id="reviews-inner"></div>
                                 <div class="py-2 text-center">
-                                    <a href="{{route('vendor.reviews')}}" class="btn btn-red">View All</a>
+                                    <a href="#" class="btn btn-red">View All</a>
                                 </div>
                             </div>
                             <div class="choice" id="bills">
@@ -115,7 +115,7 @@
                                                 {{ $bill->amount }}
                                             </td>
                                             <td>
-                                                <a target="_blank" href="{{route('vendor.bill',['bill'=>$bill->id])}}">View Bill</a>
+                                                <a target="_blank" href="#">View Bill</a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -135,7 +135,7 @@
     @include('vendor.dashboard.namejs')
     @include('vendor.dashboard.descjs')
     <script>
-        const reviews = {!! json_encode($reviews) !!};
+   
         const asset = "{{ asset('') }}";
         const $template = $('#single-review-template').html();
         var $tot=0;

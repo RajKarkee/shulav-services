@@ -189,7 +189,7 @@ class VendorController extends Controller
             }
         } else {
             if ($step > 3) {
-                return redirect()->route('vendor.dashboard');
+                return redirect()->route('user.dashboard');
             } else {
                 return view('vendor.step-' . $step);
             }

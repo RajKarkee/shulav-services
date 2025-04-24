@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use App\Models\FrontPageSection;
 use App\Models\BusRouteLocation; // Import the BusRouteLocation model
+use Illuminate\Support\Facades\Auth; // Import the Auth facade
+use App\Models\Product; // Import the Product model
+use App\Models\UserProduct;
 
 class FrontController extends Controller
 {
     public function index()
     {
-        $sliders = Cache::rememberForever('sliders',function () {
+        $sliders = Cache::rememberForever('sliders', function () {
             return DB::table('sliders')->get(['id', 'image', 'link']);
         });
 
         $serviceCategories = Cache::rememberForever('service_categories',  function () {
-            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name', 'image','type']);
+            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name', 'image', 'type']);
         });
 
         $sections = Cache::rememberForever('front_page_sections',  function () {
@@ -28,11 +31,12 @@ class FrontController extends Controller
                 ->orderBy('position', 'asc')
                 ->get();
         });
-        $routes = BusRoute::with(['fromLocation', 'toLocation']
+        $routes = BusRoute::with(
+            ['fromLocation', 'toLocation']
         )->get();
         $locations = BusRouteLocation::all();
         $popups = DB::table('popups')->get();
-        return view('front1.index', compact('sliders', 'serviceCategories','popups','sections','routes','locations'));
+        return view('front1.index', compact('sliders', 'serviceCategories', 'popups', 'sections', 'routes', 'locations'));
     }
     public function categoryIndex(Request $request, $id)
     {
@@ -142,28 +146,98 @@ class FrontController extends Controller
     {
         return view('front.bus_services');
     }
-    public function routeSearch(Request $request){
-        $from=$request->query('from');
-        $to=$request->query('to');
-        $routes=DB::table('bus_routes')
-        ->join('bus_types','bus_routes.bus_type_id','=','bus_types.id')
-       
-        ->where('from_location_id',$from)
-        ->where('to_location_id',$to)
-        ->get();
+    public function routeSearch(Request $request)
+    {
+        $from = $request->query('from');
+        $to = $request->query('to');
+        $routes = DB::table('bus_routes')
+            ->join('bus_types', 'bus_routes.bus_type_id', '=', 'bus_types.id')
+
+            ->where('from_location_id', $from)
+            ->where('to_location_id', $to)
+            ->get();
         $locations = DB::table('bus_route_locations')
-        ->select('id', 'location_name')
-        ->whereIn('id', [$from, $to])
-        ->get()
-        ->mapWithKeys(function($location) use ($from, $to) {
-            if ($location->id == $from) {
-                return ['from_location' => $location->location_name];
-            } else {
-                return ['to_location' => $location->location_name];
-            }
-        });
-        
-      
+            ->select('id', 'location_name')
+            ->whereIn('id', [$from, $to])
+            ->get()
+            ->mapWithKeys(function ($location) use ($from, $to) {
+                if ($location->id == $from) {
+                    return ['from_location' => $location->location_name];
+                } else {
+                    return ['to_location' => $location->location_name];
+                }
+            });
+
+
         return view('front1.busServices.route', compact('routes', 'locations'));
+    }
+
+    public function seller()
+    {
+        $user = Auth::user();
+        return view('user.index', compact('user'));
+    }
+    public function now()
+    {
+        $user = Auth::user();
+        return view('front1.now', compact('user'));
+    }
+    public function name()
+    {
+        $user = Auth::user();
+        return view('front1.name', compact('user'));
+    }
+
+    public function userProducts(Request $request)
+    {
+        if (request()->isMethod('GET')) {
+
+            return view('user.products.index');
+        } else {
+            // $request->validate([
+            //     'name' => 'required|unique:products,name',
+            //     'short_desc' => 'required',
+            //     'desc' => 'required',
+            //     'price' => 'required|numeric',
+            //     'image' => 'required|image',
+            //     'category_id' => 'required|exists:categories,id',
+            //     'city_id' => 'required|exists:cities,id',
+            //     'start' => 'nullable|date',
+            //     'end' => 'nullable|date'
+            // ]);
+       
+
+            $product = new Product();
+            $product->name = $request->name;
+            $product->short_desc = $request->short_desc;
+            $product->desc = $request->desc;
+            $product->price = $request->price;
+            $product->on_sale = $request->sale_price;
+            $product->category_id = $request->category_id;
+            $product->city_id = $request->city_id;
+            $product->start = $request->start;
+            $product->end = $request->end;
+            $product->active = 0;
+            if ($request->hasFile('image')) {
+                $product->image = $request->file('image')->store('uploads/products');
+            }
+
+            for ($i = 0; $i < 6; $i++) {
+                if ($request->hasFile('image-' . $i)) {
+                    $product->{'image' . ($i + 1)} = $request->file('image-' . $i)->store('uploads/products');
+                }
+            }
+            $product->save();
+            $user = Auth::user();
+            $userProduct = new UserProduct();
+            $userProduct->user_id = $user->id;
+            $userProduct->product_id = $product->id;
+            $userProduct->save();
+
+            $subKey = $subcategoryId ?? 'none';
+            Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
+
+            return redirect()->back()->with('success', 'Product added successfully!');
+        }
     }
 }

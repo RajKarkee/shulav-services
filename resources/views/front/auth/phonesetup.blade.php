@@ -419,7 +419,7 @@ body {
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="control join mb-3">
                                     <label for="location" class="required">Location</label>
                                     <select min="10" max="10" id="location" name="location_id" aria-label="location"
@@ -427,7 +427,7 @@ body {
                                         <!-- Will be populated via JavaScript -->
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-12">
                                 <div class="control join mb-3">
@@ -452,7 +452,7 @@ body {
                                 </div>
                             </div>
                             
-                            <div class="col-md-6 options option-2">
+                            {{-- <div class="col-md-6 options option-2">
                                 <div class="control join mb-3">
                                     <label for="service" class="required">Service</label>
                                     <select min="10" max="10" id="service" name="service_id" aria-label="service"
@@ -461,7 +461,7 @@ body {
                                     </select>
                                 </div>
                             </div>
-                            
+                             --}}
                             <div class="col-md-12 mt-4">
                                 <button class="btn btn-red w-100">
                                     @if ($redirect==null)
@@ -480,7 +480,7 @@ body {
 @endsection
 @section('js')
     <script>
-        const services={!! json_encode($services) !!};
+
         const locations={!! json_encode($locations) !!};
 
         $(document).ready(function() {

@@ -18,6 +18,8 @@
     <title>{{ env('APP_NAME', '') }} - @yield('title')</title>
 </head>
 
+    
+
 <body>
 
 
@@ -77,6 +79,91 @@
             'X-Requested-With': 'XMLHttpRequest',
             'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         };
+    </script>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addProductBtn = document.getElementById('addProductBtn');
+            const addProductModal = document.getElementById('addProductModal');
+            const closeModal = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const imageUploadItems = document.querySelectorAll('.image-upload-item');
+
+            // Open modal when Add new product button is clicked
+            addProductBtn.addEventListener('click', function() {
+                addProductModal.classList.add('active');
+            });
+
+            // Close modal functions
+            function closeModalFunc() {
+                addProductModal.classList.remove('active');
+            }
+
+            closeModal.addEventListener('click', closeModalFunc);
+            cancelBtn.addEventListener('click', closeModalFunc);
+
+            // Close modal when clicking outside
+            addProductModal.addEventListener('click', function(e) {
+                if (e.target === addProductModal) {
+                    closeModalFunc();
+                }
+            });
+
+            // Image upload functionality
+            imageUploadItems.forEach(item => {
+                const index = item.getAttribute('data-index');
+                const inputElement = document.getElementById(`imageUpload${index}`);
+
+                // Click on upload box triggers file input
+                item.addEventListener('click', function() {
+                    if (!item.querySelector('.image-preview')) {
+                        inputElement.click();
+                    }
+                });
+
+                // Handle file selection
+                inputElement.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            // Remove previous preview if exists
+                            const existingPreview = item.querySelector('.image-preview');
+                            if (existingPreview) {
+                                item.removeChild(existingPreview);
+                            }
+
+                            // Remove previous remove button if exists
+                            const existingRemoveBtn = item.querySelector('.remove-image');
+                            if (existingRemoveBtn) {
+                                item.removeChild(existingRemoveBtn);
+                            }
+
+                            // Create image preview
+                            const imgPreview = document.createElement('img');
+                            imgPreview.src = e.target.result;
+                            imgPreview.classList.add('image-preview');
+                            item.appendChild(imgPreview);
+
+                            // Create remove button
+                            const removeBtn = document.createElement('div');
+                            removeBtn.classList.add('remove-image');
+                            removeBtn.innerHTML = '×';
+                            item.appendChild(removeBtn);
+
+                            // Handle remove button click
+                            removeBtn.addEventListener('click', function(e) {
+                                e.stopPropagation(); // Prevent triggering parent click
+                                item.removeChild(imgPreview);
+                                item.removeChild(removeBtn);
+                                inputElement.value = ''; // Clear file input
+                            });
+                        };
+
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            });
+        });
     </script>
     @yield('js')
     <script>

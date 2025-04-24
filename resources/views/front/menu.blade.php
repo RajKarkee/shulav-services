@@ -23,6 +23,9 @@
                     <li>
                         <a class="{{ Request::is('vendor/dashboard/finished-jobs') ? 'text-danger' : '' }}" href="{{ route('vendor.finishedJob') }}">Finished Jobs</a>
                     </li>
+                    <li>
+                        <a href="{{route('user.products.add')}}">My products</a>
+                    </li>
                 @endif
 
                 @if ($user->role == 3)

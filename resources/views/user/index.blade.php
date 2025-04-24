@@ -44,7 +44,7 @@
                     </div>
                     <div class="bg-white shadow mb-3" >
                         <h5 class="p-3">
-                            My Reviews
+                            My Products
                         </h5>
                         <hr class="m-0">
                         <div class="p-3" >
@@ -54,7 +54,7 @@
                         </div>
                     </div>
 
-                    @if(count($bookmarks)>0)
+                    {{-- @if(count($bookmarks)>0)
                     <div class="bg-white shadow mb-3" >
                         <h5 class="p-3">
                             Bookmarks
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    @endif
+                    @endif --}}
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
     @include('user.dashboard.namejs')
     @include('user.dashboard.descjs')
     <script>
-        const reviews = {!! json_encode($reviews) !!};
+      
         const asset = "{{ asset('') }}";
         const $template = $('#single-review-template').html();
         var $tot=0;

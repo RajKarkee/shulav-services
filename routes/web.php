@@ -127,6 +127,21 @@ Route::middleware('guest')->group(function () {
     Route::match(['GET', 'POST'], 'join', [FrontAuthController::class, 'join'])->name('join');
     Route::match(['GET', 'POST'], 'checkEmail', [FrontAuthController::class, 'checkEmail'])->name('checkEmail');
 });
+Route::get('vendor/cheak', [FrontController::class, 'seller'])->name('vendor.dashboard');
+Route::get('vendor/cheak/now', [FrontController::class, 'now'])->name('vendor.edit-info');
+Route::get('vendor/cheak/now/name', [FrontController::class, 'name'])->name('vendor.change-name');
+Route::get('vendor/cheak/now/image', [FrontController::class, 'name'])->name('vendor.change-image');
+Route::get('vendor/cheak/now/desc', [FrontController::class, 'name'])->name('vendor.change-desc');
+Route::get('vendor/cheak/now/hour', [FrontController::class, 'name'])->name('vendor.openingHour');
+Route::get('vendor/cheak/now/revies', [FrontController::class, 'name'])->name('vendor.reviews');
+Route::get('vendor/cheak/now/index', [FrontController::class, 'name'])->name('vendor.product.index');
+Route::get('vendor/cheak/now/bill', [FrontController::class, 'name'])->name('vendor.bills');
+Route::get('vendor/cheak/now/bill/search', [FrontController::class, 'name'])->name('vendor.job-search.index');
+Route::get('vendor/cheak/now/bill/sas', [FrontController::class, 'name'])->name('vendor.mybids');
+Route::get('vendor/cheak/now/bill/mas', [FrontController::class, 'name'])->name('vendor.bidaccept');
+Route::get('vendor/cheak/now/bill/kas', [FrontController::class, 'name'])->name('vendor.finishedJob');
+Route::match(['GET', 'POST'], 'user/products/ass', [FrontController::class, 'userProducts'])->name('user.products.add');
+
 
 Route::name('user.')->prefix('user')->middleware('role:user')->group(function () {
     Route::get('', [UserController::class, 'index'])->name('dashboard');
@@ -221,7 +236,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::match(['GET', 'POST'], 'password', [DashboardController::class, 'password'])->name('password');
 
-        route::match(['GET', 'POST'], 'logout', [AuthController::class, 'logout'])->name('logout');
+        Route::match(['GET', 'POST'], 'logout', [AuthController::class, 'logout'])->name('logout');
 
         Route::get('append/{id}/{command}', [DashboardController::class, 'append']);
         Route::prefix('pricing')->name('pricing.')->group(function () {
@@ -255,6 +270,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('/update', [BusRouteController::class, 'update'])->name('update');
                 Route::post('/delete', [BusRouteController::class, 'delete'])->name('delete');
             });
+
+        
         });
 
 
@@ -272,6 +289,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::match(['get', 'post'], '/edit/{product_id}', [AdminProductController::class, 'edit'])->name('edit');
             Route::get('del/{product_id}', [AdminProductController::class, 'del'])->name('del');
         });
+//         Route::prefix('user')->name('user.')->group(function()({
+// Route::get('products',[AdminProductController,'userproducts'])->name('products');
+//         });
         Route::prefix('payment')->name('payment.')->group(function () {
             Route::get('details', [PaymentController::class, 'index'])->name('index');
             Route::get('detail/{id}', [PaymentController::class, 'store'])->name('store');
@@ -313,7 +333,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::match(['GET', 'POST'], 'website', [SettingController::class, 'website'])->name('website');
                 Route::match(['GET', 'POST'], 'contact', [SettingController::class, 'contact'])->name('contact');
                 Route::prefix('slider')->name('slider.')->group(function () {
-                    route::get('', [SliderController::class, 'index'])->name('index');
+                    Route::get('', [SliderController::class, 'index'])->name('index');
                     route::match(["GET", "POST"], 'add', [SliderController::class, 'add'])->name('add');
                     route::match(["GET", "POST"], 'edit/{slider}', [SliderController::class, 'edit'])->name('edit');
                     route::post('del/{slider}', [SliderController::class, 'del'])->name('del');

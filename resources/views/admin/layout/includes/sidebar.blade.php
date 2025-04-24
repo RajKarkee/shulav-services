@@ -54,12 +54,7 @@
                     Product Type
                 </a>
             </li> --}}
-            <li>
-                <a href="{{ route('admin.products.index') }}">
-                    <i class="material-icons">shopping_cart</i>
-                    Product
-                </a>
-            </li>
+
             {{-- <li>
                 <a href="{{ route('admin.service.index' ,['type'=>1])}}">
                     <i class="material-icons">build</i>
@@ -73,7 +68,26 @@
                     Real Estates
                 </a>
             </li>
+            <li>
+                <a href="#"><i class="material-icons">shopping_cart</i>Product<i
+                        class="material-icons has-sub-menu">add</i></a>
+                <ul class ='sub-menu'>
+                    <li class="sub-item">
 
+                        <a href="{{ route('admin.products.index') }}">
+                            {{-- <i class="material-icons">shopping_cart</i> --}}
+                            Product
+                        </a>
+                    </li>
+                    <li class="sub-item">
+
+                        <a href="{{ route('admin.products.index') }}">
+                            {{-- <i class="material-icons">shopping_cart</i> --}}
+                           User Product
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li>
                 <a href="#"><i class="material-icons">settings</i>Restaurant<i
                         class="material-icons has-sub-menu">add</i></a>
@@ -94,11 +108,11 @@
             </li>
             <li>
                 <a href="#"><i class='material-icons'>settings</i>Bus
-                <i class="material-icons has-sub-menu">add</i></a>
+                    <i class="material-icons has-sub-menu">add</i></a>
                 <ul class="sub-menu">
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.index') }}">Bus Services</a>
-                     
+
                     </li>
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.location.index') }}">Locations</a>

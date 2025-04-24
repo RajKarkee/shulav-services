@@ -348,7 +348,7 @@ class AuthController extends Controller
             $vendor->address = $request->address;
 
             $vendor->location_id = $request->location_id;
-            $vendor->service_id = $request->service_id;
+            // $vendor->service_id = $request->service_id;
 
             $vendor->save();
 
@@ -376,7 +376,7 @@ class AuthController extends Controller
             $cats = DB::table('categories')->get(['id', 'name']);
             $services = DB::table('services')->get(['id', 'name', 'category_id']);
 
-            return view('front.auth.phonesetup', compact('cities', 'locations', 'cats', 'services', 'phone', 'redirect', 'setup', 'email', 'localUser'));
+            return view('front.auth.phonesetup', compact('cities', 'locations', 'cats', 'phone', 'redirect', 'setup', 'email', 'localUser'));
         }
     }
 
