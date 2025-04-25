@@ -288,6 +288,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/store', [AdminProductController::class, 'store'])->name('store');
             Route::match(['get', 'post'], '/edit/{product_id}', [AdminProductController::class, 'edit'])->name('edit');
             Route::get('del/{product_id}', [AdminProductController::class, 'del'])->name('del');
+            Route::get('/user-data', [AdminProductController::class, 'indexUser'])->name('indexUser');
+            Route::post('/user/load-data', [AdminProductController::class, 'userloadData'])->name('userloadData');
+            Route::prefix('user')->name('user.')->group(function(){
+                Route::get('active/{product_id}',[AdminProductController::class,'userActive'])->name('active');
+                Route::get('inactive/{product_id}',[AdminProductController::class,'userInactive'])->name('inactive');
+            });
         });
 //         Route::prefix('user')->name('user.')->group(function()({
 // Route::get('products',[AdminProductController,'userproducts'])->name('products');

@@ -81,7 +81,7 @@
                     </li>
                     <li class="sub-item">
 
-                        <a href="{{ route('admin.products.index') }}">
+                        <a href="{{ route('admin.products.indexUser') }}">
                             {{-- <i class="material-icons">shopping_cart</i> --}}
                            User Product
                         </a>

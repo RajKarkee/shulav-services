@@ -255,6 +255,19 @@
                     <span class="results">6,560 results</span>
                     <span class="info-icon">ⓘ</span>
                 </div>
+                @if (session('success'))
+                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+                    <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ session('success') }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="showModal()" id="addProductBtn">
                         <span>+</span>
@@ -309,7 +322,8 @@
             </div>
             <div class="modal-body">
 
-                <form action="{{ route('user.products.add') }}" method='POST' enctype="multipart/form-data"  id="addProductForm">
+                <form action="{{ route('user.products.add') }}" method='POST' enctype="multipart/form-data"
+                    id="addProductForm">
                     @csrf
                     <div class="form-row">
                         <div class="form-column">
@@ -337,7 +351,8 @@
                         </div>
                         <div class="form-column">
                             <label class="form-label" for="price">Price</label>
-                            <input type="text" name="price" value="price" class="form-control" id="price" placeholder="Rs.2999">
+                            <input type="text" name="price" value="price" class="form-control" id="price"
+                                placeholder="Rs.2999">
                         </div>
                     </div>
                     <div class="form-row">
@@ -372,7 +387,8 @@
                         <div class="image-upload-grid">
                             <!-- Image 1 -->
                             <div class="image-upload-item" data-index="1">
-                                <input type="file" id="imageUpload1" class="hidden" value='image' name="image" accept="image/*">
+                                <input type="file" id="imageUpload1" class="hidden" value='image' name="image"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -383,7 +399,8 @@
 
                             <!-- Image 2 -->
                             <div class="image-upload-item" data-index="2">
-                                <input type="file" id="imageUpload2" value='image1' name="image1" class="hidden" accept="image/*">
+                                <input type="file" id="imageUpload2" value='image1' name="image1" class="hidden"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -394,7 +411,8 @@
 
                             <!-- Image 3 -->
                             <div class="image-upload-item" data-index="3">
-                                <input type="file" id="imageUpload3" value='image2' name="image2" class="hidden" accept="image/*">
+                                <input type="file" id="imageUpload3" value='image2' name="image2" class="hidden"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -405,7 +423,8 @@
 
                             <!-- Image 4 -->
                             <div class="image-upload-item" data-index="4">
-                                <input type="file" id="imageUpload4" value='image3' name='image3' class="hidden" accept="image/*">
+                                <input type="file" id="imageUpload4" value='image3' name='image3' class="hidden"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -416,7 +435,8 @@
 
                             <!-- Image 5 -->
                             <div class="image-upload-item" data-index="5">
-                                <input type="file" id="imageUpload5" value='image4' name='image4' class="hidden" accept="image/*">
+                                <input type="file" id="imageUpload5" value='image4' name='image4' class="hidden"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -427,7 +447,8 @@
 
                             <!-- Image 6 -->
                             <div class="image-upload-item" data-index="6">
-                                <input type="file" id="imageUpload6" value='image5' name='image5' class="hidden" accept="image/*">
+                                <input type="file" id="imageUpload6" value='image5' name='image5' class="hidden"
+                                    accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -469,9 +490,13 @@
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
     <script>
+      
         $(document).ready(function() {
             $('.products-table').DataTable();
-
+            var $toast = $('#successToast');
+        if ($toast.length) {
+            var toast = new bootstrap.Toast($toast[0], { delay: 3000 });
+            toast.show();
             // Show modal
             $('#addProductBtn').on('click', function() {
                 $('#addProductModal').fadeIn();
