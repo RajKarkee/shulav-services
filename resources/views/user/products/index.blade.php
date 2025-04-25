@@ -267,6 +267,18 @@
                     </div>
                 </div>
             @endif
+            @if (session('error'))
+            <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+                <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            {{ session('error') }}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        @endif
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="showModal()" id="addProductBtn">
@@ -289,23 +301,26 @@
                         <th>CATEGORY</th>
                         <th>PRICE</th>
                         <th>STATUS</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
+                    @foreach ($products as $product)
                     <tr>
-                        <td>image</td>
-                        <td>Apple iMac 27"</td>
-                        <td>PC</td>
-                        <td>$2999</td>
-                        <td>Active</td>
+                        <td>Image</td>
+                        <td>{{$product->name}}</td>
+                        <td>{{$product->category_name}}</td>
+                        <td>{{$product->price}}</td>
+                        <td>{{$product->active==1?'Active':'Inactive'}}</td>
+                        <td>
+                            <div class="d-flex gap-3">
+                                <button class="btn btn-secondary mr-2">Edit</button>
+                                <button class="btn btn-danger">Delete</button>
+                            </div>
+                        </td>
                     </tr>
-                    <tr>
-                        <td>image</td>
-                        <td>Apple iPhone 14</td>
-                        <td>Phone</td>
-                        <td>$999</td>
-                        <td>Active</td>
-                    </tr>
+                    @endforeach
+                  
                 </tbody>
             </table>
         </div>
@@ -491,90 +506,103 @@
 
     <script>
       
-        $(document).ready(function() {
-            $('.products-table').DataTable();
-            var $toast = $('#successToast');
-        if ($toast.length) {
-            var toast = new bootstrap.Toast($toast[0], { delay: 3000 });
-            toast.show();
-            // Show modal
-            $('#addProductBtn').on('click', function() {
-                $('#addProductModal').fadeIn();
-                $('body').css('overflow', 'hidden');
-            });
+      $(document).ready(function() {
+    console.log("Document ready!");
+    
+    // Initialize DataTable
+    try {
+        console.log("Initializing DataTable...");
+        $('.products-table').DataTable();
+        console.log("DataTable initialized successfully!");
+    } catch (e) {
+        console.error("Error initializing DataTable:", e);
+    }
+    
+    // Handle toast if it exists
+    var $toast = $('#successToast');
+    if ($toast.length) {
+        var toast = new bootstrap.Toast($toast[0], { delay: 3000 });
+        toast.show();
+    }
+    
+    // Show modal
+    $('#addProductBtn').on('click', function() {
+        $('#addProductModal').fadeIn();
+        $('body').css('overflow', 'hidden');
+    });
 
-            // Close modal
-            $('#closeModal, #cancelBtn').on('click', function() {
-                $('#addProductModal').fadeOut();
-                $('body').css('overflow', '');
-            });
+    // Close modal
+    $('#closeModal, #cancelBtn').on('click', function() {
+        $('#addProductModal').fadeOut();
+        $('body').css('overflow', '');
+    });
 
-            // Click outside modal to close
-            $('#addProductModal').on('click', function(e) {
-                if ($(e.target).is('#addProductModal')) {
-                    $('#addProductModal').fadeOut();
-                    $('body').css('overflow', '');
-                }
-            });
+    // Click outside modal to close
+    $('#addProductModal').on('click', function(e) {
+        if ($(e.target).is('#addProductModal')) {
+            $('#addProductModal').fadeOut();
+            $('body').css('overflow', '');
+        }
+    });
 
-            // Handle image uploads
-            $('.image-upload-item').each(function() {
-                const item = $(this);
-                const index = item.data('index');
-                const input = $(`#imageUpload${index}`);
+    // Handle image uploads
+    $('.image-upload-item').each(function() {
+        const item = $(this);
+        const index = item.data('index');
+        const input = $(`#imageUpload${index}`);
 
-                item.on('click', function() {
-                    if (!item.find('.image-preview').length) {
-                        input.click();
-                    }
-                });
-
-                input.on('change', function() {
-                    if (this.files && this.files[0]) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            item.find('.image-preview, .remove-image').remove();
-
-                            const img = $('<img>', {
-                                src: e.target.result,
-                                class: 'image-preview',
-                                css: {
-                                    width: '100%',
-                                    borderRadius: '8px',
-                                    marginTop: '10px'
-                                }
-                            });
-                            const remove = $('<div>', {
-                                class: 'remove-image',
-                                text: '×',
-                                css: {
-                                    position: 'absolute',
-                                    top: '5px',
-                                    right: '10px',
-                                    background: '#ff4d4d',
-                                    color: 'white',
-                                    borderRadius: '50%',
-                                    cursor: 'pointer',
-                                    fontWeight: 'bold',
-                                    width: '20px',
-                                    height: '20px',
-                                    textAlign: 'center',
-                                    lineHeight: '20px',
-                                }
-                            });
-
-                            item.css('position', 'relative').append(img).append(remove);
-
-                            remove.on('click', function(e) {
-                                e.stopPropagation();
-                                input.val('');
-                                item.find('.image-preview, .remove-image').remove();
-                            });
-                        };
-                        reader.readAsDataURL(this.files[0]);
-                    }
-                });
-            });
+        item.on('click', function() {
+            if (!item.find('.image-preview').length) {
+                input.click();
+            }
         });
+
+        input.on('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    item.find('.image-preview, .remove-image').remove();
+
+                    const img = $('<img>', {
+                        src: e.target.result,
+                        class: 'image-preview',
+                        css: {
+                            width: '100%',
+                            borderRadius: '8px',
+                            marginTop: '10px'
+                        }
+                    });
+                    const remove = $('<div>', {
+                        class: 'remove-image',
+                        text: '×',
+                        css: {
+                            position: 'absolute',
+                            top: '5px',
+                            right: '10px',
+                            background: '#ff4d4d',
+                            color: 'white',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                            fontWeight: 'bold',
+                            width: '20px',
+                            height: '20px',
+                            textAlign: 'center',
+                            lineHeight: '20px',
+                        }
+                    });
+
+                    item.css('position', 'relative').append(img).append(remove);
+
+                    remove.on('click', function(e) {
+                        e.stopPropagation();
+                        input.val('');
+                        item.find('.image-preview, .remove-image').remove();
+                    });
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+});
     </script>
 @endsection

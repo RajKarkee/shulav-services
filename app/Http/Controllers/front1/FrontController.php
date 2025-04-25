@@ -191,8 +191,18 @@ class FrontController extends Controller
     public function userProducts(Request $request)
     {
         if (request()->isMethod('GET')) {
+            $user = Auth::user();
+            $products =DB::table('user_products')
+            ->where('user_products.user_id', $user->id)
+            ->join('products','user_products.product_id','=','products.id')
+            ->join('categories','products.category_id','=','categories.id')
 
-            return view('user.products.index');
+            ->select('products.*'
+                ,'categories.name as category_name')
+             ->get();
+     
+
+            return view('user.products.index',compact('products'));
         } else {
             // $request->validate([
             //     'name' => 'required|unique:products,name',
