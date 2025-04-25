@@ -266,19 +266,19 @@
                         </div>
                     </div>
                 </div>
-            @endif
-            @if (session('error'))
-            <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
-                <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            {{ session('error') }}
+                @endif
+                @if (session('error'))
+                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+                    <div id="errorToast" class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                {{ session('error') }}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                     </div>
                 </div>
-            </div>
-        @endif
+                @endif
 
                 <div class="action-buttons">
                     <button class="btn btn-primary" onclick="showModal()" id="addProductBtn">
@@ -307,7 +307,7 @@
                 <tbody>
                     @foreach ($products as $product)
                     <tr>
-                        <td>Image</td>
+                        <td><img src="{{ asset($product->image) }}" alt="" style="width: 100px; height: 100px; background-color: #ccc;"></td>
                         <td>{{$product->name}}</td>
                         <td>{{$product->category_name}}</td>
                         <td>{{$product->price}}</td>
@@ -315,82 +315,67 @@
                         <td>
                             <div class="d-flex gap-3">
                                 <button class="btn btn-secondary mr-2">Edit</button>
-                                <button class="btn btn-danger">Delete</button>
+                                <a href="#" class="btn btn-danger">Delete</button>
                             </div>
                         </td>
                     </tr>
                     @endforeach
-                  
                 </tbody>
             </table>
         </div>
     </div>
 
     <!-- Add Product Modal -->
-
     <div class="modal" id="addProductModal">
         <div class="modal-back">
-
             <div class="modal-header">
                 <h2 class="modal-title">Add Product</h2>
                 <button class="modal-close" id="closeModal">×</button>
             </div>
             <div class="modal-body">
-
                 <form action="{{ route('user.products.add') }}" method='POST' enctype="multipart/form-data"
                     id="addProductForm">
                     @csrf
                     <div class="form-row">
                         <div class="form-column">
                             <label class="form-label" for="productName">Product Name</label>
-                            <input type="text" name="name" value='name' class="form-control" id="productName"
+                            <input type="text" name="name" class="form-control" id="productName"
                                 placeholder="Type product name">
                         </div>
                         <div class="form-column">
                             <label class="form-label" for="category">Category</label>
-                            <select class="form-control" name="category_id" value='category_id' id="category">
+                            <select class="form-control" name="category_id" id="category">
                                 <option value="">Select category</option>
                                 @foreach ($productsCats as $productsCat)
                                     <option value="{{ $productsCat->id }}">{{ $productsCat->name }}</option>
                                 @endforeach
-
                             </select>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-column">
-                            <label class="form-label" for="brand">Short description</label>
-                            <input type="text" name="short_desc" value="short_desc" class="form-control" id="brand"
+                            <label class="form-label" for="short_desc">Short description</label>
+                            <input type="text" name="short_desc" class="form-control" id="short_desc"
                                 placeholder="Product short description">
                         </div>
                         <div class="form-column">
                             <label class="form-label" for="price">Price</label>
-                            <input type="text" name="price" value="price" class="form-control" id="price"
+                            <input type="text" name="price" class="form-control" id="price"
                                 placeholder="Rs.2999">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-column">
-                            <select class="form-control" name="city_id" value='city_id' id="category">
-                                <option value="city_id">Select Cities</option>
+                            <label class="form-label" for="city_id">City</label>
+                            <select class="form-control" name="city_id" id="city_id">
+                                <option value="">Select City</option>
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
-
-                            </select>
-                        </div>
-                        <div class="form-column">
-                            <select class="form-control" value='category_id' id="category">
-                                <option value="">Select category</option>
-                                @foreach ($productsCats as $productsCat)
-                                    <option value="{{ $productsCat->id }}">{{ $productsCat->name }}</option>
-                                @endforeach
-
                             </select>
                         </div>
                     </div>
-
 
                     <div class="form-group">
                         <label class="form-label" for="description">Description</label>
@@ -402,7 +387,7 @@
                         <div class="image-upload-grid">
                             <!-- Image 1 -->
                             <div class="image-upload-item" data-index="1">
-                                <input type="file" id="imageUpload1" class="hidden" value='image' name="image"
+                                <input type="file" id="imageUpload1" class="hidden" name="image"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -414,7 +399,7 @@
 
                             <!-- Image 2 -->
                             <div class="image-upload-item" data-index="2">
-                                <input type="file" id="imageUpload2" value='image1' name="image1" class="hidden"
+                                <input type="file" id="imageUpload2" name="image1" class="hidden"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -426,7 +411,7 @@
 
                             <!-- Image 3 -->
                             <div class="image-upload-item" data-index="3">
-                                <input type="file" id="imageUpload3" value='image2' name="image2" class="hidden"
+                                <input type="file" id="imageUpload3" name="image2" class="hidden"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -438,7 +423,7 @@
 
                             <!-- Image 4 -->
                             <div class="image-upload-item" data-index="4">
-                                <input type="file" id="imageUpload4" value='image3' name='image3' class="hidden"
+                                <input type="file" id="imageUpload4" name='image3' class="hidden"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -450,7 +435,7 @@
 
                             <!-- Image 5 -->
                             <div class="image-upload-item" data-index="5">
-                                <input type="file" id="imageUpload5" value='image4' name='image4' class="hidden"
+                                <input type="file" id="imageUpload5" name='image4' class="hidden"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -462,7 +447,7 @@
 
                             <!-- Image 6 -->
                             <div class="image-upload-item" data-index="6">
-                                <input type="file" id="imageUpload6" value='image5' name='image5' class="hidden"
+                                <input type="file" id="imageUpload6" name='image5' class="hidden"
                                     accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
@@ -473,8 +458,8 @@
                             </div>
 
                             <!-- Image 7 -->
-                            <div class="image-upload-item" value='image6'name='image6' data-index="7">
-                                <input type="file" id="imageUpload7" class="hidden" accept="image/*">
+                            <div class="image-upload-item" data-index="7">
+                                <input type="file" id="imageUpload7" name='image6' class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -485,124 +470,129 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-cancel" id="cancelBtn">Cancel</button>
+                        <button type="button" class="btn btn-cancel" id="cancelBtn">Cancel</button>
                         <button type='submit' class="btn btn-save">Save product</button>
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
-
-
-
-    </div>
-
 @endsection
 
 @section('js')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
 
     <script>
-      
-      $(document).ready(function() {
-    console.log("Document ready!");
-    
-    // Initialize DataTable
-    try {
-        console.log("Initializing DataTable...");
-        $('.products-table').DataTable();
-        console.log("DataTable initialized successfully!");
-    } catch (e) {
-        console.error("Error initializing DataTable:", e);
-    }
-    
-    // Handle toast if it exists
-    var $toast = $('#successToast');
-    if ($toast.length) {
-        var toast = new bootstrap.Toast($toast[0], { delay: 3000 });
-        toast.show();
-    }
-    
-    // Show modal
-    $('#addProductBtn').on('click', function() {
-        $('#addProductModal').fadeIn();
-        $('body').css('overflow', 'hidden');
-    });
-
-    // Close modal
-    $('#closeModal, #cancelBtn').on('click', function() {
-        $('#addProductModal').fadeOut();
-        $('body').css('overflow', '');
-    });
-
-    // Click outside modal to close
-    $('#addProductModal').on('click', function(e) {
-        if ($(e.target).is('#addProductModal')) {
-            $('#addProductModal').fadeOut();
-            $('body').css('overflow', '');
-        }
-    });
-
-    // Handle image uploads
-    $('.image-upload-item').each(function() {
-        const item = $(this);
-        const index = item.data('index');
-        const input = $(`#imageUpload${index}`);
-
-        item.on('click', function() {
-            if (!item.find('.image-preview').length) {
-                input.click();
+        $(document).ready(function() {
+            console.log("Document ready!");
+            
+            // Initialize DataTable
+            try {
+                console.log("Initializing DataTable...");
+                $('.products-table').DataTable();
+                console.log("DataTable initialized successfully!");
+            } catch (e) {
+                console.error("Error initializing DataTable:", e);
             }
-        });
-
-        input.on('change', function() {
-            if (this.files && this.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    item.find('.image-preview, .remove-image').remove();
-
-                    const img = $('<img>', {
-                        src: e.target.result,
-                        class: 'image-preview',
-                        css: {
-                            width: '100%',
-                            borderRadius: '8px',
-                            marginTop: '10px'
-                        }
-                    });
-                    const remove = $('<div>', {
-                        class: 'remove-image',
-                        text: '×',
-                        css: {
-                            position: 'absolute',
-                            top: '5px',
-                            right: '10px',
-                            background: '#ff4d4d',
-                            color: 'white',
-                            borderRadius: '50%',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            width: '20px',
-                            height: '20px',
-                            textAlign: 'center',
-                            lineHeight: '20px',
-                        }
-                    });
-
-                    item.css('position', 'relative').append(img).append(remove);
-
-                    remove.on('click', function(e) {
-                        e.stopPropagation();
-                        input.val('');
-                        item.find('.image-preview, .remove-image').remove();
-                    });
-                };
-                reader.readAsDataURL(this.files[0]);
+            
+            // Handle toast if it exists
+            var $successToast = $('#successToast');
+            if ($successToast.length) {
+                var toast = new bootstrap.Toast($successToast[0], { delay: 3000 });
+                toast.show();
             }
+            
+            var $errorToast = $('#errorToast');
+            if ($errorToast.length) {
+                var toast = new bootstrap.Toast($errorToast[0], { delay: 3000 });
+                toast.show();
+            }
+            
+            // Show modal function
+            window.showModal = function() {
+                $('#addProductModal').fadeIn();
+                $('body').css('overflow', 'hidden');
+            };
+            
+            // Show modal on button click
+            $('#addProductBtn').on('click', function() {
+                showModal();
+            });
+
+            // Close modal
+            $('#closeModal, #cancelBtn').on('click', function() {
+                $('#addProductModal').fadeOut();
+                $('body').css('overflow', '');
+            });
+
+            // Click outside modal to close
+            $('#addProductModal').on('click', function(e) {
+                if ($(e.target).is('#addProductModal')) {
+                    $('#addProductModal').fadeOut();
+                    $('body').css('overflow', '');
+                }
+            });
+
+            // Handle image uploads
+            $('.image-upload-item').each(function() {
+                const item = $(this);
+                const index = item.data('index');
+                const input = $(`#imageUpload${index}`);
+
+                item.on('click', function() {
+                    if (!item.find('.image-preview').length) {
+                        input.click();
+                    }
+                });
+
+                input.on('change', function() {
+                    if (this.files && this.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            item.find('.image-preview, .remove-image').remove();
+
+                            const img = $('<img>', {
+                                src: e.target.result,
+                                class: 'image-preview',
+                                css: {
+                                    width: '100%',
+                                    borderRadius: '8px',
+                                    marginTop: '10px'
+                                }
+                            });
+                            const remove = $('<div>', {
+                                class: 'remove-image',
+                                text: '×',
+                                css: {
+                                    position: 'absolute',
+                                    top: '5px',
+                                    right: '10px',
+                                    background: '#ff4d4d',
+                                    color: 'white',
+                                    borderRadius: '50%',
+                                    cursor: 'pointer',
+                                    fontWeight: 'bold',
+                                    width: '20px',
+                                    height: '20px',
+                                    textAlign: 'center',
+                                    lineHeight: '20px',
+                                }
+                            });
+
+                            item.css('position', 'relative').append(img).append(remove);
+
+                            remove.on('click', function(e) {
+                                e.stopPropagation();
+                                input.val('');
+                                item.find('.image-preview, .remove-image').remove();
+                            });
+                        };
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                });
+            });
         });
-    });
-});
     </script>
 @endsection
