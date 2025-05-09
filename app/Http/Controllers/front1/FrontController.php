@@ -67,9 +67,7 @@ class FrontController extends Controller
             return $query->paginate(12);
         });
 
-        $cities = Cache::rememberForever('cities', function () {
-            return Helper::getCities();
-        });
+        $cities = Helper::getCities();
 
         $allcategories = Cache::rememberForever('all_categories', function () {
             return DB::table('categories')->whereNull('parent_id')->get(['id', 'name']);
@@ -200,7 +198,7 @@ class FrontController extends Controller
             ->select('products.*'
                 ,'categories.name as category_name')
              ->get();
-     
+
 
             return view('user.products.index',compact('products'));
         } else {
@@ -215,7 +213,7 @@ class FrontController extends Controller
             //     'start' => 'nullable|date',
             //     'end' => 'nullable|date'
             // ]);
-       
+
 
             $product = new Product();
             $product->name = $request->name;
