@@ -1,23 +1,57 @@
 @extends('front1.navbar.layout')
+@section('css')
+    <style type="text/css">
+        /* Main container adjustments */
+        .top-banner-slider {
+            width: 100%;
+            height: 400px; /* Set slider height to 400px */
+            /* Set slider height to 400px */
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+
+        /* Ensure images cover full height without distortion */
+        .top-banner-slider img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+
+        /* Dots styling */
+        .top-banner-slider .slick-dots {
+            bottom: 15px;
+        }
+
+        .top-banner-slider .slick-dots li button:before {
+            font-size: 12px;
+            color: #fff;
+        }
+
+        .top-banner-slider .slick-dots li.slick-active button:before {
+            color: #0071e3;
+        }
+
+        /* .slider{
+            margin: 15px;
+        } */
+    </style>
+@endsection
 @section('content')
     <div class="homepage">
-        <div class="banner" id="banner">
-            <div class="top-banner-slider">
-                @foreach ($sliders as $slider)
-                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner"
-                        loading="lazy">
-                @endforeach
+        <div class="top-banner-slider">
+            @foreach ($sliders as $slider)
+            <div class="slider">
+                <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner"
+                loading="lazy">
             </div>
-            {{-- <div class="custom-nav">
-                <button class="custom-prev"><i class="fas fa-chevron-left"></i></button>
-                <button class="custom-next"><i class="fas fa-chevron-right"></i></button>
-            </div> --}}
+            @endforeach
         </div>
         <div class="container">
             <section class="categories">
-
-
-
                 @foreach ($serviceCategories as $category)
                     @if ($category->type == 3)
                         <a href="javascript:void(0);" class="category" onclick="openBusModal()">
@@ -45,7 +79,7 @@
                                 <select id="fromLocation" class="bus-modal-select" style="min-width:200px; width:220px;">
                                     <option value="" disabled selected>Start your adventure at?</option>
                                     @foreach ($locations as $location)
-                                        <option value="{{ $location->id }}">{{ $location->location_name }}</option>  
+                                        <option value="{{ $location->id }}">{{ $location->location_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -131,31 +165,31 @@
                     <div class="row row-cols-4">
                         @foreach ($section->products as $product)
                             <div class="col">
-                                    <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
-                                        class="card-link">
-                                        <div class="card">
-                                            <div class="card-image">
-                                                <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
-                                                    loading="lazy" width="200" height="150">
-                                                <span class="image-count"><i class="fas fa-camera"></i>
-                                                    {{ (isset($product->image) && !empty($product->image) ? 1 : 0) +
-                                                        (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
-                                                        (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
-                                                        (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
-                                                        (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
-                                                        (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
-                                                        (isset($product->image6) && !empty($product->image6) ? 1 : 0) }}</span>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="category">
-                                                    <i class="fas fa-tools"></i> {{ $product->short_desc }}
-                                                </div>
-                                                <h5>{{ $product->name }}</h5>
-                                                <p class="price">{{ $product->price }}</p>
-                                            </div>
+                                <a href="{{ route('product.show', ['name' => $product->name, 'id' => $product->id]) }}"
+                                    class="card-link">
+                                    <div class="card">
+                                        <div class="card-image">
+                                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
+                                                loading="lazy" width="200" height="150">
+                                            <span class="image-count"><i class="fas fa-camera"></i>
+                                                {{ (isset($product->image) && !empty($product->image) ? 1 : 0) +
+                                                    (isset($product->image1) && !empty($product->image1) ? 1 : 0) +
+                                                    (isset($product->image2) && !empty($product->image2) ? 1 : 0) +
+                                                    (isset($product->image3) && !empty($product->image3) ? 1 : 0) +
+                                                    (isset($product->image4) && !empty($product->image4) ? 1 : 0) +
+                                                    (isset($product->image5) && !empty($product->image5) ? 1 : 0) +
+                                                    (isset($product->image6) && !empty($product->image6) ? 1 : 0) }}</span>
                                         </div>
-                                    </a>
-                                
+                                        <div class="card-body">
+                                            <div class="category">
+                                                <i class="fas fa-tools"></i> {{ $product->short_desc }}
+                                            </div>
+                                            <h5>{{ $product->name }}</h5>
+                                            <p class="price">{{ $product->price }}</p>
+                                        </div>
+                                    </div>
+                                </a>
+
                             </div>
                         @endforeach
                     </div>
@@ -168,6 +202,7 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the top banner slider with proper settings
             $('.top-banner-slider').slick({
                 infinite: true,
                 slidesToShow: 1,
@@ -176,16 +211,8 @@
                 dots: true,
                 prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
                 nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
-            });
-
-            $('.top-banner-slider').slick({
-                infinite: false,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                arrows: true,
-                dots: true,
-                prevArrow: '<button class="slick-prev custom-prev"><i class="fa-solid fa-chevron-left"></i></button>',
-                nextArrow: '<button class="slick-next custom-next"><i class="fa-solid fa-chevron-right"></i></button>',
+                autoplay: true,
+                autoplaySpeed: 3000
             });
 
 
@@ -237,7 +264,7 @@
         });
     </script>
     <script>
-        (function(){
+        (function() {
             var link = document.createElement('link');
             link.rel = 'stylesheet';
             link.href = 'https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css';
@@ -245,9 +272,17 @@
 
             var script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js';
-            script.onload = function () {
-                new Choices('#fromLocation', { searchEnabled: true, itemSelectText: '', shouldSort: false });
-                new Choices('#toLocation', { searchEnabled: true, itemSelectText: '', shouldSort: false });
+            script.onload = function() {
+                new Choices('#fromLocation', {
+                    searchEnabled: true,
+                    itemSelectText: '',
+                    shouldSort: false
+                });
+                new Choices('#toLocation', {
+                    searchEnabled: true,
+                    itemSelectText: '',
+                    shouldSort: false
+                });
             };
             document.body.appendChild(script);
         })();
@@ -326,45 +361,117 @@
     </script>
     <style>
         .bus-modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.15); z-index: 9999; justify-content: center; align-items: center;
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
         }
+
         .bus-modal {
             margin-top: 40px;
-            background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-            padding: 24px 32px; min-width: 800px; position: relative;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+            padding: 24px 32px;
+            min-width: 800px;
+            position: relative;
         }
+
         .bus-modal-row {
-            display: flex; align-items: center; gap: 16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
         }
-        .bus-modal-col { display: flex; align-items: center; }
-        .bus-modal-label { margin-right: 8px; color: #666; font-size: 18px; }
-        .bus-modal-select, .bus-modal-date {
-            padding: 8px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px;
+
+        .bus-modal-col {
+            display: flex;
+            align-items: center;
         }
+
+        .bus-modal-label {
+            margin-right: 8px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .bus-modal-select,
+        .bus-modal-date {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
         .bus-modal-search-btn {
-            background: #0071e3; color: #fff; border: none; border-radius: 6px; padding: 10px 24px; font-weight: 600; font-size: 16px;
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 24px;
+            font-weight: 600;
+            font-size: 16px;
             transition: background 0.2s;
         }
-        .bus-modal-search-btn:hover { background: #005bb5; }
+
+        .bus-modal-search-btn:hover {
+            background: #005bb5;
+        }
+
         .bus-modal-close-btn {
-            position: absolute; top: 10px; right: 16px; background: none; border: none; font-size: 26px; color: #888; cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: #888;
+            cursor: pointer;
         }
-        .swap-icon { padding: 0 12px; color: #bbb; font-size: 20px; }
-        .bus-modal-pills { display: flex; gap: 8px; margin-top: 20px; }
+
+        .swap-icon {
+            padding: 0 12px;
+            color: #bbb;
+            font-size: 20px;
+        }
+
+        .bus-modal-pills {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
         .bus-modal-pill {
-            display: flex; flex-direction: column; align-items: center; padding: 6px 12px; border-radius: 8px; background: #f5f7fa;
-            cursor: pointer; font-size: 14px; color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #f5f7fa;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
         }
-        .bus-modal-pill.active { background: #0099ff; color: #fff; }
+
+        .bus-modal-pill.active {
+            background: #0099ff;
+            color: #fff;
+        }
     </style>
     <script>
         function openBusModal() {
             document.getElementById('busModal').style.display = 'flex';
         }
+
         function closeBusModal() {
             document.getElementById('busModal').style.display = 'none';
         }
+
         function searchBus() {
             const fromId = document.getElementById('fromLocation').value;
             const toId = document.getElementById('toLocation').value;
