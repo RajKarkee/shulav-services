@@ -30,7 +30,6 @@ class SliderController extends Controller
             $slider->index=$request->index;
             $slider->save();
             cache()->forget('sliders');
-            $this->render() ;
             return response()->json(['status'=>true]);
         }else{
             return view('admin.slider.add');
@@ -52,7 +51,6 @@ class SliderController extends Controller
             $slider->index=$request->index;
             $slider->save();
             cache()->forget('sliders');
-            $this->render() ;
             return response()->json(['status'=>true]);
         }else{
             return view('admin.slider.edit',compact('slider'));
@@ -62,11 +60,6 @@ class SliderController extends Controller
     public function del(Request $request,Slider $slider){
         $slider->delete() ;
         cache()->forget('sliders');
-        $this->render() ;
         return redirect()->back()->with('message','Slider Deleted');
-    }
-    public function render(){
-        $sliders = DB::table('sliders')->get();
-        Helper::putCache('home.slider',view('admin.setting.template.slider',compact('sliders')));
     }
 }
