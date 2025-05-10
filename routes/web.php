@@ -140,9 +140,9 @@ Route::get('vendor/cheak/now/bill/search', [FrontController::class, 'name'])->na
 Route::get('vendor/cheak/now/bill/sas', [FrontController::class, 'name'])->name('vendor.mybids');
 Route::get('vendor/cheak/now/bill/mas', [FrontController::class, 'name'])->name('vendor.bidaccept');
 Route::get('vendor/cheak/now/bill/kas', [FrontController::class, 'name'])->name('vendor.finishedJob');
-Route::match(['GET', 'POST'], 'user/products/ass', [FrontController::class, 'userProducts'])->name('user.products.add');
 
 
+ Route::match(['GET', 'POST'], 'user/products/add', [FrontController::class, 'userProducts'])->name('user.products.add');
 Route::name('user.')->prefix('user')->middleware('role:user')->group(function () {
     Route::get('', [UserController::class, 'index'])->name('dashboard');
     Route::get('bookmark/{vendor_id}', [UserController::class, 'bookmark'])->name('bookmark');
@@ -175,12 +175,14 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
         Route::match(['get', 'post'], 'menu/{id}', [FrontRestaurantController::class, 'menusDetail'])->name('menusDetail');
     });
 
+
+
     Route::match(['get', 'post'], 'cart', [FrontRestaurantController::class, 'cart'])->name('cart');
     Route::match(['get', 'post'], 'place-to-order', [FrontRestaurantController::class, 'placeToOrder'])->name('placeToOrder');
 });
 
 
-Route::name(value: 'user.')->prefix('user.')->middleware('role:2')->group(function () {
+Route::name('user.')->prefix('user.')->middleware('role:2')->group(function () {
     Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
     Route::match(['GET', 'POST'], 'reviews', [FrontVendorController::class, 'reviews'])->name('reviews');
     Route::match(['GET', 'POST'], 'bill/{bill}', [FrontVendorController::class, 'bill'])->name('bill');
@@ -201,7 +203,6 @@ Route::name(value: 'user.')->prefix('user.')->middleware('role:2')->group(functi
         Route::match(['get', 'post'], '/update/{id}', [CertificateController::class, 'update'])->name('update');
         Route::match(['get', 'post'], '/delete/{id}', [CertificateController::class, 'delete'])->name('delete');
     });
-
     Route::prefix('skill')->name('skill.')->group(function () {
         Route::match(['get', 'post'], '/', [SkillController::class, 'index'])->name('index');
         Route::match(['get', 'post'], '/add', [SkillController::class, 'add'])->name('add');
@@ -256,7 +257,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('type')->name('type.')->group(function () {
                 Route::get('', [BusServiceController::class, 'type'])->name('index');
                 Route::match(['get', 'post'], 'add', [BusServiceController::class, 'typeStore'])->name('add');
-                Route::delete('delete/{id}', [BusServiceController::class,'typeDel'])->name('delete');
+                Route::delete('delete/{id}', [BusServiceController::class, 'typeDel'])->name('delete');
             });
             Route::prefix('route')->name('route.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
@@ -270,8 +271,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 Route::post('/update', [BusRouteController::class, 'update'])->name('update');
                 Route::post('/delete', [BusRouteController::class, 'delete'])->name('delete');
             });
-
-        
         });
 
 
@@ -290,14 +289,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('del/{product_id}', [AdminProductController::class, 'del'])->name('del');
             Route::get('/user-data', [AdminProductController::class, 'indexUser'])->name('indexUser');
             Route::post('/user/load-data', [AdminProductController::class, 'userloadData'])->name('userloadData');
-            Route::prefix('user')->name('user.')->group(function(){
-                Route::get('active/{product_id}',[AdminProductController::class,'userActive'])->name('active');
-                Route::get('inactive/{product_id}',[AdminProductController::class,'userInactive'])->name('inactive');
+            Route::prefix('user')->name('user.')->group(function () {
+                Route::get('active/{product_id}', [AdminProductController::class, 'userActive'])->name('active');
+                Route::get('inactive/{product_id}', [AdminProductController::class, 'userInactive'])->name('inactive');
             });
         });
-//         Route::prefix('user')->name('user.')->group(function()({
-// Route::get('products',[AdminProductController,'userproducts'])->name('products');
-//         });
+        //         Route::prefix('user')->name('user.')->group(function()({
+        // Route::get('products',[AdminProductController,'userproducts'])->name('products');
+        //         });
         Route::prefix('payment')->name('payment.')->group(function () {
             Route::get('details', [PaymentController::class, 'index'])->name('index');
             Route::get('detail/{id}', [PaymentController::class, 'store'])->name('store');

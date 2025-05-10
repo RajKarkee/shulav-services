@@ -32,10 +32,7 @@
                 'logo' => '',
                 'footer_logo' => '',
             ];
-        $products = DB::table('products')
-
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $products = DB::table('products')->orderBy('created_at', 'desc')->get();
     @endphp
 
     <header>
@@ -45,7 +42,7 @@
                     <picture>
                         <source media="(min-width: 768px)" srcset="{{ $data->logo }}">
                         <source media="(max-width: 767px)" srcset="{{ $data->footer_logo }}">
-                            <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo12">
+                        <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo12">
 
                     </picture>
                 </a>
@@ -61,39 +58,40 @@
                     Location <i class="fas fa-chevron-down"></i>
                 </div>
                 @if (Auth::check())
-                    <div class="user-profile" style="position: relative">
-                        <div class="dropdown user-dropdown" style="cursor: pointer">
-                            <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? Auth::user()->profile->profile_picture : asset('media/user.png') }}"
-                                class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
-                            <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon"
-                                data-bs-toggle="dropdown" aria-expanded="false"
-                                style="margin-left: 5px; cursor: pointer;"></i>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownIcon"
-                                style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
-                                <li><a class="dropdown-item" href="#">Settings</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
+                    @php
+                        $user = Auth::user();
+                        $userRole = $user->getRole();
+                    @endphp
+                    @if ($userRole !== 1)
+                        <div class="user-profile" style="position: relative">
+                            <div class="dropdown user-dropdown" style="cursor: pointer">
+                                <img src="{{ Auth::user()->profile && Auth::user()->profile->profile_picture ? Auth::user()->profile->profile_picture : asset('media/user.png') }}"
+                                    class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
+                                <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon"
+                                    data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="margin-left: 5px; cursor: pointer;"></i>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-label="userDropdownIcon"
+                                    style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                            <span class="username">{{ Auth::user()->name }}</span>
                         </div>
-                        <span class="username">{{ Auth::user()->name }}</span>
-                    </div>
+                    @endif
                 @else
                     <div class="login" data-bs-toggle="modal" data-bs-target="#loginModal">Login</div>
                 @endif
-
-
-
-
-
             </div>
         </div>
         <div class="categories-bar">
@@ -130,10 +128,6 @@
                         @foreach ($locations as $location)
                             <li><a href="#">{{ $location->name }}</a></li>
                         @endforeach
-                        {{-- <li><a href="#">Tarahara</a></li>
-                        <li><a href="#">Bhedetar</a></li>
-                        <li><a href="#">Hile</a></li>
-                        <li><a href="#">Soman</a></li> --}}
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -170,15 +164,6 @@
             </div>
         </div>
         <div class="footer-bottom">
-            {{-- <div class="brand-logos">
-                <div class="logo-item"><img src="{{ asset('media/car22.jpg') }}" alt="CarTrade Tech Group"></div>
-                <div class="logo-item"><img src="{{ asset('media/bike22.png') }}" alt="Bike"></div>
-                <div class="logo-item"><img src="{{ asset('media/electronics22.png') }}" alt="Electronic"></div>
-                <div class="logo-item"><img src="{{ asset('media/bikewale.png') }}" alt="Bikewale"></div>
-                <div class="logo-item"><img src="{{ asset('media/cartrade.png') }}" alt="CarTrade"></div>
-                <div class="logo-item"><img src="{{ asset('media/mobility-outlook.png') }}" alt="Mobility Outlook">
-                </div>
-            </div> --}}
             <div class="copyright">
                 <p>All rights reserved © Needtechnosoft</p>
                 <a href="#">Help - Sitemap</a>
@@ -186,7 +171,6 @@
         </div>
     </footer>
 
-    <!-- Location Modal -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -207,9 +191,6 @@
         </div>
     </div>
 
-
-
-    <!-- Login Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content login-modal">
@@ -255,10 +236,6 @@
                         <button class="btn btn-phone w-100 mb-3" data-bs-toggle="modal" data-bs-target="#phoneModal">
                             <i class="fas fa-phone-alt"></i> Continue with phone
                         </button>
-                        {{-- <a href="{{ route('loginPhone') }}" onclick="showPhoneModal()"
-                            class="btn btn-phone w-100 mb-3">
-                            <i class="fas fa-phone-alt"></i> Continue with phone
-                        </a> --}}
                         <a href="{{ route('loginGoogle') }}" class="btn btn-google w-100 mb-3">
                             <i class="fab fa-google me-2"></i> Continue with Google
                         </a>
@@ -276,7 +253,6 @@
         </div>
     </div>
 
-    <!-- Phone Modal -->
     <div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content phone-modal">
@@ -357,13 +333,13 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle - Required for modals to work -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js" integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.8.4/axios.min.js"
+        integrity="sha512-2A1+/TAny5loNGk3RBbk11FwoKXYOMfAK6R7r4CpQH7Luz4pezqEGcfphoNzB7SM4dixUoJsKkBsB6kg+dNE2g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Your custom JavaScript files -->
     <script src="{{ asset('front1/js/main.js') }}"></script>
     <script src="{{ asset('front1/js/nextpg.js') }}"></script>
 

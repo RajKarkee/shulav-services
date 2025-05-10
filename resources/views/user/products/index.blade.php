@@ -252,32 +252,36 @@
             <div class="header">
                 <div class="title-section">
                     <h1 class="title">Products</h1>
-                    <span class="results">6,560 results</span>
+                    <span class="results"></span>
                     <span class="info-icon">ⓘ</span>
                 </div>
                 @if (session('success'))
-                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
-                    <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ session('success') }}
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+                        <div id="successToast" class="toast align-items-center text-bg-success border-0 show" role="alert"
+                            aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ session('success') }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
                             </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                     </div>
-                </div>
                 @endif
                 @if (session('error'))
-                <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
-                    <div id="errorToast" class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                {{ session('error') }}
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1050">
+                        <div id="errorToast" class="toast align-items-center text-bg-danger border-0 show" role="alert"
+                            aria-live="assertive" aria-atomic="true">
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ session('error') }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                                    aria-label="Close"></button>
                             </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 <div class="action-buttons">
@@ -291,8 +295,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Sample product table -->
             <table class="products-table">
                 <thead>
                     <tr>
@@ -306,26 +308,25 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                    <tr>
-                        <td><img src="{{ asset($product->image) }}" alt="" style="width: 100px; height: 100px; background-color: #ccc;"></td>
-                        <td>{{$product->name}}</td>
-                        <td>{{$product->category_name}}</td>
-                        <td>{{$product->price}}</td>
-                        <td>{{$product->active==1?'Active':'Inactive'}}</td>
-                        <td>
-                            <div class="d-flex gap-3">
-                                <button class="btn btn-secondary mr-2">Edit</button>
-                                <a href="#" class="btn btn-danger">Delete</button>
-                            </div>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td><img src="{{ asset($product->image) }}" alt=""
+                                    style="width: 100px; height: 100px; background-color: #ccc;"></td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->category_name }}</td>
+                            <td>{{ $product->price }}</td>
+                            <td>{{ $product->active == 1 ? 'Active' : 'Inactive' }}</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-secondary">Edit</button>
+                                    <button class="btn btn-danger">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-
-    <!-- Add Product Modal -->
     <div class="modal" id="addProductModal">
         <div class="modal-back">
             <div class="modal-header">
@@ -387,8 +388,7 @@
                         <div class="image-upload-grid">
                             <!-- Image 1 -->
                             <div class="image-upload-item" data-index="1">
-                                <input type="file" id="imageUpload1" class="hidden" name="image"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload1" class="hidden" name="image" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -399,8 +399,7 @@
 
                             <!-- Image 2 -->
                             <div class="image-upload-item" data-index="2">
-                                <input type="file" id="imageUpload2" name="image1" class="hidden"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload2" name="image1" class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -411,8 +410,7 @@
 
                             <!-- Image 3 -->
                             <div class="image-upload-item" data-index="3">
-                                <input type="file" id="imageUpload3" name="image2" class="hidden"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload3" name="image2" class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -423,8 +421,7 @@
 
                             <!-- Image 4 -->
                             <div class="image-upload-item" data-index="4">
-                                <input type="file" id="imageUpload4" name='image3' class="hidden"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload4" name='image3' class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -435,8 +432,7 @@
 
                             <!-- Image 5 -->
                             <div class="image-upload-item" data-index="5">
-                                <input type="file" id="imageUpload5" name='image4' class="hidden"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload5" name='image4' class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -447,8 +443,7 @@
 
                             <!-- Image 6 -->
                             <div class="image-upload-item" data-index="6">
-                                <input type="file" id="imageUpload6" name='image5' class="hidden"
-                                    accept="image/*">
+                                <input type="file" id="imageUpload6" name='image5' class="hidden" accept="image/*">
                                 <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -477,6 +472,7 @@
             </div>
         </div>
     </div>
+
 @endsection
 
 @section('js')
@@ -487,7 +483,7 @@
     <script>
         $(document).ready(function() {
             console.log("Document ready!");
-            
+
             // Initialize DataTable
             try {
                 console.log("Initializing DataTable...");
@@ -496,26 +492,30 @@
             } catch (e) {
                 console.error("Error initializing DataTable:", e);
             }
-            
+
             // Handle toast if it exists
             var $successToast = $('#successToast');
             if ($successToast.length) {
-                var toast = new bootstrap.Toast($successToast[0], { delay: 3000 });
+                var toast = new bootstrap.Toast($successToast[0], {
+                    delay: 3000
+                });
                 toast.show();
             }
-            
+
             var $errorToast = $('#errorToast');
             if ($errorToast.length) {
-                var toast = new bootstrap.Toast($errorToast[0], { delay: 3000 });
+                var toast = new bootstrap.Toast($errorToast[0], {
+                    delay: 3000
+                });
                 toast.show();
             }
-            
+
             // Show modal function
             window.showModal = function() {
                 $('#addProductModal').fadeIn();
                 $('body').css('overflow', 'hidden');
             };
-            
+
             // Show modal on button click
             $('#addProductBtn').on('click', function() {
                 showModal();

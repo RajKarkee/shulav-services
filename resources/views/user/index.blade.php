@@ -53,63 +53,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- @if(count($bookmarks)>0)
-                    <div class="bg-white shadow mb-3" >
-                        <h5 class="p-3">
-                            Bookmarks
-                        </h5>
-                        <hr class="m-0">
-                        <div class="p-3" >
-                            <div class="row">
-                                @foreach ($bookmarks as $bookmark)
-
-                                <div class="col-md-4 mb-3" style="position: relative;">
-                                    <a target="_blank" href="{{route('vendor',['username'=>$bookmark->username])}}" class="bookmark shadow">
-                                        <div class="image">
-                                            <img class="w-100" src="{{asset($bookmark->image)}}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            {{$bookmark->name}}
-                                        </div>
-                                    </a>
-                                    <a href="{{route('user.bookmark',['vendor_id'=>$bookmark->id])}}" style="" class="btn-red remove-bookmark">
-                                        <span class="material-icons">
-                                            bookmark_remove
-                                        </span>
-                                    </a>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                    @if(count($histories)>0)
-                    <div class="bg-white shadow mb-3" >
-                        <h5 class="p-3">
-                            Visited Professionals
-                        </h5>
-                        <hr class="m-0">
-                        <div class="p-3" >
-                            <div class="row">
-                                @foreach ($histories as $bookmark)
-
-                                <div class="col-md-4 mb-3" style="position: relative;">
-                                    <a target="_blank" href="{{route('vendor',['username'=>$bookmark->username])}}" class="bookmark shadow">
-                                        <div class="image px-5">
-                                            <img class="w-100" src="{{asset($bookmark->image)}}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            {{$bookmark->name}}
-                                        </div>
-                                    </a>
-
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                    @endif --}}
                 </div>
             </div>
         </div>
@@ -122,7 +65,7 @@
     @include('user.dashboard.namejs')
     @include('user.dashboard.descjs')
     <script>
-      
+
         const asset = "{{ asset('') }}";
         const $template = $('#single-review-template').html();
         var $tot=0;

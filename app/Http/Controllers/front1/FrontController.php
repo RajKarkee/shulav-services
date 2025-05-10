@@ -202,19 +202,6 @@ class FrontController extends Controller
 
             return view('user.products.index',compact('products'));
         } else {
-            // $request->validate([
-            //     'name' => 'required|unique:products,name',
-            //     'short_desc' => 'required',
-            //     'desc' => 'required',
-            //     'price' => 'required|numeric',
-            //     'image' => 'required|image',
-            //     'category_id' => 'required|exists:categories,id',
-            //     'city_id' => 'required|exists:cities,id',
-            //     'start' => 'nullable|date',
-            //     'end' => 'nullable|date'
-            // ]);
-
-
             $product = new Product();
             $product->name = $request->name;
             $product->short_desc = $request->short_desc;
@@ -246,6 +233,41 @@ class FrontController extends Controller
             Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
 
             return redirect()->back()->with('success', 'Product added successfully!');
+        }
+    }
+
+    public function userProductEdit(Request $request, $id)
+    {
+        if ($request->isMethod('GET')) {
+            $product = DB::table('user_products')
+                ->where('user_products.id', $id)
+                ->join('products', 'user_products.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
+                ->select('products.*', 'categories.name as category_name')
+                ->first();
+
+            return view('user.products.edit', compact('product'));
+        } else {
+            $product = Product::find($id);
+            $product->name = $request->name;
+            $product->short_desc = $request->short_desc;
+            $product->desc = $request->desc;
+            $product->price = $request->price;
+            $product->on_sale = $request->sale_price;
+            $product->category_id = $request->category_id;
+            $product->city_id = $request->city_id;
+            $product->start = $request->start;
+            $product->end = $request->end;
+            if ($request->hasFile('image')) {
+                $product->image = $request->file('image')->store('uploads/products');
+            }
+            for ($i = 0; $i < 6; $i++) {
+                if ($request->hasFile('image-' . $i)) {
+                    $product->{'image' . ($i + 1)} = $request->file('image-' . $i)->store('uploads/products');
+                }
+            }
+            $product->save();
+            return redirect()->back()->with('success', 'Product updated successfully!');
         }
     }
 }
