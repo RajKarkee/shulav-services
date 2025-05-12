@@ -147,6 +147,7 @@ Route::get('vendor/cheak/now/bill/kas', [FrontController::class, 'name'])->name(
  Route::match(['GET', 'POST'], 'user/products/del/{product_id}', [FrontController::class, 'userProductsDel'])->name('user.products.del');
 
 Route::name('user.')->prefix('user')->middleware('role:user')->group(function () {
+
     Route::get('', [UserController::class, 'index'])->name('dashboard');
     Route::get('bookmark/{vendor_id}', [UserController::class, 'bookmark'])->name('bookmark');
     Route::match(['GET', 'POST'], 'edit-info', [UserController::class, 'editInfo'])->name('edit-info');

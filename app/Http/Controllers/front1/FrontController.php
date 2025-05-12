@@ -236,7 +236,7 @@ class FrontController extends Controller
         }
     }
 
-    public function userProductEdit(Request $request, $id)
+    public function userProductsEdit(Request $request, $id)
     {
         if ($request->isMethod('GET')) {
             $product = DB::table('user_products')

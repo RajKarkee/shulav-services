@@ -216,7 +216,6 @@ class AuthController extends Controller
         if ($request->getMethod() == "POST") {
         } else {
             $redirect = session('redirect');
-
             return view('front.auth.firstlogin', compact('redirect'));
         }
     }
