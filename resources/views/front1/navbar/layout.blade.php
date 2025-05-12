@@ -394,34 +394,43 @@
         }
 
 
-        function login() {
-            const otp = $('#otp').val();
-            const name = $('#name').val();
-            const email = $('#email').val();
-            const address = $('#address').val();
-            const city_id = $('#city_id').val();
+    function login() {
+        const otp = $('#otp').val();
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const address = $('#address').val();
+        const city_id = $('#city_id').val();
 
-            axios.post('{{ route('loginOTP') }}', {
-                    otp: otp,
-                    name: name,
-                    email: email,
-                    address: address,
-                    city_id: city_id
-                })
-                .then((res) => {
-
-                })
-                .catch((err) => {
-                    console.log(err.response);
-                    if (err.response) {
-                        alert(err.response.data.message);
-                    } else {
-                        alert('Some error occurred. Please try again.');
-                    }
-                    $('#login_opt button').show();
-                });
-        }
-
+        axios.post('{{ route('loginOTP') }}', {
+                otp: otp,
+                name: name,
+                email: email,
+                address: address,
+                city_id: city_id
+            }, {
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then((res) => {
+                const user = res.data;
+                console.log(user)
+                if(user.role == 2){
+                    window.location.href = "{{ route('vendor.dashboard') }}";
+                }else{
+                    alert('You do not have access to this page');
+                }
+            })
+            .catch((err) => {
+                console.log(err.response);
+                if (err.response) {
+                    alert(err.response.data.message);
+                } else {
+                    alert('Some error occured please try again');
+                }
+                $('#login_opt button').show();
+            });
+    }
         function showPhoneModal() {
             $('#loginModal').modal('hide');
             $('#phoneModal').modal('show');

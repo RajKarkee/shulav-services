@@ -275,10 +275,12 @@ class AuthController extends Controller
                     $user->save();
                     Session::put('setup', 3);
                     Session::save();
+                    Auth::login($user);
                     return response($user);
                 } else {
                     Session::put('setup', 3);
                     Session::save();
+                    Auth::login($user);
                     return response($user);
                 }
             } else {
