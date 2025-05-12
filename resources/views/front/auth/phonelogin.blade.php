@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('front/auth.css') }}">
     <style>
         label{
-            padding: 6px 6px;
+           margin: 10px 0px 10px 5px;
         }
     </style>
 @endsection
@@ -145,11 +145,13 @@
                     city_id: city_id
                 })
                 .then((res) => {
-                    if (res.data.status == true) {
-                        window.location.href = "{{ route('setupUser') }}";
-                    } else {
-                        alert(res.data.message);
+                    const user - res.data;
+                    if(user.role == 2){
+                        window.location.href = "{{ route('vendor.dashboard') }}";
+                    }else{
+                        alert('You do not have access to this page');
                     }
+
                 })
                 .catch((err) => {
                     console.log(err.response);

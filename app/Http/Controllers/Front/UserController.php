@@ -38,7 +38,6 @@ class UserController extends Controller
     public function editInfo(Request $request)
     {
         $user=Auth::user();
-
         if($request->getMethod()=="POST"){
             if($request->phone!=$user->vendor->phone){
 

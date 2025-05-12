@@ -201,7 +201,7 @@
                 <div class="modal-body">
                     <h4 class="login-title text-center">Close deals from the comfort of your home.</h4>
                     <div class="login-form-container">
-                        <form class="login-form" method="post" action="{{ route('User.login') }}">
+                        {{-- <form class="login-form" method="post" action="{{ route('User.login') }}">
                             @csrf
                             @if (session('message'))
                                 <div class="alert alert-success">
@@ -232,7 +232,7 @@
                             </div>
                             <button type="submit" class="btn btn-login w-100">Login with Email</button>
                         </form>
-                        <div class="or-divider"><span>OR</span></div>
+                        <div class="or-divider"><span>OR</span></div> --}}
                         <button class="btn btn-phone w-100 mb-3" data-bs-toggle="modal" data-bs-target="#phoneModal">
                             <i class="fas fa-phone-alt"></i> Continue with phone
                         </button>

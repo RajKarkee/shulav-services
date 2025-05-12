@@ -58,7 +58,7 @@ class AuthController extends Controller
                 } else {
                     if ($user->getRole() == 'user') {
                         $user->role = 2;
-                        return redirect()->route('index');
+                        return redirect()->route('vendor.dashboard');
                     } else {
 
                         return redirect()->route($user->getRole() . 'index');
@@ -283,10 +283,7 @@ class AuthController extends Controller
                 } else {
                     Session::put('setup', 3);
                     Session::save();
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Login successful',
-                    ]);
+                    return response($user);
                 }
             } else {
                 return response()->json([
@@ -321,11 +318,7 @@ class AuthController extends Controller
                 }
                 $localUser->auth_source = 3;
                 $localUser->username = strtolower($username);
-
-
                 $localUser->role = $request->type;
-
-
                 $localUser->password = bcrypt('_pass' . mt_rand(111111, 999999));
                 $localUser->save();
             } else if ($setup == 2) {
@@ -400,7 +393,7 @@ class AuthController extends Controller
             $localUser->auth_source = 2;
             $localUser->username = strtolower($username);
             $localUser->email = $user->email;
-            $localUser->role = 3;
+            $localUser->role = 2;
             $localUser->google_id = $user->id;
             $localUser->password = bcrypt('pass' . mt_rand(0, 999999));
             $localUser->email_verified_at = now();
@@ -436,7 +429,7 @@ class AuthController extends Controller
             Session::save();
             return redirect($redirect);
         } else {
-            return redirect()->route('index');
+            return redirect()->route('vendor.dashboard');
         }
     }
 }
