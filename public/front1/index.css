@@ -1673,6 +1673,7 @@ footer .footer-bottom .copyright a:hover {
   border-radius: 8px;
   padding: 0.85rem 1.5rem;
   margin-top: 20px;
+  color: black;
   font-weight: 600;
   transition: all 0.2s ease;
   box-shadow: 0 4px 10px rgba(255, 90, 95, 0.2);

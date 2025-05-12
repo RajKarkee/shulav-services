@@ -294,22 +294,22 @@
                                     </div>
                                     <div id="OTPForm">
                                         <div class="control mb-3">
-                                            <label for="name">Name</label>
+                                            <label for="name" style="margin: 10px 0px 10px 8px;">Name</label>
                                             <input type="text" name="name" id="name" aria-label="Name"
                                                 aria-describedby="Name">
                                         </div>
                                         <div class="control mb-3">
-                                            <label for="email">Email</label>
+                                            <label for="email" style="margin: 10px 0px 10px 8px;" >Email</label>
                                             <input type="email" name="email" id="email" aria-label="Email"
                                                 aria-describedby="Email">
                                         </div>
                                         <div class="control mb-3">
-                                            <label for="address">Address</label>
+                                            <label for="address" style="margin: 10px 0px 10px 8px;" >Address</label>
                                             <input type="text" name="address" id="address" aria-label="Address"
                                                 aria-describedby="Address">
                                         </div>
                                         <div class="control mb-3">
-                                            <label for="city_id">City</label>
+                                            <label for="city_id" style="margin: 10px 0px 10px 8px;" >City</label>
                                             <select name="city_id" id="city_id" aria-label="City"
                                                 aria-describedby="City">
                                                 @foreach ($cities as $city)
@@ -410,11 +410,7 @@
                     city_id: city_id
                 })
                 .then((res) => {
-                    if (res.data.status === true) {
-                        window.location.href = "{{ route('setupUser') }}";
-                    } else {
-                        alert(res.data.message);
-                    }
+
                 })
                 .catch((err) => {
                     console.log(err.response);

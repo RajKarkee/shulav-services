@@ -9,6 +9,6 @@ class SocialController extends Controller
 {
     public function loginGoogle()
     {
-        return Socialite::driver('google');
+        return Socialite::driver('google')->redirect();
     }
 }

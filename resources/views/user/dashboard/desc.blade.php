@@ -9,7 +9,7 @@
             </div>
         </strong>
         <div id="first-selector-desc">
-            <textarea autocorrect="off" id="desc-input" cols="30" rows="6" >{!!$user->vendor->desc!!}</textarea>
+            {{-- <textarea autocorrect="off" id="desc-input" cols="30" rows="6" >{!!$user->vendor->desc!!}</textarea> --}}
             <div >
                 <span id="cancel-desc" class="btn  link">
                     cancel

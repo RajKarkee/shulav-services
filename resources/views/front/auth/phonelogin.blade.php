@@ -1,11 +1,6 @@
 @extends('front.page')
 @section('css')
     <link rel="stylesheet" href="{{ asset('front/auth.css') }}">
-    <style>
-        label{
-           margin: 10px 0px 10px 5px;
-        }
-    </style>
 @endsection
 @section('title', 'Login')
 @section('jumbotron')
@@ -43,25 +38,25 @@
                             Login
                         </button>
                     </div>
-                    <div  id="OTPForm">
+                    <div id="OTPForm">
                         <div class="control mb-3">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="name" aria-label="Name"
+                            <label for="name" class="form-label" style="margin: 10px 0px 10px 5px;">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" aria-label="Name"
                                 aria-describedby="Name">
                         </div>
                         <div class="control mb-3">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" aria-label="Email"
+                            <label for="email" class="form-label" style="margin: 10px 0px 10px 5px;">Email</label>
+                            <input type="email" name="email" id="email" class="form-control" aria-label="Email"
                                 aria-describedby="Email">
                         </div>
                         <div class="control mb-3">
-                            <label for="address">Address</label>
-                            <input type="text" name="address" id="address" aria-label="Address"
+                            <label for="address" class="form-label" style="margin: 10px 0px 10px 5px;">Address</label>
+                            <input type="text" name="address" id="address" class="form-control" aria-label="Address"
                                 aria-describedby="Address">
                         </div>
                         <div class="control mb-3">
-                            <label for="city_id">City</label>
-                            <select name="city_id" id="city_id" aria-label="City"
+                            <label for="city_id" class="form-label" style="margin: 10px 0px 10px 5px;">City</label>
+                            <select name="city_id" id="city_id" class="form-select" aria-label="City"
                                 aria-describedby="City">
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
@@ -145,7 +140,7 @@
                     city_id: city_id
                 })
                 .then((res) => {
-                    const user - res.data;
+                    const user = res.data;
                     if(user.role == 2){
                         window.location.href = "{{ route('vendor.dashboard') }}";
                     }else{

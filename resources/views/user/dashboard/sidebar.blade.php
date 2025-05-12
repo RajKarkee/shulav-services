@@ -17,13 +17,13 @@
                     <i class="material-icons">room</i> <span>From</span>
                 </span>
                 <span id="from-input">
-                    {{$user->vendor->city->name}}
+                    {{-- {{$user->vendor->city->name}} --}}
                 </span>
             </div>
             <hr class="my-1">
            <div class="info">
                <span >
-                    {{$user->vendor->address}}
+                    {{-- {{$user->vendor->address}} --}}
                 </span>
             </div>
             <hr class="my-1">
