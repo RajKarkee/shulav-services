@@ -347,10 +347,7 @@ class AuthController extends Controller
             $vendor->address = $request->address;
 
             $vendor->location_id = $request->location_id;
-            // $vendor->service_id = $request->service_id;
-
             $vendor->save();
-
             Session::forget('google_id');
             Session::forget('email');
             Session::forget('setup');
@@ -369,7 +366,6 @@ class AuthController extends Controller
             } else {
                 $localUser = User::where('email', $email)->first();
             }
-            // dd($localUser);
             $cities = DB::table('cities')->get(['id', 'name']);
             $locations = DB::table('locations')->get(['id', 'name', 'city_id']);
             $cats = DB::table('categories')->get(['id', 'name']);

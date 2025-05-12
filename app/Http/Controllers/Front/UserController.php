@@ -31,31 +31,9 @@ class UserController extends Controller
     public function index()
     {
         $user=Auth::user();
-        $reviews=DB::table('reviews')
-        ->join('vendors','vendors.id','=','reviews.vendor_id')
-        ->join('users','users.id','=','vendors.user_id')
-        ->where('reviews.user_id',$user->id)
-        ->select(DB::raw('reviews.created_at as c,reviews.rate as r,users.name as n,reviews.desc as d,vendors.image as i,reviews.id as vid' ))
-        ->orderByDesc('reviews.id')
-        ->get();
-
-        $histories=DB::table('histories')
-        ->join('vendors','vendors.id','=','histories.vendor_id')
-        ->join('users','users.id','=','vendors.user_id')
-        ->select(DB::raw('vendors.id,users.name,users.username,vendors.image' ))
-        ->where('histories.user_id',$user->id)
-        ->get();
-        $bookmarks=DB::table('book_marks')
-        ->join('vendors','vendors.id','=','book_marks.vendor_id')
-        ->join('users','users.id','=','vendors.user_id')
-        ->select(DB::raw('vendors.id,users.name,users.username,vendors.image' ))
-        ->where('book_marks.user_id',$user->id)
-        ->get();
-
-
-
-        // dd($reviews);
-        return view('user.index',compact('user','reviews','histories','bookmarks'));
+        $userProducts = DB::table('user_products')->where('user_id', $user->id)->get();
+        $reviews = Review::where('user_id', $user->id)->get();
+        return view('user.index',compact('userProducts','user','reviews'));
     }
     public function editInfo(Request $request)
     {

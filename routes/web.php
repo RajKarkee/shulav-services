@@ -117,7 +117,7 @@ Route::match(['GET', 'POST'], 'logout', [FrontAuthController::class, 'logout'])-
 
 Route::middleware('guest')->group(function () {
     Route::match(['GET', 'POST'], 'login', [FrontAuthController::class, 'login'])->name('login');
-    Route::match(['GET', 'POST'], 'loginFirst', [FrontAuthController::class, 'loginFirst'])->name('loginFirst');
+    Route::match(['GET', 'POST'], 'loginFirst', [FrontAuthController::class, 'loginPFirst'])->name('loginFirst');
     Route::match(['GET', 'POST'], 'loginPhone', [FrontAuthController::class, 'loginPhone'])->name('loginPhone');
     Route::match(['GET', 'POST'], 'setupUser', [FrontAuthController::class, 'setupUser'])->name('setupUser');
     Route::match(['GET', 'POST'], 'loginOTP', [FrontAuthController::class, 'loginOTP'])->name('loginOTP');

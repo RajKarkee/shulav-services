@@ -146,7 +146,6 @@
                 })
                 .then((res) => {
                     if (res.data.status == true) {
-                        console.log(res.data);
                         window.location.href = "{{ route('setupUser') }}";
                     } else {
                         alert(res.data.message);

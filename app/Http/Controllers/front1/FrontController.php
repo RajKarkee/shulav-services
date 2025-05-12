@@ -173,7 +173,8 @@ class FrontController extends Controller
     public function seller()
     {
         $user = Auth::user();
-        return view('user.index', compact('user'));
+        $userProducts = DB::table('user_products')->where('user_id', $user->id)->get();
+        return view('user.index', compact('user', 'userProducts'));
     }
     public function now()
     {
