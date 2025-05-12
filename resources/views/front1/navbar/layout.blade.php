@@ -25,14 +25,14 @@
         $locations = DB::table('locations')
             ->limit(5)
             ->get(['id', 'name']);
-
-        $data =
-            App\Helper::getSetting('minor') ??
-            (object) [
-                'logo' => '',
-                'footer_logo' => '',
-            ];
         $products = DB::table('products')->orderBy('created_at', 'desc')->get();
+
+        $settingData = DB::table('settings')->where('code', 'minor')->first();
+        if ($settingData) {
+            $data = json_decode($settingData->value);
+        }
+        $logo = $data->logo ?? null;
+        $footer_logo = $data->footer_logo ?? null;
     @endphp
 
     <header>
@@ -40,8 +40,6 @@
             <div class="logo">
                 <a href="{{ route('index') }}">
                     <picture>
-                        <source media="(min-width: 768px)" srcset="{{ $data->logo }}">
-                        <source media="(max-width: 767px)" srcset="{{ $data->footer_logo }}">
                         <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo">
                     </picture>
                 </a>
@@ -164,8 +162,7 @@
         </div>
     </footer>
 
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-header">
@@ -255,53 +252,55 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="login-title text-center">Close deals from the comfort of your home.</h4>
-                    <div id="page-login" >
+                    <div id="page-login">
                         <div class="holder">
                             <div class="login-form">
-                                <div class="controls px-3">
-                                    <div class="control mb-3">
-                                        <span class="icon">
-                                            <i class="fas fa-phone"></i>
-                                        </span>
-                                        <input type="phone" name="phone" id="phone"
-                                            placeholder="Enter Phone No" aria-label="Phone" aria-describedby="Email">
-                                    </div>
-                                    <div class="control mb-3" id="otp-holder">
-                                        <span class="icon">
-                                            <i class="fas fa-lock"></i>
-                                        </span>
-                                        <input type="number" name="otp" placeholder="Enter Otp"
-                                            aria-label="Otp" aria-describedby="otp" id="otp">
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="controls px-3">
+                                        <div class="control mb-3">
+                                            <span class="icon">
+                                                <i class="fas fa-phone"></i>
+                                            </span>
+                                            <input type="phone" name="phone" id="phone"
+                                                placeholder="Enter Phone No" aria-label="Phone" aria-describedby="Email">
+                                        </div>
+                                        <div class="control mb-3" id="otp-holder">
+                                            <span class="icon">
+                                                <i class="fas fa-lock"></i>
+                                            </span>
+                                            <input type="number" name="otp" placeholder="Enter Otp"
+                                                aria-label="Otp" aria-describedby="otp" id="otp">
 
-                                    </div>
-                                    <div class="text-end" id="request_otp">
-                                        <button class="btn btn-danger" onclick="requestOTP()">
-                                            Request OTP
-                                        </button>
-                                    </div>
-                                    <div class="text-end" id="login_opt">
-                                        <button class="btn btn-danger" id="finish" onclick="login()">
-                                            Login
-                                        </button>
-                                    </div>
-                                    <div id="OTPForm">
+                                        </div>
+                                        <div class="text-end" id="request_otp">
+                                            <button class="btn btn-danger" onclick="requestOTP()">
+                                                Request OTP
+                                            </button>
+                                        </div>
+                                        <div class="text-end" id="login_opt">
+                                            <button class="btn btn-danger" id="finish" onclick="login()">
+                                                Login
+                                            </button>
+                                        </div>
+                                        <div id="OTPForm">
                                             <div class="control mb-3">
                                                 <label for="name" style="margin: 10px 0px 10px 8px;">Name</label>
                                                 <input type="text" name="name" id="name" aria-label="Name"
                                                     aria-describedby="Name">
                                             </div>
                                             <div class="control mb-3">
-                                                <label for="email" style="margin: 10px 0px 10px 8px;" >Email</label>
+                                                <label for="email" style="margin: 10px 0px 10px 8px;">Email</label>
                                                 <input type="email" name="email" id="email" aria-label="Email"
                                                     aria-describedby="Email">
                                             </div>
                                             <div class="control mb-3">
-                                                <label for="address" style="margin: 10px 0px 10px 8px;" >Address</label>
+                                                <label for="address" style="margin: 10px 0px 10px 8px;">Address</label>
                                                 <input type="text" name="address" id="address" aria-label="Address"
                                                     aria-describedby="Address">
                                             </div>
                                             <div class="control mb-3">
-                                                <label for="city_id" style="margin: 10px 0px 10px 8px;" >City</label>
+                                                <label for="city_id" style="margin: 10px 0px 10px 8px;">City</label>
                                                 <select name="city_id" id="city_id" aria-label="City"
                                                     aria-describedby="City">
                                                     @foreach ($cities as $city)
@@ -310,12 +309,13 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-12 mb-3">
-                                                <button class="btn btn-primary">
+                                                <button type="submit" class="btn btn-primary">
                                                     Save
                                                 </button>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
 
@@ -387,39 +387,39 @@
         }
 
 
-    function login(ele,e) {
-        const otp = $('#otp').val();
-        const name = $('#name').val();
-        const email = $('#email').val();
-        const address = $('#address').val();
-        const city_id = $('#city_id').val();
+        function login() {
+            const otp = $('#otp').val();
+            const name = $('#name').val();
+            const email = $('#email').val();
+            const address = $('#address').val();
+            const city_id = $('#city_id').val();
 
-        axios.post(ele.action, {
-                otp: otp,
-                name: name,
-                email: email,
-                address: address,
-                city_id: city_id
-            })
-            .then((res) => {
-                const user = res.data;
-                console.log(user)
-                if(user.role == 2){
-                    window.location.href = "{{ route('vendor.dashboard') }}";
-                }else{
-                    alert('You do not have access to this page');
-                }
-            })
-            .catch((err) => {
-                console.log(err.response);
-                if (err.response) {
-                    alert(err.response.data.message);
-                } else {
-                    alert('Some error occured please try again');
-                }
-                $('#login_opt button').show();
-            });
-    }
+            axios.post("{{ route('loginOTP') }}", {
+                    otp: otp,
+                    name: name,
+                    email: email,
+                    address: address,
+                    city_id: city_id,
+                })
+                .then((res) => {
+                    const user = res.data;
+                    if (user.role == 2) {
+                        window.location.href = "{{ route('vendor.dashboard') }}";
+                    } else {
+                        alert('You do not have access to this page');
+                    }
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                    if (err.response) {
+                        alert(err.response.data.message);
+                    } else {
+                        alert('Some error occured please try again');
+                    }
+                    $('#login_opt button').show();
+                });
+        }
+
         function showPhoneModal() {
             $('#loginModal').modal('hide');
             $('#phoneModal').modal('show');
