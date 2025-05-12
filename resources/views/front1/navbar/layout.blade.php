@@ -42,8 +42,7 @@
                     <picture>
                         <source media="(min-width: 768px)" srcset="{{ $data->logo }}">
                         <source media="(max-width: 767px)" srcset="{{ $data->footer_logo }}">
-                        <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo12">
-
+                        <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo">
                     </picture>
                 </a>
             </div>
@@ -69,15 +68,10 @@
                                     class="profile-pic dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                     style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; cursor: pointer;">
-                                <i class="fas fa-chevron-down dropdown-toggle" id="userDropdownIcon"
-                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="margin-left: 5px; cursor: pointer;"></i>
+
                                 <ul class="dropdown-menu dropdown-menu-end" aria-label="userDropdownIcon"
                                     style="position: absolute; top: 100%; left: auto; right: 0; margin-top: 5px;">
                                     <li><a class="dropdown-item" href="#">Settings</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
@@ -86,7 +80,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            <span class="username">{{ Auth::user()->name }}</span>
                         </div>
                     @endif
                 @else
@@ -292,35 +285,35 @@
                                         </button>
                                     </div>
                                     <div id="OTPForm">
-                                        <div class="control mb-3">
-                                            <label for="name" style="margin: 10px 0px 10px 8px;">Name</label>
-                                            <input type="text" name="name" id="name" aria-label="Name"
-                                                aria-describedby="Name">
-                                        </div>
-                                        <div class="control mb-3">
-                                            <label for="email" style="margin: 10px 0px 10px 8px;" >Email</label>
-                                            <input type="email" name="email" id="email" aria-label="Email"
-                                                aria-describedby="Email">
-                                        </div>
-                                        <div class="control mb-3">
-                                            <label for="address" style="margin: 10px 0px 10px 8px;" >Address</label>
-                                            <input type="text" name="address" id="address" aria-label="Address"
-                                                aria-describedby="Address">
-                                        </div>
-                                        <div class="control mb-3">
-                                            <label for="city_id" style="margin: 10px 0px 10px 8px;" >City</label>
-                                            <select name="city_id" id="city_id" aria-label="City"
-                                                aria-describedby="City">
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}">{{ $city->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-12 mb-3">
-                                            <button class="btn btn-primary" onclick="login()">
-                                                Save
-                                            </button>
-                                        </div>
+                                            <div class="control mb-3">
+                                                <label for="name" style="margin: 10px 0px 10px 8px;">Name</label>
+                                                <input type="text" name="name" id="name" aria-label="Name"
+                                                    aria-describedby="Name">
+                                            </div>
+                                            <div class="control mb-3">
+                                                <label for="email" style="margin: 10px 0px 10px 8px;" >Email</label>
+                                                <input type="email" name="email" id="email" aria-label="Email"
+                                                    aria-describedby="Email">
+                                            </div>
+                                            <div class="control mb-3">
+                                                <label for="address" style="margin: 10px 0px 10px 8px;" >Address</label>
+                                                <input type="text" name="address" id="address" aria-label="Address"
+                                                    aria-describedby="Address">
+                                            </div>
+                                            <div class="control mb-3">
+                                                <label for="city_id" style="margin: 10px 0px 10px 8px;" >City</label>
+                                                <select name="city_id" id="city_id" aria-label="City"
+                                                    aria-describedby="City">
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 mb-3">
+                                                <button class="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -394,23 +387,19 @@
         }
 
 
-    function login() {
+    function login(ele,e) {
         const otp = $('#otp').val();
         const name = $('#name').val();
         const email = $('#email').val();
         const address = $('#address').val();
         const city_id = $('#city_id').val();
 
-        axios.post('{{ route('loginOTP') }}', {
+        axios.post(ele.action, {
                 otp: otp,
                 name: name,
                 email: email,
                 address: address,
                 city_id: city_id
-            }, {
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
             })
             .then((res) => {
                 const user = res.data;

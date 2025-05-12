@@ -261,6 +261,8 @@ class AuthController extends Controller
     {
         $phone = Session::get('phone');
         $otp = Otp::where('phone', $phone)->first();
+
+        dd($request->all());
         if ($request->getMethod() == "POST") {
             if ($otp->otp == $request->otp) {
                 $user = User::where('phone', $phone)->first();
