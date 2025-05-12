@@ -5,6 +5,13 @@
 @section('page-option')
     <a type="button" class="btn btn-primary" href="{{ route('admin.products.create') }}">Add Product</a>
 @endsection
+@section('css')
+<style>
+    label{
+        margin-left: 6px;
+    }
+</style>
+@endsection
 @section('s-title')
     <li class="breadcrumb-item">Products</li>
 @endsection
@@ -30,7 +37,7 @@
                     </select>
                 </div>
                 <div class="col-md-4 mb-2">
-                    <label for="city_id" class="form-label">City</label>
+                    <label for="user_id" class="form-label">Sellers</label>
                     <select name="user_id" id="user_id" class="form-control">
                         <option value="">All Sellers</option>
 
@@ -71,8 +78,8 @@
         const users = @json(
             \App\Models\UserProduct::with('user')->get()->map(function ($userProduct) {
                     return ['id' => $userProduct->user->id, 'name' => $userProduct->user->name];
-                }));
-       
+}));
+
         var cityMap = {};
         var categoryMap = {};
         var userMap = {};
@@ -103,8 +110,8 @@
             event.preventDefault();
             const editURL = "{{ route('admin.products.edit', ['product_id' => 'xxx_id']) }}";
             const deleteURL = "{{ route('admin.products.del', ['product_id' => 'xxx_id']) }}";
-            const active="{{ route('admin.products.user.active',['product_id'=>'xxx_id']) }}"
-            const inactive="{{ route('admin.products.user.inactive',['product_id'=>'xxx_id']) }}";
+            const active = "{{ route('admin.products.user.active', ['product_id' => 'xxx_id']) }}"
+            const inactive = "{{ route('admin.products.user.inactive', ['product_id' => 'xxx_id']) }}";
             const formData = new FormData(form);
             axios.post(form.action, formData)
                 .then(response => {
@@ -112,23 +119,23 @@
                     $('#product-list').html(
                         response.data.map(data => {
                             return `<tr id="product-${data.id}">
-    <td>${data.user_name}</td>
-    <td>${data.name}</td>
-    <td>${data.short_desc}</td>
-    <td>${data.price}</td>
-    <td>${cityMap[data.city_id]}</td>
-    <td>${categoryMap[data.category_id]}</td>
-    <td>${data.active ==0 ?'Inactive':'Active'}</td>
-    <td>
-       <a href="${(data.active == 0 ? active : inactive).replace('xxx_id', data.id)}" 
-   class="btn btn-sm btn-success">
-   ${data.active == 0 ? 'Active' : 'Inactive'}
-</a>
+                                <td>${data.user_name}</td>
+                                <td>${data.name}</td>
+                                <td>${data.short_desc}</td>
+                                <td>${data.price}</td>
+                                <td>${cityMap[data.city_id]}</td>
+                                <td>${categoryMap[data.category_id]}</td>
+                                <td>${data.active ==0 ?'Inactive':'Active'}</td>
+                                <td>
+                                <a href="${(data.active == 0 ? active : inactive).replace('xxx_id', data.id)}"
+                            class="btn btn-sm btn-success">
+                            ${data.active == 0 ? 'Active' : 'Inactive'}
+                            </a>
 
-        <a href="${editURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-info">Edit</a>
-        <a href="${deleteURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-danger">Del</a>
-    </td>
-</tr>`;
+                                    <a href="${editURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-info">Edit</a>
+                                    <a href="${deleteURL.replace('xxx_id',data.id)}" class="btn btn-sm btn-danger">Del</a>
+                                </td>
+                            </tr>`;
                         }).join('')
                     );
                 })

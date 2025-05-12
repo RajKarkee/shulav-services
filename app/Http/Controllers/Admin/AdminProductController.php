@@ -78,7 +78,7 @@ class AdminProductController extends Controller
         }
         $product->save();
 
-   
+
         $subKey = $subcategoryId ?? 'none';
         Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
 
@@ -128,7 +128,7 @@ class AdminProductController extends Controller
         if ($product) {
             $product->delete();
 
-          
+
             $subKey = $subcategoryId ?? 'none';
             Cache::forget("products_category_{$product->category_id}_subcategory_{$subKey}");
         }
@@ -142,36 +142,34 @@ class AdminProductController extends Controller
     public function userloadData(Request $request)
     {
         $query = DB::table('user_products');
-        // $query = DB::table(user_products::tableName);
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
         }
-        if ($request->filled('city_id')) { 
+        if ($request->filled('city_id')) {
             $query->where('city_id', $request->city_id);
         }
-        if ($request->filled('user_id')){
+        if ($request->filled('user_id')) {
             $query->where('user_id', $request->user_id);
         }
         $products = $query
-        ->join('users', 'user_products.user_id', '=', 'users.id')
-        ->join('products', 'user_products.product_id', '=', 'products.id')
-        ->select(
-            'users.name as user_name',
-            'products.*'
-        )
-        ->get();
-        // $products = $query->get(['id', 'name', 'short_desc',  'price', 'on_sale', 'image', 'category_id', 'city_id'])
-        // ->where('active',0);
+            ->join('users', 'user_products.user_id', '=', 'users.id')
+            ->join('products', 'user_products.product_id', '=', 'products.id')
+            ->select(
+                'users.name as user_name',
+                'products.*'
+            )
+            ->get();
         return response()->json($products);
     }
 
-    public function userActive($product_id){
-product::where('id',$product_id)->update(['active'=>1]);
+    public function userActive($product_id)
+    {
+        product::where('id', $product_id)->update(['active' => 1]);
         return redirect()->back()->with('success', 'Product activated successfully!');
     }
-    public function userInactive($product_id){
-product::where('id',$product_id)->update(['active'=>0]);
+    public function userInactive($product_id)
+    {
+        product::where('id', $product_id)->update(['active' => 0]);
         return redirect()->back()->with('success', 'Product deactivated successfully!');
     }
-
 }

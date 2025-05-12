@@ -318,7 +318,7 @@
                             <td>
                                 <div class="d-flex gap-2">
                                     <button class="btn btn-secondary">Edit</button>
-                                    <button class="btn btn-danger">Delete</button>
+                                    <a href="{{route('user.products.del',['product_id'=>$product->id])}}" class="btn btn-danger">Delete</a>
                                 </div>
                             </td>
                         </tr>
@@ -334,7 +334,7 @@
                 <button class="modal-close" id="closeModal">×</button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('user.products.add') }}" method='POST' enctype="multipart/form-data"
+                <form action="{{ route('user.products.index') }}" method='POST' enctype="multipart/form-data"
                     id="addProductForm">
                     @csrf
                     <div class="form-row">

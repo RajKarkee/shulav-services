@@ -18,7 +18,7 @@
     <title>{{ env('APP_NAME', '') }} - @yield('title')</title>
 </head>
 
-    
+
 
 <body>
 
@@ -165,12 +165,9 @@
             });
         });
     </script>
-    @yield('js')
-    <script>
-
-    </script>
-
     @include('share.citychooserjs')
+    @yield('js')
+    @yield('js2')
 
 </body>
 

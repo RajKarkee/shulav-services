@@ -186,7 +186,7 @@ class FrontController extends Controller
         return view('front1.name', compact('user'));
     }
 
-    public function userProducts(Request $request)
+    public function userProductsIndex(Request $request)
     {
         if (request()->isMethod('GET')) {
             $user = Auth::user();
@@ -268,6 +268,17 @@ class FrontController extends Controller
             }
             $product->save();
             return redirect()->back()->with('success', 'Product updated successfully!');
+        }
+    }
+
+    public function userProductsDel($product_id){
+        $user = Auth::user();
+        $userProduct = UserProduct::where('user_id', $user->id)->where('product_id', $product_id)->first();
+        if ($userProduct) {
+            $userProduct->delete();
+            return redirect()->back()->with('success', 'Product deleted successfully!');
+        } else {
+            return redirect()->back()->with('error', 'Product not found!');
         }
     }
 }
