@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Title -->
-    <title>{{env('APP_NAME')}} @yield('title')</title>
+    <title>{{ env('APP_NAME') }} @yield('title')</title>
 
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
         rel="stylesheet">
     <link href="{{ asset('admin/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/plugins/font-awesome/css/all.min.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     @yield('css-include')
 
     <!-- Theme Styles -->
@@ -27,16 +28,17 @@
     @yield('css2')
     @yield('css3')
     <style>
-        .btn-table{
+        .btn-table {
             font-size: 18px;
-        }
-        .btn-table *{
-            font-size: 18px;
-        }
-        label{
-            color:rgb(49, 49, 49);
         }
 
+        .btn-table * {
+            font-size: 18px;
+        }
+
+        label {
+            color: rgb(49, 49, 49);
+        }
     </style>
 </head>
 
@@ -72,12 +74,13 @@
             <div class="page-footer">
                 <div class="row">
                     <div class="col-md-12">
-                        <span class="footer-text"> <script>
-                            var CurrentYear = new Date().getFullYear()
-                            document.write(CurrentYear)
-                        </script> © {{env('copyright','NeedTech')}}
+                        <span class="footer-text">
+                            <script>
+                                var CurrentYear = new Date().getFullYear()
+                                document.write(CurrentYear)
+                            </script> © {{ env('copyright', 'NeedTech') }}
 
-                      </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -90,26 +93,29 @@
     <script src="{{ asset('admin/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('admin/plugins/blockui/jquery.blockUI.js') }}"></script>
     <script src="{{ asset('admin/js/connect.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js" integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
+        integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('admin/js/custom.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     @include('toastr.index')
     @yield('script')
     @yield('script1')
     @yield('script2')
     @yield('script3')
     <script>
-     window.onload = function() {
-            $('#accordion-menu a').each(function (index, element) {
-                if(element.href== window.location.href){
-                    console.log(element.href,window.location.href);
-                    const n1=element.parentNode;
-                    if($(n1).hasClass('sub-item')){
-                        const n2=n1.parentNode;
-                        const n3=n2.parentNode;
+        window.onload = function() {
+            $('#accordion-menu a').each(function(index, element) {
+                if (element.href == window.location.href) {
+                    console.log(element.href, window.location.href);
+                    const n1 = element.parentNode;
+                    if ($(n1).hasClass('sub-item')) {
+                        const n2 = n1.parentNode;
+                        const n3 = n2.parentNode;
                         $(n2).removeAttr('style');
                         $(n3).addClass('active-page open');
 
-                    }else{
+                    } else {
                         $(n1).addClass('active-page');
                     }
                     $(element).addClass('active');

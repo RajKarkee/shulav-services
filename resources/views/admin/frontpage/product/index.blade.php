@@ -10,7 +10,7 @@
                 @csrf
                 <div class="col-md-4">
                     <label for="Product_id">Select Product</label>
-                    <select name="product_id" id="product_id" class="form-control">
+                    <select name="product_id[]" id="product_id" class="form-control" multiple="multiple">
                         @foreach ($products as $product)
                             <option value="{{ $product->id }}">{{ $product->name }}</option>
                         @endforeach
@@ -44,4 +44,14 @@
             </tbody>
         </table>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            $('#product_id').select2({
+                placeholder: 'Select Product',
+                allowClear: true
+            });
+        });
+    </script>
 @endsection

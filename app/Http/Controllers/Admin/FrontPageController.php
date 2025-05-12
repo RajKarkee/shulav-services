@@ -45,23 +45,42 @@ class FrontPageController extends Controller
     public function productIndex(Request $request,$section_id)
     {
         if ($request->getMethod() == "POST") {
-            $exists = FrontPageSectionProduct::where('front_page_section_id', $section_id)
-                ->where('product_id', $request->product_id)
-                ->exists();
-
-            if ($exists) {
-               return redirect()->back()->with('error', 'Product Already Exists in this Section');
+            if (!isset($request->product_id) || empty($request->product_id)) {
+                return redirect()->back()->with('error', 'Please select at least one product');
             }
 
-            $sectionProduct = new FrontPageSectionProduct();
-            $sectionProduct->front_page_section_id = $section_id;
-            $sectionProduct->product_id = $request->product_id;
-            $sectionProduct->save();
+            $insertedCount = 0;
+            $existingProducts = [];
+
+            foreach ($request->product_id as $productId) {
+                $exists = FrontPageSectionProduct::where('front_page_section_id', $section_id)
+                    ->where('product_id', $productId)
+                    ->exists();
+
+                if (!$exists) {
+                    $sectionProduct = new FrontPageSectionProduct();
+                    $sectionProduct->front_page_section_id = $section_id;
+                    $sectionProduct->product_id = $productId;
+                    $sectionProduct->save();
+                    $insertedCount++;
+                } else {
+                    $existingProducts[] = DB::table('products')->where('id', $productId)->value('name') ?? $productId;
+                }
+            }
+
             cache()->forget('front_page_sections');
-            
-            return redirect()->back()->with('message', 'Section Product Added Successfully');
+
+            if ($insertedCount > 0) {
+                $message = $insertedCount . ' Product(s) Added Successfully';
+                if (!empty($existingProducts)) {
+                    $message .= '. The following products already exist: ' . implode(', ', $existingProducts);
+                }
+                return redirect()->back()->with('message', $message);
+            } else {
+                return redirect()->back()->with('error', 'All selected products already exist in this section');
+            }
         } else {
-            $products = DB::table('products')->get(['id', 'name']);
+            $products = DB::table('products')->where('active',1)->get(['id', 'name']);
             $sectionProducts = DB::table('front_page_section_products')->where('front_page_section_id', $section_id)->get(['id', 'product_id']);
             return view('admin.frontpage.product.index',compact('products', 'section_id','sectionProducts'));
         }
