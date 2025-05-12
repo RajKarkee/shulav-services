@@ -262,9 +262,8 @@
                 </div>
                 <div class="modal-body">
                     <h4 class="login-title text-center">Close deals from the comfort of your home.</h4>
-                    <div id="page-login">
+                    <div id="page-login" >
                         <div class="holder">
-
                             <div class="login-form">
                                 <div class="controls px-3">
                                     <div class="control mb-3">

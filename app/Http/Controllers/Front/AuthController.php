@@ -275,11 +275,7 @@ class AuthController extends Controller
                     $user->save();
                     Session::put('setup', 3);
                     Session::save();
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'User created successfully',
-
-                    ]);
+                    return response($user);
                 } else {
                     Session::put('setup', 3);
                     Session::save();
