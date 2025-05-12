@@ -237,7 +237,7 @@
 @section('title', 'User Dashboard ')
 
 @section('content')
-    <div class="view">
+    <div class="view mt-2" >
         <div class="heading">
             <h4>My Products</h4>
         </div>
@@ -288,10 +288,6 @@
                     <button class="btn btn-primary" onclick="showModal()" id="addProductBtn">
                         <span>+</span>
                         Add new product
-                    </button>
-                    <button class="btn btn-secondary">
-                        Table settings
-                        <span class="arrow-down"></span>
                     </button>
                 </div>
             </div>

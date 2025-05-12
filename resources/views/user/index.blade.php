@@ -51,7 +51,7 @@
                 <div class="col-md-8   ">
                     <div class="bg-white shadow mb-3">
                         <div class="card-body " id="jumbotron">
-                            <a href="{{ route('user.dashboard') }}">Dashboard</a>
+                            <a href="{{ route('user.dashwboard') }}">Dashboard</a>
 
                         </div>
                     </div>

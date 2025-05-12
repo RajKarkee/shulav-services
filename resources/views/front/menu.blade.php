@@ -11,7 +11,7 @@
                 @endphp
 
                 @if ($user->role == 2)
-                    <li>
+                    {{-- <li>
                         <a class="{{ Request::is('vendor/dashboard/job-search') ? 'text-danger' : '' }}" href="{{ route('vendor.job-search.index') }}">Search Jobs</a>
                     </li>
                     <li>
@@ -22,6 +22,9 @@
                     </li>
                     <li>
                         <a class="{{ Request::is('vendor/dashboard/finished-jobs') ? 'text-danger' : '' }}" href="{{ route('vendor.finishedJob') }}">Finished Jobs</a>
+                    </li> --}}
+                    <li>
+                        <a href="{{ route('vendor.dashboard') }}">Dashboard</a>
                     </li>
                     <li>
                         <a href="{{route('user.products.index')}}">My products</a>
@@ -68,11 +71,11 @@
         </ul>
 
     </div>
-    <div class="menu-section">
+    {{-- <div class="menu-section">
         <ul>
             <li><a href="{{ route('user.cart') }}"><img src="https://img.icons8.com/ios-filled/40/null/shopping-cart.png"/></a></li>
         </ul>
-    </div>
+    </div> --}}
 </div>
 
 
