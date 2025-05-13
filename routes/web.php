@@ -186,51 +186,51 @@ Route::name('user.')->prefix('user')->middleware('role:user')->group(function ()
 });
 
 
-Route::name('user.')->prefix('user.')->middleware('role:2')->group(function () {
-    Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
-    Route::match(['GET', 'POST'], 'reviews', [FrontVendorController::class, 'reviews'])->name('reviews');
-    Route::match(['GET', 'POST'], 'bill/{bill}', [FrontVendorController::class, 'bill'])->name('bill');
-    Route::match(['GET', 'POST'], 'bills', [FrontVendorController::class, 'bills'])->name('bills');
-    Route::match(['GET', 'POST'], 'openingHour', [FrontVendorController::class, 'openingHour'])->name('openingHour');
-    Route::match(['GET', 'POST'], 'change-image', [FrontVendorController::class, 'changeImage'])->name('change-image');
-    Route::match(['GET', 'POST'], 'change-main-service/{id}', [FrontVendorController::class, 'changeMainService'])->name('change-main-service');
-    Route::match(['GET', 'POST'], 'change-status-service/{id}/{status}', [FrontVendorController::class, 'changeStatusService'])->name('change-status-service');
-    Route::match(['GET', 'POST'], 'change-name', [FrontVendorController::class, 'changeName'])->name('change-name');
-    Route::match(['GET', 'POST'], 'change-desc', [FrontVendorController::class, 'changeDesc'])->name('change-desc');
-    Route::match(['GET', 'POST'], 'edit-info', [FrontVendorController::class, 'editInfo'])->name('edit-info');
-    Route::match(['GET', 'POST'], 'update-pass', [FrontVendorController::class, 'updatePass'])->name('update-pass');
-    Route::prefix('certificate')->name('certificate.')->group(function () {
-        Route::match(['get', 'post'], '/', [CertificateController::class, 'index'])->name('index');
-        Route::match(['get', 'post'], '/add', [CertificateController::class, 'add'])->name('add');
-        Route::match(['get', 'post'], '/store', [CertificateController::class, 'store'])->name('store');
-        Route::match(['get', 'post'], '/edit/{id}', [CertificateController::class, 'edit'])->name('edit');
-        Route::match(['get', 'post'], '/update/{id}', [CertificateController::class, 'update'])->name('update');
-        Route::match(['get', 'post'], '/delete/{id}', [CertificateController::class, 'delete'])->name('delete');
-    });
-    Route::prefix('skill')->name('skill.')->group(function () {
-        Route::match(['get', 'post'], '/', [SkillController::class, 'index'])->name('index');
-        Route::match(['get', 'post'], '/add', [SkillController::class, 'add'])->name('add');
-        Route::match(['get', 'post'], '/store', [SkillController::class, 'store'])->name('store');
-        Route::match(['get', 'post'], '/edit/{id}', [SkillController::class, 'edit'])->name('edit');
-        Route::match(['get', 'post'], '/update/{id}', [SkillController::class, 'update'])->name('update');
-        Route::match(['get', 'post'], '/delete/{id}', [SkillController::class, 'delete'])->name('delete');
-    });
+// Route::name('user.')->prefix('user.')->middleware('role:2')->group(function () {
+//     Route::match(['GET', 'POST'], '', [FrontVendorController::class, 'index'])->name('dashboard');
+//     Route::match(['GET', 'POST'], 'reviews', [FrontVendorController::class, 'reviews'])->name('reviews');
+//     Route::match(['GET', 'POST'], 'bill/{bill}', [FrontVendorController::class, 'bill'])->name('bill');
+//     Route::match(['GET', 'POST'], 'bills', [FrontVendorController::class, 'bills'])->name('bills');
+//     Route::match(['GET', 'POST'], 'openingHour', [FrontVendorController::class, 'openingHour'])->name('openingHour');
+//     Route::match(['GET', 'POST'], 'change-image', [FrontVendorController::class, 'changeImage'])->name('change-image');
+//     Route::match(['GET', 'POST'], 'change-main-service/{id}', [FrontVendorController::class, 'changeMainService'])->name('change-main-service');
+//     Route::match(['GET', 'POST'], 'change-status-service/{id}/{status}', [FrontVendorController::class, 'changeStatusService'])->name('change-status-service');
+//     Route::match(['GET', 'POST'], 'change-name', [FrontVendorController::class, 'changeName'])->name('change-name');
+//     Route::match(['GET', 'POST'], 'change-desc', [FrontVendorController::class, 'changeDesc'])->name('change-desc');
+//     Route::match(['GET', 'POST'], 'edit-info', [FrontVendorController::class, 'editInfo'])->name('edit-info');
+//     Route::match(['GET', 'POST'], 'update-pass', [FrontVendorController::class, 'updatePass'])->name('update-pass');
+//     Route::prefix('certificate')->name('certificate.')->group(function () {
+//         Route::match(['get', 'post'], '/', [CertificateController::class, 'index'])->name('index');
+//         Route::match(['get', 'post'], '/add', [CertificateController::class, 'add'])->name('add');
+//         Route::match(['get', 'post'], '/store', [CertificateController::class, 'store'])->name('store');
+//         Route::match(['get', 'post'], '/edit/{id}', [CertificateController::class, 'edit'])->name('edit');
+//         Route::match(['get', 'post'], '/update/{id}', [CertificateController::class, 'update'])->name('update');
+//         Route::match(['get', 'post'], '/delete/{id}', [CertificateController::class, 'delete'])->name('delete');
+//     });
+//     Route::prefix('skill')->name('skill.')->group(function () {
+//         Route::match(['get', 'post'], '/', [SkillController::class, 'index'])->name('index');
+//         Route::match(['get', 'post'], '/add', [SkillController::class, 'add'])->name('add');
+//         Route::match(['get', 'post'], '/store', [SkillController::class, 'store'])->name('store');
+//         Route::match(['get', 'post'], '/edit/{id}', [SkillController::class, 'edit'])->name('edit');
+//         Route::match(['get', 'post'], '/update/{id}', [SkillController::class, 'update'])->name('update');
+//         Route::match(['get', 'post'], '/delete/{id}', [SkillController::class, 'delete'])->name('delete');
+//     });
 
 
-    Route::prefix('job-search')->name('job-search.')->group(function () {
-        Route::match(['get', 'post'], '/', [FrontJobController::class, 'jobSearch'])->name('index');
-        Route::match(['get', 'post'], '/detail/{id}', [FrontJobController::class, 'jobSearchdetails'])->name('details');
-        Route::match(['get', 'post'], '/bid', [FrontJobController::class, 'addBid'])->name('bid');
-    });
+//     Route::prefix('job-search')->name('job-search.')->group(function () {
+//         Route::match(['get', 'post'], '/', [FrontJobController::class, 'jobSearch'])->name('index');
+//         Route::match(['get', 'post'], '/detail/{id}', [FrontJobController::class, 'jobSearchdetails'])->name('details');
+//         Route::match(['get', 'post'], '/bid', [FrontJobController::class, 'addBid'])->name('bid');
+//     });
 
 
 
-    Route::match(['get', 'post'], '/my-bids', [FrontJobController::class, 'mybids'])->name('mybids');
-    Route::match(['get', 'post'], '/bid-accepted-jobs', [FrontJobController::class, 'bidAccepted'])->name('bidaccept');
-    Route::match(['get', 'post'], '/finished-job-request/{id}', [FrontJobController::class, 'finishedJobReq'])->name('finishedJobReq');
-    Route::match(['get', 'post'], '/finished-jobs', [FrontJobController::class, 'finishedJob'])->name('finishedJob');
-    Route::match(['get', 'post'], '/received-payment/{id}', [FrontJobController::class, 'yesReceivedPayment'])->name('receivedAPayment');
-});
+//     Route::match(['get', 'post'], '/my-bids', [FrontJobController::class, 'mybids'])->name('mybids');
+//     Route::match(['get', 'post'], '/bid-accepted-jobs', [FrontJobController::class, 'bidAccepted'])->name('bidaccept');
+//     Route::match(['get', 'post'], '/finished-job-request/{id}', [FrontJobController::class, 'finishedJobReq'])->name('finishedJobReq');
+//     Route::match(['get', 'post'], '/finished-jobs', [FrontJobController::class, 'finishedJob'])->name('finishedJob');
+//     Route::match(['get', 'post'], '/received-payment/{id}', [FrontJobController::class, 'yesReceivedPayment'])->name('receivedAPayment');
+// });
 
 Route::prefix('admin')->name('admin.')->group(function () {
     route::match(['GET', 'POST'], 'login', [AuthController::class, 'login'])->name('login');

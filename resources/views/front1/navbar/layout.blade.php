@@ -28,11 +28,15 @@
         $products = DB::table('products')->orderBy('created_at', 'desc')->get();
 
         $settingData = DB::table('settings')->where('code', 'minor')->first();
+
+        $data = null;
+        $logo = null;
+        $footer_logo = null;
         if ($settingData) {
             $data = json_decode($settingData->value);
+            $logo = $data->logo ?? null;
+            $footer_logo = $data->footer_logo ?? null;
         }
-        $logo = $data->logo ?? null;
-        $footer_logo = $data->footer_logo ?? null;
     @endphp
 
     <header>
@@ -40,7 +44,11 @@
             <div class="logo">
                 <a href="{{ route('index') }}">
                     <picture>
-                        <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}" alt="Logo">
+                        @if ($logo == null)
+                            <img src="{{ asset('default-logo.png') }}" alt="Logo">
+                        @else
+                            <img src="{{ $data->logo ? asset($data->logo) : asset('default-logo.png') }}">
+                        @endif
                     </picture>
                 </a>
             </div>
@@ -255,7 +263,8 @@
                     <div id="page-login">
                         <div class="holder">
                             <div class="login-form">
-                                <form action="{{ route('loginOTP') }}" method="POST" id="otp-login-form" onsubmit="login(this,event)">
+                                <form action="{{ route('loginOTP') }}" method="POST" id="otp-login-form"
+                                    onsubmit="login(this,event)">
                                     @csrf
                                     <div class="controls px-3">
                                         <div class="control mb-3">
