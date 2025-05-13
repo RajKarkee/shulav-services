@@ -1,8 +1,8 @@
 @extends('admin.layout.app')
 
 @section('s-title')
-    <li class="breadcrumb-item">Bus</li>
-    <li class="breadcrumb-item">Bus Types</li>
+    <li class="breadcrumb-item">E-Ticketing</li>
+    <li class="breadcrumb-item">Vehicle Types</li>
 @endsection
 
 @section('css')
@@ -10,7 +10,7 @@
 @endsection
 
 @section('page-option')
-    <a type="button" class="btn btn-primary" href="{{ route('admin.busServices.vehicle.add') }}">Add Bus type</a>
+    <a type="button" class="btn btn-primary" href="{{ route('admin.busServices.vehicle.types.add') }}">Add</a>
 @endsection
 
 @section('content')

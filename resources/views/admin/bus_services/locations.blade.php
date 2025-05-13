@@ -1,6 +1,6 @@
 @extends('admin.layout.app')
 @section('s-title')
-    <li class="breadcrumb-item">Bus</li>
+    <li class="breadcrumb-item">E-Ticketing</li>
     <li class="breadcrumb-item">Locations</li>
 @endsection
 @section('content')
@@ -52,7 +52,7 @@
                         <td>{{ $location->longitude }}</td>
                         <td><a href="{{ route('admin.busServices.location.del',['location'=>$location->id]) }}"
                             class="btn btn-sm btn-danger">Delete</a>
-                          
+
                         </td>
 
                         @endforeach

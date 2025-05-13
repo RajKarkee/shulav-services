@@ -6,8 +6,8 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" onclick="showAdd()">Add Route</button>
 @endsection
 @section('s-title')
-    <li class="breadcrumb-item">Bus</li>
-    <li class="breadcrumb-item">Bus Service</li>
+    <li class="breadcrumb-item">E-Ticketing</li>
+    <li class="breadcrumb-item">Vehicle Service</li>
 @endsection
 @section('content')
     <div class="card shadow">

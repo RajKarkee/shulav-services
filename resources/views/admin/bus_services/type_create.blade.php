@@ -1,8 +1,8 @@
 @extends('admin.layout.app') <!-- Assuming you have a layout file for the admin -->
 
 @section('s-title')
-    <li class="breadcrumb-item">Bus</li>
-    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.vehicle.index') }}">Vehicle</a></li>
+    <li class="breadcrumb-item">E-Ticketing</li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.vehicle.types.index') }}">Vehicle Type</a></li>
     <li class="breadcrumb-item">Add</li>
 @endsection
 
@@ -19,7 +19,7 @@
 @section('content')
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('admin.busServices.vehicle.add') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.busServices.vehicle.types.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class=" col-md-4">

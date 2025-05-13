@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BusRouteLocation;
@@ -40,13 +41,13 @@ class BusServiceController extends Controller
         return redirect()->route('admin.busServices.location.index')->with('success', 'Location deleted successfully.');
     }
 
-    public function vehicleIndex()
+    public function vehicleTypeIndex()
     {
         $busTypes = BusType::all();
 
         return view('admin.bus_services.type', compact('busTypes'));
     }
-    public function vehicleAdd(Request $request)
+    public function vehicleTypeAdd(Request $request)
     {
         if ($request->isMethod('get')) {
             return view('admin.bus_services.type_create');
@@ -65,9 +66,10 @@ class BusServiceController extends Controller
         }
     }
 
-    public function vehicleDelete($id)
+    public function vehicleTypeDelete($id)
     {
         BusType::where('id', $id)->delete();
         return redirect()->back()->with('success', 'Bus Type deleted successfully.');
     }
+
 }

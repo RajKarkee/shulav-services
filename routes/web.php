@@ -264,6 +264,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
             //     Route::delete('delete/{id}', [BusServiceController::class, 'typeDel'])->name('delete');
             // });
             Route::prefix('vehicle')->name('vehicle.')->group(function () {
+               Route::prefix('types')->name('types.')->group(function () {
+                    Route::get('', [BusServiceController::class, 'vehicleTypeIndex'])->name('index');
+                    Route::match(['get', 'post'], 'add', [BusServiceController::class, 'vehicleTypeAdd'])->name('add');
+                    Route::delete('delete/{id}', [BusServiceController::class, 'vehicleTypeDelete'])->name('delete');
+                });
                 Route::get('', [BusServiceController::class, 'vehicleIndex'])->name('index');
                 Route::match(['get', 'post'], 'add', [BusServiceController::class, 'vehicleAdd'])->name('add');
                 Route::delete('delete/{id}', [BusServiceController::class, 'vehicleDelete'])->name('delete');
