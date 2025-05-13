@@ -111,8 +111,6 @@ body {
   border-bottom: 1px solid #ebeef0;
 }
 .categories-bar .all-categories {
-  display: flex;
-  align-items: center;
   font-size: 14px;
   font-weight: bold;
   color: #002f34;
@@ -129,6 +127,7 @@ body {
 }
 .categories-bar nav ul li {
   margin-right: 24px;
+  line-height: 20px;
 }
 .categories-bar nav ul li a {
   font-size: 14px;

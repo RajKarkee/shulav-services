@@ -87,7 +87,7 @@
         </div>
         <div class="categories-bar">
             <div class="all-categories">
-                ALL CATEGORIES <i class="fas fa-chevron-down"></i>
+                ALL CATEGORIES
             </div>
             <nav>
                 <ul>
@@ -255,7 +255,7 @@
                     <div id="page-login">
                         <div class="holder">
                             <div class="login-form">
-                                <form action="" method="POST">
+                                <form action="{{ route('loginOTP') }}" method="POST">
                                     @csrf
                                     <div class="controls px-3">
                                         <div class="control mb-3">
