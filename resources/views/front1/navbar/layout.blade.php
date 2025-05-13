@@ -401,6 +401,7 @@
 
 
         function login(ele, e) {
+            e.preventDefault();
             const otp = $('#otp').val();
             const name = $('#name').val();
             const email = $('#email').val();
