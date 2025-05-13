@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->integer('capacity')->nullable();
+            $table->string('bus_type_id')->nullable();
             $table->timestamps();
         });
     }

@@ -72,4 +72,6 @@ class BusServiceController extends Controller
         return redirect()->back()->with('success', 'Bus Type deleted successfully.');
     }
 
+
+
 }

@@ -157,16 +157,4 @@ class Helper
         file_put_contents($filePath, $content);
     }
 
-
-
-    public static function getVehicleTypes()
-    {
-        return Cache::rememberForever('cache_vehicle_types', function () {
-            return DB::table('vehicle_types')->get();
-        });
-    }
-    public static function clearVehicleTypes()
-    {
-        Cache::forget('cache_vehicle_types');
-    }
 }
