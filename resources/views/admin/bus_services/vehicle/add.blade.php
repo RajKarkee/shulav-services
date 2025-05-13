@@ -1,8 +1,8 @@
-@extends('admin.layout.app') <!-- Assuming you have a layout file for the admin -->
+@extends('admin.layout.app')
 
 @section('s-title')
     <li class="breadcrumb-item">E-Ticketing</li>
-    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.vehicle.types.index') }}">Vehicle Type</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.vehicle.index') }}">Vehicles</a></li>
     <li class="breadcrumb-item">Add</li>
 @endsection
 
@@ -19,18 +19,18 @@
 @section('content')
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('admin.busServices.vehicle.types.add') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.busServices.vehicle.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class=" col-md-4">
+                    <div class="col-md-4">
                         <div>
-                            <label for="image">Feature Image</label>
-                            <input type="file" name="image_1" class="form-control dropify" accept=".jpg,.jpeg,.png"
+                            <label for="image">Featured Vehicle Image</label>
+                            <input type="file" name="image1" class="form-control dropify" accept=".jpg,.jpeg,.png"
                                 id="image" required>
                         </div>
                         <hr>
                         <div class="row" id="mass-image">
-                            @for ($index = 2; $index <= 3; $index++)
+                            @for ($index = 2; $index <= 7; $index++)
                                 <div class="col-md-6">
                                     <label for="image_{{ $index }}">Image {{ $index }}</label>
                                     <input type="file" name="image_{{ $index }}" class="form-control dropify"
@@ -39,30 +39,43 @@
                             @endfor
                         </div>
                     </div>
+
                     <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name">Bus Type</label>
-                                    <input type="text" name="bus_type_name" class="form-control" id="name">
+                                    <label for="name">Vehicle Name</label>
+                                    <input type="text" name="name" class="form-control" id="name" required>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="short_desc">Short Description</label>
-                                    <textarea name="short_desc" class="form-control" id="short_desc" rows="2"></textarea>
+                                    <label for="bus_type_id">Vehicle Type</label>
+                                    <select name="bus_type_id" class="form-control" id="bus_type_id" required>
+                                        <option value="">Select Vehicle Type</option>
+                                        @foreach ($busTypes as $type)
+                                            <option value="{{ $type->id }}">{{ $type->bus_type_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="desc">Description</label>
-                                    <textarea name="desc" class="form-control" id="desc" rows="3"></textarea>
+                                    <label for="capacity">Capacity</label>
+                                    <input type="number" name="capacity" class="form-control" id="capacity" min="1"
+                                        required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="vehicle_number">Vehicle Number</label>
+                                    <input type="text" name="vehicle_number" class="form-control" id="vehicle_number"
+                                        required>
                                 </div>
                             </div>
                         </div>
                         <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Add Bus type</button>
+                            <button type="submit" class="btn btn-primary">Add Vehicle</button>
                         </div>
                     </div>
                 </div>
@@ -76,11 +89,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
 
     <script>
-        var lock = false;
         $(function() {
             $('.dropify').dropify();
-            $('#desc').summernote({
-                placeholder: 'Enter the bus description...',
+            $('#description').summernote({
+                placeholder: 'Enter the vehicle description...',
                 tabsize: 2,
                 height: 200
             });

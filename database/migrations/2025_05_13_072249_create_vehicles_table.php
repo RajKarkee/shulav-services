@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->integer('capacity')->nullable();
             $table->string('bus_type_id')->nullable();
+            $table->text('image_1')->nullable();
+            $table->text('image_2')->nullable();
+            $table->text('image_3')->nullable();
+            $table->text('image_4')->nullable();
+            $table->text('image_5')->nullable();
+            $table->text('image_6')->nullable();
+            $table->text('image_7')->nullable();
             $table->timestamps();
         });
     }

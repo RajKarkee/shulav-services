@@ -111,10 +111,13 @@
                     <i class="material-icons has-sub-menu">add</i></a>
                 <ul class="sub-menu">
                     <li class="sub-item">
-                        <a href="{{ route('admin.busServices.vehicle.types.index') }}">Vehicle Types</a>
+                        <a href="{{ route('admin.busServices.vehicle.index') }}">Vehicle</a>
                     </li>
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.location.index') }}">Locations</a>
+                    </li>
+                    <li class="sub-item">
+                        <a href="{{ route('admin.busServices.vehicle.types.index') }}">Vehicle Types</a>
                     </li>
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.index') }}">Vehicle Services</a>
