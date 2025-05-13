@@ -107,18 +107,17 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class='material-icons'>settings</i>Bus
+                <a href="#"><i class='material-icons'>settings</i>E-Ticketing
                     <i class="material-icons has-sub-menu">add</i></a>
                 <ul class="sub-menu">
                     <li class="sub-item">
-                        <a href="{{ route('admin.busServices.index') }}">Bus Services</a>
-
+                        <a href="{{ route('admin.busServices.vehicle.index') }}">Vehicle</a>
                     </li>
                     <li class="sub-item">
                         <a href="{{ route('admin.busServices.location.index') }}">Locations</a>
                     </li>
                     <li class="sub-item">
-                        <a href="{{ route('admin.busServices.type.index') }}">Bus type</a>
+                        <a href="{{ route('admin.busServices.index') }}">Vehicle Services</a>
                     </li>
                 </ul>
             </li>

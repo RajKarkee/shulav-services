@@ -40,13 +40,13 @@ class BusServiceController extends Controller
         return redirect()->route('admin.busServices.location.index')->with('success', 'Location deleted successfully.');
     }
 
-    public function type()
+    public function vehicleIndex()
     {
         $busTypes = BusType::all();
 
         return view('admin.bus_services.type', compact('busTypes'));
     }
-    public function typeStore(Request $request)
+    public function vehicleAdd(Request $request)
     {
         if ($request->isMethod('get')) {
             return view('admin.bus_services.type_create');
@@ -55,22 +55,19 @@ class BusServiceController extends Controller
             $bus_type->bus_type_name = $request->input('bus_type_name');
             $bus_type->short_description = $request->input('short_desc');
             $bus_type->long_description = $request->input('desc');
-
-
-
             for ($i = 1; $i <= 7; $i++) {
                 if ($request->hasFile('image_' . $i)) {
                     $bus_type->{'image_' . $i} = $request->file('image_' . $i)->store('images/bus_types', 'public');
                 }
             }
             $bus_type->save();
-            return redirect()->route('admin.busServices.type.index')->with('success', 'Bus Type added successfully.');
+            return redirect()->back()->with('success', 'Bus Type added successfully.');
         }
     }
 
-    public function typeDel($id)
+    public function vehicleDelete($id)
     {
         BusType::where('id', $id)->delete();
-        return redirect()->route('admin.busServices.type.index')->with('success', 'Bus Type deleted successfully.');
+        return redirect()->back()->with('success', 'Bus Type deleted successfully.');
     }
 }

@@ -10,7 +10,7 @@
 @endsection
 
 @section('page-option')
-    <a type="button" class="btn btn-primary" href="{{ route('admin.busServices.type.add') }}">Add Bus type</a>
+    <a type="button" class="btn btn-primary" href="{{ route('admin.busServices.vehicle.add') }}">Add Bus type</a>
 @endsection
 
 @section('content')
@@ -30,12 +30,12 @@
                             <td>{{ $busType->bus_type_name }}</td>
                             <td>{{ $busType->created_at->format('d-m-Y') }}</td>
                             <td>
-                                <form action="{{ route('admin.busServices.type.delete', ['id' => $busType->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this bus type?');">
+                                <form action="{{ route('admin.busServices.vehicle.delete', ['id' => $busType->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this bus type?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                                
+
                             </td>
                         </tr>
                     @endforeach

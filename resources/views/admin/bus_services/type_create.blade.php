@@ -2,7 +2,7 @@
 
 @section('s-title')
     <li class="breadcrumb-item">Bus</li>
-    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.type.index') }}">Bus Type</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('admin.busServices.vehicle.index') }}">Vehicle</a></li>
     <li class="breadcrumb-item">Add</li>
 @endsection
 
@@ -19,7 +19,7 @@
 @section('content')
     <div class="card shadow">
         <div class="card-body">
-            <form action="{{ route('admin.busServices.type.add') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.busServices.vehicle.add') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class=" col-md-4">
@@ -41,18 +41,12 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-
-
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Bus Type</label>
                                     <input type="text" name="bus_type_name" class="form-control" id="name">
                                 </div>
                             </div>
-
-
-
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="short_desc">Short Description</label>
@@ -66,12 +60,10 @@
                                     <textarea name="desc" class="form-control" id="desc" rows="3"></textarea>
                                 </div>
                             </div>
-
                         </div>
                         <div class="text-right">
                             <button type="submit" class="btn btn-primary">Add Bus type</button>
                         </div>
-
                     </div>
                 </div>
             </form>
