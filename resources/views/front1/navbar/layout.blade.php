@@ -255,7 +255,7 @@
                     <div id="page-login">
                         <div class="holder">
                             <div class="login-form">
-                                <form action="{{ route('loginOTP') }}" method="POST">
+                                <form action="{{ route('loginOTP') }}" method="POST" id="otp-login-form" onsubmit="login(this,event)">
                                     @csrf
                                     <div class="controls px-3">
                                         <div class="control mb-3">
@@ -263,7 +263,8 @@
                                                 <i class="fas fa-phone"></i>
                                             </span>
                                             <input type="phone" name="phone" id="phone"
-                                                placeholder="Enter Phone No" aria-label="Phone" aria-describedby="Email">
+                                                placeholder="Enter Phone No" aria-label="Phone"
+                                                aria-describedby="Email">
                                         </div>
                                         <div class="control mb-3" id="otp-holder">
                                             <span class="icon">
@@ -274,37 +275,39 @@
 
                                         </div>
                                         <div class="text-end" id="request_otp">
-                                            <button class="btn btn-danger" onclick="requestOTP()">
+                                            <button class="btn btn-danger" onclick="requestOTP(event)">
                                                 Request OTP
                                             </button>
                                         </div>
                                         <div class="text-end" id="login_opt">
-                                            <button class="btn btn-danger" id="finish" onclick="login()">
+                                            <button class="btn btn-danger" type="submit" id="finish">
                                                 Login
                                             </button>
                                         </div>
                                         <div id="OTPForm">
                                             <div class="control mb-3">
                                                 <label for="name" style="margin: 10px 0px 10px 8px;">Name</label>
-                                                <input type="text" name="name" id="name" aria-label="Name"
-                                                    aria-describedby="Name">
+                                                <input type="text" name="name" id="name"
+                                                    aria-label="Name" aria-describedby="Name">
                                             </div>
                                             <div class="control mb-3">
                                                 <label for="email" style="margin: 10px 0px 10px 8px;">Email</label>
-                                                <input type="email" name="email" id="email" aria-label="Email"
-                                                    aria-describedby="Email">
+                                                <input type="email" name="email" id="email"
+                                                    aria-label="Email" aria-describedby="Email">
                                             </div>
                                             <div class="control mb-3">
-                                                <label for="address" style="margin: 10px 0px 10px 8px;">Address</label>
-                                                <input type="text" name="address" id="address" aria-label="Address"
-                                                    aria-describedby="Address">
+                                                <label for="address"
+                                                    style="margin: 10px 0px 10px 8px;">Address</label>
+                                                <input type="text" name="address" id="address"
+                                                    aria-label="Address" aria-describedby="Address">
                                             </div>
                                             <div class="control mb-3">
                                                 <label for="city_id" style="margin: 10px 0px 10px 8px;">City</label>
                                                 <select name="city_id" id="city_id" aria-label="City"
                                                     aria-describedby="City">
                                                     @foreach ($cities as $city)
-                                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                                        <option value="{{ $city->id }}">{{ $city->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -361,7 +364,8 @@
             });
         });
 
-        function requestOTP() {
+        function requestOTP(e) {
+            e.preventDefault();
             const phone = $('#phone').val();
             axios.post("{{ route('loginPhone') }}", {
                     phone: phone
@@ -387,7 +391,7 @@
         }
 
 
-        function login() {
+        function login(ele, e) {
             const otp = $('#otp').val();
             const name = $('#name').val();
             const email = $('#email').val();
