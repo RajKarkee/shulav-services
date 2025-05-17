@@ -60,7 +60,7 @@ class BusServiceController extends Controller
             $bus_type->long_description = $request->input('desc');
             for ($i = 1; $i <= 3; $i++) {
                 if ($request->hasFile('image_' . $i)) {
-                    $bus_type->{'image_' . $i} = $request->file('image_' . $i)->store('images/bus_types', 'public');
+                    $bus_type->{'image_' . $i} = $request->file('image_' . $i)->store('uploads/bus_types');
                 }
             }
             $bus_type->save();
@@ -77,21 +77,23 @@ class BusServiceController extends Controller
     public function vehicleIndex(Request $request)
     {
         $vehicles = DB::table('vehicles')->get();
-        return view('admin.bus_services.vehicle.index',compact('vehicles'));
+        return view('admin.bus_services.vehicle.index', compact('vehicles'));
     }
 
     public function vehicleAdd(Request $request)
     {
         if ($request->isMethod('get')) {
             $busTypes = DB::table('bus_types')->get(['id', 'bus_type_name']);
-            return view('admin.bus_services.vehicle.add',compact('busTypes'));
+            return view('admin.bus_services.vehicle.add', compact('busTypes'));
         } else {
             $Vehicle = new Vehicle();
             $Vehicle->name = $request->input('name');
             $Vehicle->capacity = $request->input('capacity');
             $Vehicle->bus_type_id = $request->input('bus_type_id');
-            if ($request->hasFile('image')) {
-                $Vehicle->image = $request->file('image')->store('images/bus_types', 'public');
+            for ($i = 1; $i <= 7; $i++) {
+                if ($request->hasFile('image_' . $i)) {
+                    $Vehicle->{'image_' . $i} = $request->file('image_' . $i)->store('uploads/vehicles');
+                }
             }
             $Vehicle->save();
             return redirect()->back()->with('success', 'Bus added successfully.');
@@ -100,19 +102,27 @@ class BusServiceController extends Controller
 
     public function vehicleEdit(Request $request, $vehicle_id)
     {
+        $Vehicle = Vehicle::where('id', $vehicle_id)->first();
         if ($request->isMethod('get')) {
-            $Vehicle = Vehicle::where('id', $vehicle_id)->first();
-            return view('admin.bus_services.vehicle.edit', compact('Vehicle'));
+            $busTypes = DB::table('bus_types')->get(['id', 'bus_type_name']);
+            return view('admin.bus_services.vehicle.edit', compact('Vehicle','busTypes'));
         } else {
-            $Vehicle  = Vehicle::where('id', $vehicle_id)->first();
-            $Vehicle = new Vehicle();
             $Vehicle->name = $request->input('name');
             $Vehicle->capacity = $request->input('capacity');
             $Vehicle->bus_type_id = $request->input('bus_type_id');
-            if ($request->hasFile('image')) {
-                $Vehicle->image = $request->file('image')->store('images/bus_types', 'public');
+            for ($i = 1; $i <= 3; $i++) {
+                if ($request->hasFile('image_' . $i)) {
+                    $Vehicle->{'image_' . $i} = $request->file('image_' . $i)->store('uploads/vehicles');
+                }
             }
             $Vehicle->save();
+            return redirect()->back()->with('success', 'Bus updated successfully.');
         }
+    }
+
+    public function vehicleDelete($id)
+    {
+        Vehicle::where('id', $id)->delete();
+        return redirect()->back()->with('success', 'Bus deleted successfully.');
     }
 }

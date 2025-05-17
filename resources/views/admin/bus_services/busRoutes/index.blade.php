@@ -37,7 +37,6 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
-        // Initialize dropify and load data on page load
         $(document).ready(function() {
             $('.dropify').dropify();
             loadData();
@@ -51,7 +50,6 @@
             update: '{{ route('admin.busServices.busRoutes.update') }}'
         };
 
-        // CRUD Functions
         function loadData() {
             axios.get('{{ route('admin.busServices.busRoutes.loadData') }}')
                 .then(res => {
@@ -101,6 +99,7 @@
             }
         }
 
+
         function showAdd() {
             $('#addModal').modal('show');
         }
@@ -123,7 +122,9 @@
         }
 
         function editData(id) {
-            axios.post(routes.edit, { id })
+            axios.post(routes.edit, {
+                    id
+                })
                 .then(res => {
                     if (res.data.status) {
                         const route = res.data.route;

@@ -42,13 +42,13 @@
 
                     <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name">Vehicle Name</label>
                                     <input type="text" name="name" class="form-control" id="name" required>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="bus_type_id">Vehicle Type</label>
                                     <select name="bus_type_id" class="form-control" id="bus_type_id" required>
@@ -59,17 +59,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="capacity">Capacity</label>
                                     <input type="number" name="capacity" class="form-control" id="capacity" min="1"
-                                        required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="vehicle_number">Vehicle Number</label>
-                                    <input type="text" name="vehicle_number" class="form-control" id="vehicle_number"
                                         required>
                                 </div>
                             </div>

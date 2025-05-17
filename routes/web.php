@@ -272,11 +272,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             Route::prefix('route')->name('route.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
+
                 Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
             });
             Route::prefix('busRoutes')->name('busRoutes.')->group(function () {
                 Route::get('/', [BusRouteController::class, 'index'])->name('index');
                 Route::get('/loadData', [BusRouteController::class, 'loadData'])->name('loadData');
+                Route::post('/getVehicle', [BusRouteController::class, 'getVehicle'])->name('getVehicle');
                 Route::post('/add', [BusRouteController::class, 'add'])->name('add');
                 Route::post('/edit', [BusRouteController::class, 'edit'])->name('edit');
                 Route::post('/update', [BusRouteController::class, 'update'])->name('update');

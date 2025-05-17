@@ -14,7 +14,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="from_location">From</label>
-                                <select name="from_location_id" id="from_location" class="form-control select2" required>
+                                <select name="from_location_id" id="from_location" class="form-control select2"
+                                    required>
                                     <option value="">Select Departure Location</option>
                                     @foreach ($locations as $location)
                                         <option value="{{ $location->id }}">{{ $location->location_name }}</option>
@@ -37,14 +38,19 @@
 
                     <div class="form-group">
                         <label for="bus_type">Bus Type</label>
-                        <select name="bus_type_id" id="bus_type" class="form-control" required>
+                        <select name="bus_type_id" id="bus_type" class="form-control" required
+                            onchange="getVehicle(this.value)">
                             <option value="">Select Bus Type</option>
                             @foreach ($busTypes as $busType)
                                 <option value="{{ $busType->id }}">{{ $busType->bus_type_name }}</option>
                             @endforeach
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="vehicle">Vehicle</label>
+                        <select name="vehicle_id" id="vehicle" class="form-control select2" required>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label for="distance">Distance (km)</label>
                         <input type="number" name="distance" id="distance" class="form-control" step="0.01"
@@ -76,3 +82,23 @@
         </div>
     </div>
 </div>
+@section('script1')
+    <script>
+        function getVehicle(busTypeId) {
+            axios.post('{{ route('admin.busServices.busRoutes.getVehicle') }}', {
+                    bus_type_id: busTypeId
+                })
+                .then(res => {
+                    let options = '<option value="">Select Vehicle</option>';
+                    res.data.forEach(vehicle => {
+                        options += `<option value="${vehicle.id}">${vehicle.name}</option>`;
+                    });
+                    $('#vehicle').html(options);
+                })
+                .catch(err => {
+                    toastr.error("Please Try Again.");
+                    console.error(err);
+                });
+        }
+    </script>
+@endsection

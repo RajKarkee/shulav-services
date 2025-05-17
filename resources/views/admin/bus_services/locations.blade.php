@@ -5,7 +5,7 @@
 @endsection
 @section('content')
     <div class="bg-white p-4 shadow">
-        <form action="{{ route('admin.busServices.location.add') }}" method="post" >
+        <form action="{{ route('admin.busServices.location.add') }}" method="post">
             @csrf
             <div class="row">
                 <div class="col-md-4 mb-2">
@@ -19,7 +19,8 @@
                 </div>
                 <div class="col-md-4 mb-2">
                     <label for="Longitude">Longitude</label>
-                    <input type="text" name="longitude" class="form-control" id="longitude" placeholder="Enter longitude">
+                    <input type="text" name="longitude" class="form-control" id="longitude"
+                        placeholder="Enter longitude">
                 </div>
 
 
@@ -45,88 +46,16 @@
                     </tr>
                 </thead>
                 <tbody id="section-list">
-                    @foreach($locations as $location)
-                    <tr>
-                        <td>{{ $location->location_name }}</td>
-                        <td>{{ $location->latitude }}</td>
-                        <td>{{ $location->longitude }}</td>
-                        <td><a href="{{ route('admin.busServices.location.del',['location'=>$location->id]) }}"
-                            class="btn btn-sm btn-danger">Delete</a>
-
-                        </td>
-
-                        @endforeach
-                    {{-- @foreach ($sections as $section)
+                    @foreach ($locations as $location)
                         <tr>
-                            <td>{{ $section->section_name }}</td>
-                            <td>{{ $section->design_type }}</td>
-                            <td>{{ $section->position }}</td>
-
-                            <td>
-                                <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#editModal{{ $section->id }}">Edit</button>
-                                <div class="modal fade" id="editModal{{ $section->id }}" tabindex="-1" role="dialog"
-                                    aria-labelledby="editModalLabel{{ $section->id }}" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel{{ $section->id }}">Edit Section
-                                                </h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                    aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form
-                                                    action="{{ route('admin.frontPageSection.edit', ['section_id' => $section->id]) }}"
-                                                    method="POST" id="editForm{{ $section->id }}">
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="section_name{{ $section->id }}">Section Name</label>
-                                                        <input type="text" name="section_name" class="form-control"
-                                                            id="section_name{{ $section->id }}"
-                                                            value="{{ $section->section_name }}">
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="design_type{{ $section->id }}">Design Type</label>
-                                                        <select name="design_type" id="design_type{{ $section->id }}"
-                                                            class="form-control">
-                                                            <option value="1"
-                                                                {{ $section->design_type == 1 ? 'selected' : '' }}>Type 1
-                                                            </option>
-                                                            <option value="2"
-                                                                {{ $section->design_type == 2 ? 'selected' : '' }}>Type 2
-                                                            </option>
-                                                            <option value="3"
-                                                                {{ $section->design_type == 3 ? 'selected' : '' }}>Type 3
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="position{{ $section->id }}">Position</label>
-                                                        <input type="number" name="position"
-                                                            id="position{{ $section->id }}" class="form-control"
-                                                            value="{{ $section->position }}">
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary"
-                                                    onclick="updateSection({{ $section->id }})">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <a href="{{ route('admin.frontPageSection.del', ['section_id' => $section->id]) }}"
+                            <td>{{ $location->location_name }}</td>
+                            <td>{{ $location->latitude }}</td>
+                            <td>{{ $location->longitude }}</td>
+                            <td><a href="{{ route('admin.busServices.location.del', ['location' => $location->id]) }}"
                                     class="btn btn-sm btn-danger">Delete</a>
-                                <a href="{{ route('admin.frontPageSection.product.index', ['section_id' => $section->id]) }}"
-                                    class="btn btn-sm btn-info">Manage Products</a>
+
                             </td>
-                        </tr>
-                    @endforeach --}}
+                    @endforeach
                 </tbody>
             </table>
         </div>

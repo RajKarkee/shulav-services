@@ -8,6 +8,7 @@ use App\Models\BusRoute;
 use App\Models\Bus_type;
 use App\Models\BusRouteLocation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -22,6 +23,11 @@ class BusRouteController extends Controller
         ]);
     }
 
+    public function getVehicle(Request $request)
+    {
+        $vehicles = DB::table('vehicles')->where('bus_type_id', $request->bus_type_id)->get();
+        return response()->json($vehicles);
+    }
     public function add(Request $request)
     {
         $route = new BusRoute();
