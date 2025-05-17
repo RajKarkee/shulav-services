@@ -36,7 +36,9 @@ class FrontController extends Controller
         )->get();
         $locations = BusRouteLocation::all();
         $popups = DB::table('popups')->get();
-        return view('front1.index', compact('sliders', 'serviceCategories', 'popups', 'sections', 'routes', 'locations'));
+        $busTypes = DB::table('bus_types')->get(['id','bus_type_name','image_1']);
+        // dd($busTypes);
+        return view('front1.index', compact('sliders', 'serviceCategories', 'popups','busTypes' ,'sections', 'routes', 'locations'));
     }
     public function categoryIndex(Request $request, $id)
     {
@@ -148,9 +150,8 @@ class FrontController extends Controller
     {
         $from = $request->query('from');
         $to = $request->query('to');
-        $routes = DB::table('bus_routes')
-            ->join('bus_types', 'bus_routes.bus_type_id', '=', 'bus_types.id')
-
+        $busType = $request->query('busType');
+        $routes = DB::table('bus_routes')->where('bus_type_id', $busType)
             ->where('from_location_id', $from)
             ->where('to_location_id', $to)
             ->get();

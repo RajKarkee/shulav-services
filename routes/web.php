@@ -255,19 +255,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::prefix('location')->name('location.')->group(function () {
                 Route::get('', [BusServiceController::class, 'location'])->name('index');
                 Route::post('add', [BusServiceController::class, 'locationStore'])->name('add');
-
                 Route::get('del/{location}', [BusServiceController::class, 'del'])->name('del');
             });
             Route::prefix('vehicle')->name('vehicle.')->group(function () {
                Route::prefix('types')->name('types.')->group(function () {
                     Route::get('', [BusServiceController::class, 'vehicleTypeIndex'])->name('index');
                     Route::match(['get', 'post'], 'add', [BusServiceController::class, 'vehicleTypeAdd'])->name('add');
-                    Route::delete('delete/{id}', [BusServiceController::class, 'vehicleTypeDelete'])->name('delete');
+                    Route::get('del/{id}', [BusServiceController::class, 'vehicleTypeDelete'])->name('del');
                 });
                 Route::get('', [BusServiceController::class, 'vehicleIndex'])->name('index');
                 Route::match(['get', 'post'], 'add', [BusServiceController::class, 'vehicleAdd'])->name('add');
                 Route::match(['get', 'post'], 'edit/{vehicle_id}', [BusServiceController::class, 'vehicleEdit'])->name('edit');
-                Route::delete('delete/{vehicle_id}', [BusServiceController::class, 'vehicleDelete'])->name('delete');
+                Route::get('delete/{vehicle_id}', [BusServiceController::class, 'vehicleDelete'])->name('delete');
             });
 
             Route::prefix('route')->name('route.')->group(function () {

@@ -154,13 +154,15 @@
             <section class="categories">
                 @foreach ($serviceCategories as $category)
                     @if ($category->type == 3)
-                        <a href="javascript:void(0);" class="category" onclick="openBusModal()">
-                            <div class="pic">
-                                <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" loading="lazy"
-                                    width="100" height="100">
-                            </div>
-                            {{ $category->name }}
-                        </a>
+                        @foreach ($busTypes as $type)
+                            <a href="javascript:void(0);" class="category" onclick="openBusModal({{ $type->id }})">
+                                <div class="pic">
+                                    <img src="{{asset($type->image_1)}}" alt="{{ $type->bus_type_name }}" loading="lazy"
+                                        width="100" height="100">
+                                </div>
+                                {{ $type->bus_type_name }}
+                            </a>
+                        @endforeach
                     @else
                         <a href="{{ route('product.library', $category->id) }}" class="category">
                             <div class="pic">
@@ -173,6 +175,7 @@
                 @endforeach
                 <div id="busModal" class="bus-modal-overlay">
                     <div class="bus-modal">
+                        <input type="hidden" id="typeID">
                         <div class="bus-modal-row">
                             <div class="bus-modal-col">
                                 <div class="bus-modal-label"><i class="fa fa-bus"></i></div>
@@ -457,8 +460,9 @@
             observeSliders();
         });
 
-        function openBusModal() {
+        function openBusModal(id) {
             document.getElementById('busModal').style.display = 'flex';
+            document.getElementById('typeID').value = id;
         }
 
 
@@ -467,9 +471,10 @@
         }
 
         function searchBus() {
+            const id = document.getElementById('typeID').value;
             const fromId = document.getElementById('fromLocation').value;
             const toId = document.getElementById('toLocation').value;
-            window.location.href = `/bus/search?from=${fromId}&to=${toId}`;
+            window.location.href = `/bus/search?from=${fromId}&to=${toId}&busType=${id}`;
         }
     </script>
 @endsection

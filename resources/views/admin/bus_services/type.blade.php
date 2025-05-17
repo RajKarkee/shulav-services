@@ -30,12 +30,7 @@
                             <td>{{ $busType->bus_type_name }}</td>
                             <td>{{ $busType->created_at->format('d-m-Y') }}</td>
                             <td>
-                                <form action="{{ route('admin.busServices.vehicle.delete', ['id' => $busType->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure you want to delete this bus type?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-
+                                <a href="{{ route('admin.busServices.vehicle.types.del', ['id' => $busType->id]) }}" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
                     @endforeach

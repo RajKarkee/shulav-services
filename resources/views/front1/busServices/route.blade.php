@@ -10,7 +10,7 @@
     </nav>
     <div class="route-page">
         <div class="container">
-            @if($routes->isEmpty())
+            @if ($routes->isEmpty())
                 <div class="no-routes-message">
                     <h2>No routes available for the selected locations.</h2>
                 </div>
@@ -18,11 +18,13 @@
             @foreach ($routes as $route)
                 <div class="bus-card" data-bus-id="{{ $route->id }}">
                     <div class="bus-details">
-                        <div class="bus-title">
+                        @php
+                            $vehicle = App\Models\Vehicle::where('id', $route->vehicle_id)->first();
+                        @endphp
+                        {{-- <div class="bus-title">
                             {{ $route->short_description }}
-                            {{-- <span class="night-badge">Night</span> --}}
-                        </div>
-                        <div class="bus-subtype">{{ $route->bus_type_name }}</div>
+                        </div> --}}
+                        <div class="bus-subtype">{{ $vehicle->name }}</div>
 
                         <div class="journey-details">
                             <div class="departure">
@@ -33,7 +35,7 @@
                             <div class="journey-middle">
 
                                 <div class="journey-duration">{{ $route->estimated_time }} Hours</div>
-                                <div class="seats-available">{{$route->estimated_time}}</div>
+                                <div class="seats-available">{{ $route->estimated_time }}</div>
                                 <div class="journey-line"> </div>
 
                                 <div class="bus-number">{{ $route->description }}</div>
@@ -112,19 +114,6 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             const busImages = {
-
-                @foreach ($routes as $route)
-                    {{ $route->id }}: [
-                        "{{ asset('storage/' . $route->image_1) }}", // this becomes /storage/images/bus_types/...
-                        "{{ asset('storage/' . $route->image_2) }}",
-                        "{{ asset('storage/' . $route->image_3) }}",
-                        "{{ asset('storage/' . $route->image_4) }}",
-                        "{{ asset('storage/' . $route->image_5) }}",
-                        "{{ asset('storage/' . $route->image_6) }}",
-                        "{{ asset('storage/' . $route->image_7) }}",
-
-                    ]
-                @endforeach
 
 
             };
