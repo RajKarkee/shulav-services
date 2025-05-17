@@ -272,7 +272,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             Route::prefix('route')->name('route.')->group(function () {
                 Route::post('add', [BusServiceController::class, 'routeStore'])->name('add');
-
                 Route::get('del/{route}', [BusServiceController::class, 'routeDel'])->name('del');
             });
             Route::prefix('busRoutes')->name('busRoutes.')->group(function () {

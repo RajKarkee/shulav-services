@@ -34,6 +34,7 @@ class BusRouteController extends Controller
         $route->from_location_id = $request->from_location_id;
         $route->to_location_id = $request->to_location_id;
         $route->bus_type_id = $request->bus_type_id;
+        $route->vehicle_id = $request->vehicle_id;
         $route->distance = $request->distance;
         $route->estimated_time = $request->estimated_time;
         $route->fare = $request->fare;
@@ -74,6 +75,7 @@ class BusRouteController extends Controller
         $route->from_location_id = $request->from_location_id;
         $route->to_location_id = $request->to_location_id;
         $route->bus_type_id = $request->bus_type_id;
+        $route->vehicle_id = $request->vehicle_id;
         $route->distance = $request->distance;
         $route->estimated_time = $request->estimated_time;
         $route->fare = $request->fare;
