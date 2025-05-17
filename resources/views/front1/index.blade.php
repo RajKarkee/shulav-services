@@ -4,7 +4,8 @@
         /* Main container adjustments */
         .top-banner-slider {
             width: 100%;
-            height: 400px; /* Set slider height to 400px */
+            height: 400px;
+            /* Set slider height to 400px */
             /* Set slider height to 400px */
             margin: 0 auto;
             overflow: hidden;
@@ -35,19 +36,118 @@
             color: #0071e3;
         }
 
-        /* .slider{
-            margin: 15px;
-        } */
+        .bus-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bus-modal {
+            margin-top: 40px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+            padding: 24px 32px;
+            min-width: 800px;
+            position: relative;
+        }
+
+        .bus-modal-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bus-modal-col {
+            display: flex;
+            align-items: center;
+        }
+
+        .bus-modal-label {
+            margin-right: 8px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .bus-modal-select,
+        .bus-modal-date {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .bus-modal-search-btn {
+            background: #0071e3;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+
+        .bus-modal-search-btn:hover {
+            background: #005bb5;
+        }
+
+        .bus-modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 26px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .swap-icon {
+            padding: 0 12px;
+            color: #bbb;
+            font-size: 20px;
+        }
+
+        .bus-modal-pills {
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .bus-modal-pill {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #f5f7fa;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .bus-modal-pill.active {
+            background: #0099ff;
+            color: #fff;
+        }
     </style>
 @endsection
 @section('content')
     <div class="homepage">
         <div class="top-banner-slider">
             @foreach ($sliders as $slider)
-            <div class="slider">
-                <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner"
-                loading="lazy">
-            </div>
+                <div class="slider">
+                    <img src="{{ asset($slider->image) }}" alt="Color Your Way to Epic Rewards" class="full-width-banner"
+                        loading="lazy">
+                </div>
             @endforeach
         </div>
         <div class="container">
@@ -262,8 +362,7 @@
                 });
             }
         });
-    </script>
-    <script>
+
         (function() {
             var link = document.createElement('link');
             link.rel = 'stylesheet';
@@ -286,8 +385,7 @@
             };
             document.body.appendChild(script);
         })();
-    </script>
-    <script>
+
         function initializeSlickSlider(section) {
             const $wrapper = $(section).find('.slider-wrapper');
             const $prev = $(section).find('.slider-prev');
@@ -358,115 +456,11 @@
             initializeAllSliders();
             observeSliders();
         });
-    </script>
-    <style>
-        .bus-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-        }
 
-        .bus-modal {
-            margin-top: 40px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
-            padding: 24px 32px;
-            min-width: 800px;
-            position: relative;
-        }
-
-        .bus-modal-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .bus-modal-col {
-            display: flex;
-            align-items: center;
-        }
-
-        .bus-modal-label {
-            margin-right: 8px;
-            color: #666;
-            font-size: 18px;
-        }
-
-        .bus-modal-select,
-        .bus-modal-date {
-            padding: 8px 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
-
-        .bus-modal-search-btn {
-            background: #0071e3;
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 24px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: background 0.2s;
-        }
-
-        .bus-modal-search-btn:hover {
-            background: #005bb5;
-        }
-
-        .bus-modal-close-btn {
-            position: absolute;
-            top: 10px;
-            right: 16px;
-            background: none;
-            border: none;
-            font-size: 26px;
-            color: #888;
-            cursor: pointer;
-        }
-
-        .swap-icon {
-            padding: 0 12px;
-            color: #bbb;
-            font-size: 20px;
-        }
-
-        .bus-modal-pills {
-            display: flex;
-            gap: 8px;
-            margin-top: 20px;
-        }
-
-        .bus-modal-pill {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 6px 12px;
-            border-radius: 8px;
-            background: #f5f7fa;
-            cursor: pointer;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .bus-modal-pill.active {
-            background: #0099ff;
-            color: #fff;
-        }
-    </style>
-    <script>
         function openBusModal() {
             document.getElementById('busModal').style.display = 'flex';
         }
+
 
         function closeBusModal() {
             document.getElementById('busModal').style.display = 'none';

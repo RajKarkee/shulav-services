@@ -13,24 +13,6 @@
     <li class="breadcrumb-item">Services </li>
 @endsection
 @section('content')
-    {{-- <div class="card shadow mb-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-4">
-                    <input type="text" placeholder="Search Category" oninput="searchCategory(this)" class="form-control">
-                </div>
-                <div class="col-md-4">
-                    <input type="text" placeholder="Search Service" oninput="searchService(this)" class="form-control">
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    {{-- <div class="all" id="all">
-        @foreach ($cats as $cat)
-            @include('admin.setting.service.singlecategory',['cat'=>$cat])
-        @endforeach
-    </div> --}}
-
     <div class="card shadow">
         <div class="card-body">
             <table class="table">

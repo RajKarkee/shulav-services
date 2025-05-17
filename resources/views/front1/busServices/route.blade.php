@@ -5,12 +5,9 @@
             <li class="breadcrumb-item">
                 <a href="{{ route('index') }}" style="text-decoration: none; color: black;">Home</a>
             </li>
-            <li class="breadcrumb-item active" aria-current="page">Bus ticketing</li>
+            <li class="breadcrumb-item active" aria-current="page">E-ticketing</li>
         </ul>
     </nav>
-
-
-
     <div class="route-page">
         <div class="container">
             @if($routes->isEmpty())
@@ -18,9 +15,7 @@
                     <h2>No routes available for the selected locations.</h2>
                 </div>
             @endif
-      
             @foreach ($routes as $route)
-            
                 <div class="bus-card" data-bus-id="{{ $route->id }}">
                     <div class="bus-details">
                         <div class="bus-title">
@@ -36,7 +31,7 @@
                             </div>
 
                             <div class="journey-middle">
-                                
+
                                 <div class="journey-duration">{{ $route->estimated_time }} Hours</div>
                                 <div class="seats-available">{{$route->estimated_time}}</div>
                                 <div class="journey-line"> </div>
@@ -75,73 +70,16 @@
                     <div class="price-section">
                         <div>
                             <div class="price">Rs.{{ $route->fare }}</div>
-                           
+
                         </div>
                         <button class="view-seats-btn">View Seats</button>
                     </div>
                 </div>
             @endforeach
 
-            <!-- Second Bus Card -->
-            {{-- <div class="bus-card" data-bus-id="2">
-                <div class="bus-details">
-                    <div class="bus-title">
-                        Sunaulo Mahakali 2x2 Luxury Sofa Bus
-                        <span class="night-badge">Night</span>
-                    </div>
-                    <div class="bus-subtype">2x2 Sofa Seater</div>
 
-                    <div class="journey-details">
-                        <div class="departure">
-                            <div class="time">02:00 PM</div>
-                            <div class="location">Kathmandu</div>
-                        </div>
-
-                        <div class="journey-middle">
-                            <div class="journey-duration">20 Hours</div>
-                            <div class="journey-line"></div>
-                            <div class="bus-number">Bus No. Su. Pa. Pra. 02 001 KHA 1321</div>
-                        </div>
-
-                        <div class="arrival">
-                            <div class="time">10:00 AM</div>
-                            <div class="location">Sukhad</div>
-                        </div>
-                    </div>
-
-                    <div class="bus-features">
-                        <div class="feature-icon">
-                            <span>🔌</span>
-                        </div>
-                        <div class="feature-icon">
-                            <span>🚻</span>
-                        </div>
-                    </div>
-
-                    <div class="tabs">
-                        <span class="tab">Amenities</span>
-                        <span class="tab-separator">|</span>
-                        <span class="tab">Cancellation Terms</span>
-                        <span class="tab-separator">|</span>
-                        <span class="tab bus-gallery-tab">Bus Gallery</span>
-                        <span class="tab-separator">|</span>
-                        <span class="tab">Boarding & Dropping</span>
-                        <span class="tab-separator">|</span>
-                        <span class="tab">Reviews</span>
-                    </div>
-                </div>
-
-                <div class="price-section">
-                    <div>
-                        <div class="price">Rs.2500</div>
-                        <div class="seats-available">47 Seats Available</div>
-                    </div>
-                    <button class="view-seats-btn">View Seats</button>
-                </div>
-            </div> --}}
         </div>
 
-        <!-- Gallery Modal -->
         <div id="galleryModal" class="modal">
             <div class="modal-content">
                 <div class="modal-header">
@@ -150,13 +88,13 @@
                 </div>
                 <div class="modal-body">
                     <div class="gallery-container" id="galleryImages">
-                        <!-- Gallery images will be loaded here -->
+
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Image Preview Modal -->
+
         <div id="imagePreviewModal" class="image-preview-modal">
             <span class="close-preview">&times;</span>
             <div class="nav-arrow prev-image">&#10094;</div>
@@ -172,7 +110,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Define bus images (fixed syntax)
+
             const busImages = {
 
                 @foreach ($routes as $route)
@@ -190,11 +128,7 @@
 
 
             };
-
-            // Debug to check if images are loaded correctly
             console.log('Bus Images:', busImages);
-
-            // Get all necessary DOM elements
             const galleryModal = document.getElementById('galleryModal');
             const imagePreviewModal = document.getElementById('imagePreviewModal');
             const previewImage = document.getElementById('previewImage');

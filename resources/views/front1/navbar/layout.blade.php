@@ -18,7 +18,7 @@
     @php
         $serviceCategories = DB::table('categories')
             ->whereNull('parent_id')
-            ->get(['id', 'name']);
+            ->get(['id', 'name', 'type']);
         $cities = DB::table('cities')
             ->limit(5)
             ->get(['id', 'name']);
@@ -28,7 +28,7 @@
         $products = DB::table('products')->orderBy('created_at', 'desc')->get();
 
         $settingData = DB::table('settings')->where('code', 'minor')->first();
-
+        $locations = App\Models\BusRouteLocation::all();
         $data = null;
         $logo = null;
         $footer_logo = null;
@@ -100,7 +100,12 @@
             <nav>
                 <ul>
                     @foreach ($serviceCategories as $category)
-                        <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
+                        @if ($category->type == 1)
+                            <li><a href="{{ route('product.library', $category->id) }}">{{ $category->name }}</a></li>
+                        @elseif ($category->type == 3)
+                            <li><a href="javascript:void(0);" class="category"
+                                    onclick="openBusModal()">{{ $category->name }}</a></li>
+                        @endif
                     @endforeach
                 </ul>
             </nav>
@@ -109,6 +114,37 @@
     </header>
 
     @yield('content')
+    {{-- <div id="busModal" class="bus-modal-overlay">
+        <div class="bus-modal">
+            <div class="bus-modal-row">
+                <div class="bus-modal-col">
+                    <div class="bus-modal-label"><i class="fa fa-bus"></i></div>
+                    <select id="fromLocation" class="bus-modal-select" style="min-width:200px; width:220px;">
+                        <option value="" disabled selected>Start your adventure at?</option>
+                        @foreach ($locations as $location)
+                            <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="bus-modal-col swap-icon">
+                    <i class="fa fa-exchange-alt"></i>
+                </div>
+                <div class="bus-modal-col">
+                    <div class="bus-modal-label"><i class="fa fa-map-marker-alt"></i></div>
+                    <select id="toLocation" class="bus-modal-select" style="min-width:200px; width:220px;">
+                        <option value="" disabled selected>Your destination awaits at?</option>
+                        @foreach ($locations as $location)
+                            <option value="{{ $location->id }}">{{ $location->location_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="bus-modal-col">
+                    <button class="bus-modal-search-btn" onclick="searchBus()">Search</button>
+                </div>
+            </div>
+            <button onclick="closeBusModal()" class="bus-modal-close-btn">&times;</button>
+        </div>
+    </div> --}}
 
     <footer>
         <div class="footer-content">
@@ -170,7 +206,8 @@
         </div>
     </footer>
 
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content location-dropdown">
                 <div class="modal-header">
@@ -199,38 +236,7 @@
                 <div class="modal-body">
                     <h4 class="login-title text-center">Close deals from the comfort of your home.</h4>
                     <div class="login-form-container">
-                        {{-- <form class="login-form" method="post" action="{{ route('User.login') }}">
-                            @csrf
-                            @if (session('message'))
-                                <div class="alert alert-success">
 
-                                    {{ session('message') }}
-                                </div>
-                            @endif
-
-                            @if (session('error'))
-                                <script>
-                                    $(document).ready(function() {
-                                        var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-                                        loginModal.show();
-                                    });
-                                </script>
-                                <div class="alert alert-danger">
-
-                                    {{ session('error') }}
-                                </div>
-                            @endif
-                            <div class="mb-3">
-                                <input type="email" name="email" class="form-control" placeholder="Email"
-                                    required>
-                            </div>
-                            <div class="mb-3">
-                                <input type="password" name="password" class="form-control" placeholder="Password"
-                                    required>
-                            </div>
-                            <button type="submit" class="btn btn-login w-100">Login with Email</button>
-                        </form>
-                        <div class="or-divider"><span>OR</span></div> --}}
                         <button class="btn btn-phone w-100 mb-3" data-bs-toggle="modal" data-bs-target="#phoneModal">
                             <i class="fas fa-phone-alt"></i> Continue with phone
                         </button>
@@ -438,6 +444,20 @@
             $('#loginModal').modal('hide');
             $('#phoneModal').modal('show');
         }
+
+        // function openBusModal() {
+        //     document.getElementById('busModal').style.display = 'flex';
+        // }
+
+        // function closeBusModal() {
+        //     document.getElementById('busModal').style.display = 'none';
+        // }
+
+        // function searchBus() {
+        //     const fromId = document.getElementById('fromLocation').value;
+        //     const toId = document.getElementById('toLocation').value;
+        //     window.location.href = `/bus/search?from=${fromId}&to=${toId}`;
+        // }
     </script>
 
     @yield('script')

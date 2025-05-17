@@ -191,17 +191,19 @@ class FrontController extends Controller
     {
         if (request()->isMethod('GET')) {
             $user = Auth::user();
-            $products =DB::table('user_products')
-            ->where('user_products.user_id', $user->id)
-            ->join('products','user_products.product_id','=','products.id')
-            ->join('categories','products.category_id','=','categories.id')
+            $products = DB::table('user_products')
+                ->where('user_products.user_id', $user->id)
+                ->join('products', 'user_products.product_id', '=', 'products.id')
+                ->join('categories', 'products.category_id', '=', 'categories.id')
 
-            ->select('products.*'
-                ,'categories.name as category_name')
-             ->get();
+                ->select(
+                    'products.*',
+                    'categories.name as category_name'
+                )
+                ->get();
 
 
-            return view('user.products.index',compact('products'));
+            return view('user.products.index', compact('products'));
         } else {
             $product = new Product();
             $product->name = $request->name;
@@ -272,7 +274,8 @@ class FrontController extends Controller
         }
     }
 
-    public function userProductsDel($product_id){
+    public function userProductsDel($product_id)
+    {
         $user = Auth::user();
         $userProduct = UserProduct::where('user_id', $user->id)->where('product_id', $product_id)->first();
         if ($userProduct) {
