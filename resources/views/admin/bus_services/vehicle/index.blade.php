@@ -20,7 +20,6 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Type</th>
                         <th>Capacity</th>
                         <th>Created</th>
                         <th>Actions</th>
@@ -30,7 +29,6 @@
                     @foreach ($vehicles as $vehicle)
                         <tr>
                             <td>{{ $vehicle->name }}</td>
-                            <td>{{ $vehicle->bus_type_id}}</td>
                             <td>{{ $vehicle->capacity }}</td>
                             <td>
                                 <a href="{{ route('admin.busServices.vehicle.edit', ['vehicle_id' => $vehicle->id]) }}" class="btn btn-primary">Edit</a>
