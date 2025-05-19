@@ -11,10 +11,11 @@
             <div class="modal-body">
                 <form id="addform">
                     @csrf
-                    <input type="hidden" name="parent_id" id="parent_id" value="{{$parent_id}}">
+                    <input type="hidden" name="parent_id" id="parent_id" value="{{ $parent_id }}">
                     <div class="row">
                         <div class="col-md-4" id="addimage">
-                            <input type="file" class="dropify" name="image" id="image" accept=".jpg,.jpeg,.png" data-default="">
+                            <input type="file" class="dropify" name="image" id="image" accept=".jpg,.jpeg,.png"
+                                data-default="">
                         </div>
                         <div class="col-md-8">
                             <div class="form-group">
@@ -22,9 +23,10 @@
                                 <input type="text" name="name" id="name" class="form-control">
                             </div>
 
-                            <div class="form-group d-none"  >
+                            <div class="form-group d-none">
                                 <label for="rate">Rate</label>
-                                <input type="number" name="rate" id="rate" class="form-control" value="{{ isset($cat) ? $cat->rate : '' }}">
+                                <input type="number" name="rate" id="rate" class="form-control"
+                                    value="{{ isset($cat) ? $cat->rate : '' }}">
                             </div>
 
                             <div class="form-group">
@@ -33,7 +35,7 @@
                             </div>
 
                             <!-- Service Type Dropdown -->
-                            <div class="form-group {{$parent_id?'d-none':''}}">
+                            <div class="form-group {{ $parent_id ? 'd-none' : '' }}">
                                 <label for="type">Service Type</label>
                                 <select name="type" id="type" class="form-control type">
 
@@ -55,41 +57,49 @@
     </div>
 </div>
 @section('script1')
-    <script >
-        function showAdd(_state,cat_id){
+    <script>
+        function showAdd(_state, cat_id) {
             $('#addmodal').modal('show');
-            $('#addtitle').text('Add New '+(_state==1?'Category':'Service'));
-            $('#addsave').text('Add '+(_state==1?'Category':'Service'));
+            $('#addtitle').text('Add New ' + (_state == 1 ? 'Category' : 'Service'));
+            $('#addsave').text('Add ' + (_state == 1 ? 'Category' : 'Service'));
             $('#state').val(_state);
-            $('#category_id').val(_state==1?0:cat_id);
+            $('#category_id').val(_state == 1 ? 0 : cat_id);
 
-            state=_state;
+            state = _state;
         }
-         function addSave(){
-            const name=$('#name').val();
-            if(name==''){
-                alert('Please Enter '+ (state==1?'Category':'Service') +' Name');
+
+        function addSave() {
+            const name = $('#name').val();
+            if (name == '') {
+                alert('Please Enter ' + (state == 1 ? 'Category' : 'Service') + ' Name');
                 return;
             }
-            const fd=new FormData(document.getElementById('addform'));
-            $('#addmodal').block({message: '<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div>'});
-            axios.post('{{route('admin.setting.category.add')}}',fd)
-            .then((res)=>{
-                cats.push(res.data);
-                $('#data').append(render(res.data));
-
-                document.getElementById('addform').reset();
-                $('#rate').val({{ isset($cat)?$cat->rate:'0'}});
-                $('#addmodal').modal('hide');
-                $('#addimage .dropify-clear')[0].click();
-                $('#addmodal').unblock();
-
-            })
-            .catch((err)=>{
-                $('#addmodal').unblock();
-                toastr.error('Cannot Add '+(state==1?'Category':'Service')+" Please Try Again.")
-                console.log(err);
+            const fd = new FormData(document.getElementById('addform'));
+            $('#addmodal').block({
+                message: '<div class="spinner-grow text-primary" role="status"><span class="sr-only">Loading...</span></div>'
             });
+            axios.post('{{ route('admin.setting.category.add') }}', fd)
+                .then((res) => {
+                    if (res.data.status == true) {
+                        cats.push(res.data);
+                        $('#data').append(render(res.data));
+
+                        document.getElementById('addform').reset();
+                        $('#rate').val({{ isset($cat) ? $cat->rate : '0' }});
+                        $('#addmodal').modal('hide');
+                        $('#addimage .dropify-clear')[0].click();
+                        $('#addmodal').unblock();
+                    } else {
+                        $('#addmodal').unblock();
+                        toastr.error(res.data.message);
+                    }
+
+                })
+                .catch((err) => {
+                    $('#addmodal').unblock();
+                    toastr.error('Cannot Add ' + (state == 1 ? 'Category' : 'Service') + " Please Try Again.")
+                    console.log(err);
+                });
         }
     </script>
 @endsection

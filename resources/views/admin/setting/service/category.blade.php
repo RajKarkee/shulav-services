@@ -23,7 +23,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Image</th>
+                        {{-- <th>Image</th> --}}
                         <th>Name</th>
                         <th>Type</th>
                         <th>Description</th>
@@ -69,9 +69,7 @@
         function render(cat){
             const subURL = "{{ route('admin.setting.category.index') }}";
             return `<tr id="cat-${cat.id}">
-                        <td>
-                            <img src="/${cat.image}" style="max-width: 100px" alt="">
-                        </td>
+
                         <td>${cat.name}</td>
                         <td>
                             ${serviceTypes[cat.type]}

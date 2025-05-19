@@ -83,7 +83,7 @@
 
                         <a href="{{ route('admin.products.indexUser') }}">
                             {{-- <i class="material-icons">shopping_cart</i> --}}
-                           User Product
+                           UserProducts
                         </a>
                     </li>
                 </ul>

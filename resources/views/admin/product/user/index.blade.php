@@ -2,9 +2,9 @@
 @section('css-include')
     <link href="{{ asset('admin/plugins/DataTables/datatables.min.css') }}" rel="stylesheet">
 @endsection
-@section('page-option')
+{{-- @section('page-option')
     <a type="button" class="btn btn-primary" href="{{ route('admin.products.create') }}">Add Product</a>
-@endsection
+@endsection --}}
 @section('css')
 <style>
     label{
@@ -13,7 +13,7 @@
 </style>
 @endsection
 @section('s-title')
-    <li class="breadcrumb-item">Products</li>
+    <li class="breadcrumb-item">UserProducts</li>
 @endsection
 @section('content')
     <div class="card shadow mb-3">

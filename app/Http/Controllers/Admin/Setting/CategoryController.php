@@ -32,28 +32,35 @@ class CategoryController extends Controller
     }
 
     public function add(Request $request){
-        $category = new Category();
-        $category->name = $request->name;
-        $category->parent_id = $request->parent_id;
-        if($request->filled('parent_id')){
-            $parent = Category::find($request->parent_id);
-            $category->type = $parent->type;
+        if($request->type  == 3){
+            $ticketing = DB::table(Category::tableName)->where('type', 3)->first();
+            if($ticketing){
+                return response()->json(['status'=>false,'message'=>'Ticketing category already exists']);
+            }
         }else{
-            $category->type = $request->type??1;
-        }
-        $category->desc = $request->desc;
-        $category->rate=$request->rate??0;
-        if ($request->hasFile('image')) {
-            $category->image = $request->image->store('uploads/category');
-        }
+            $category = new Category();
+            $category->name = $request->name;
+            $category->parent_id = $request->parent_id;
+            if($request->filled('parent_id')){
+                $parent = Category::find($request->parent_id);
+                $category->type = $parent->type;
+            }else{
+                $category->type = $request->type??1;
+            }
+            $category->desc = $request->desc;
+            $category->rate=$request->rate??0;
+            if ($request->hasFile('image')) {
+                $category->image = $request->image->store('uploads/category');
+            }
 
-        $category->save();
-        cache()->forget('service_categories');
-        cache()->forget('all_categories');
-        cache()->forget('subcategories');
-        Helper::clearCategoriesCache();
+            $category->save();
+            cache()->forget('service_categories');
+            cache()->forget('all_categories');
+            cache()->forget('subcategories');
+            Helper::clearCategoriesCache();
 
-        return response()->json($category);
+            return response()->json(['status'=>true,'category'=>$category]);
+        }
     }
 
     public function update(Request $request){
