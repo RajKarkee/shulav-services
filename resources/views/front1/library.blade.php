@@ -29,25 +29,27 @@
                                 </a>
                             </li>
                             @foreach ($allcategories as $allcategory)
-                                <li>
-                                    <a href="{{ route('product.library.filter', ['category_id' => $allcategory->id]) }}"
-                                        class="main-category" onclick="selectCategory(event, this)">
-                                        {{ $allcategory->name }}
-                                        <i class="fas fa-chevron-down"></i>
-                                    </a>
-                                    <ul class="sub-categories">
-                                        @foreach ($subcategories as $subcategory)
-                                            @if ($subcategory->parent_id == $allcategory->id)
-                                                <li>
-                                                    <a href="{{ route('product.library.filter', ['subcategory_id' => $subcategory->id]) }}"
-                                                        class="sub-category" onclick="selectCategory(event, this)">
-                                                        {{ $subcategory->name }}
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                </li>
+                                @if ($allcategory->type != 3)
+                                    <li>
+                                        <a href="{{ route('product.library.filter', ['category_id' => $allcategory->id]) }}"
+                                            class="main-category" onclick="selectCategory(event, this)">
+                                            {{ $allcategory->name }}
+                                            <i class="fas fa-chevron-down"></i>
+                                        </a>
+                                        <ul class="sub-categories">
+                                            @foreach ($subcategories as $subcategory)
+                                                @if ($subcategory->parent_id == $allcategory->id)
+                                                    <li>
+                                                        <a href="{{ route('product.library.filter', ['subcategory_id' => $subcategory->id]) }}"
+                                                            class="sub-category" onclick="selectCategory(event, this)">
+                                                            {{ $subcategory->name }}
+                                                        </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -96,24 +98,23 @@
                 <div class="col-md-9">
                     <div class="content">
                         <div class="col">
-                            @foreach ($products as $product )
-                            <div class="card">
-                                <a href="{{route('product.show',[$product->name,$product->id])}}" class="card-link">
-                               <div class="card">
-                                   <div class="card-image">
-                                       <img src="{{asset($product->image)}}" alt="Product" loading="lazy">
-                                   </div>
-                                   <div class="card-body">
-                                       <div class="category">
-                                           <i class="fas fa-car"></i> {{ $product->short_desc }}
-                                       </div>
-                                       <h5>{{$product->name}}</h5>
-                                       <p class="price">{{$product->price}}Rs</p>
-                                   </div>
-                               </div>
-                           </a>
-                       </div>
-                                                
+                            @foreach ($products as $product)
+                                <div class="card">
+                                    <a href="{{ route('product.show', [$product->name, $product->id]) }}" class="card-link">
+                                        <div class="card">
+                                            <div class="card-image">
+                                                <img src="{{ asset($product->image) }}" alt="Product" loading="lazy">
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="category">
+                                                    <i class="fas fa-car"></i> {{ $product->short_desc }}
+                                                </div>
+                                                <h5>{{ $product->name }}</h5>
+                                                <p class="price">{{ $product->price }}Rs</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
                             @endforeach
                         </div>
                     </div>

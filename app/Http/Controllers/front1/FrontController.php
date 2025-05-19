@@ -72,7 +72,7 @@ class FrontController extends Controller
         $cities = Helper::getCities();
 
         $allcategories = Cache::rememberForever('all_categories', function () {
-            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name']);
+            return DB::table('categories')->whereNull('parent_id')->get(['id', 'name','type']);
         });
 
         $subcategories = Cache::rememberForever('subcategories', function () {
