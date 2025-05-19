@@ -37,9 +37,9 @@ class AdminProductController extends Controller
 
     public function create()
     {
-        $serviceCategories = Helper::getCategoriesMini();
+        $serviceCategories = Helper::getCategories();
         $cities = DB::table('cities')->get(['id', 'name']);
-        return view('admin.product.add', compact('serviceCategories', 'cities')); // Pass $cities to the view
+        return view('admin.product.add', compact('serviceCategories', 'cities'));
     }
 
     public function store(Request $request)

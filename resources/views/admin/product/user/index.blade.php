@@ -74,7 +74,7 @@
 @section('script')
     <script>
         const cities = @json(\App\Helper::getCitiesMini());
-        const categories = @json(\App\Helper::getCategoriesMini());
+        const categories = @json(\App\Helper::getCategories());
         const users = @json(
             \App\Models\UserProduct::with('user')->get()->map(function ($userProduct) {
                     return ['id' => $userProduct->user->id, 'name' => $userProduct->user->name];
@@ -85,7 +85,7 @@
         var userMap = {};
 
         $(document).ready(function() {
-            $('#category_id').append(categories.map(category => {
+           $('#category_id').append(categories.filter(category => category.type != 3).map(category => {
                 return `<option value="${category.id}">${category.name}</option>`;
             }));
             $('#city_id').append(cities.map(city => {

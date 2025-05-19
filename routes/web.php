@@ -363,7 +363,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
                 });
             });
             Route::prefix('category')->name('category.')->group(function () {
-                route::get('', [CategoryController::class, 'index'])->name('index');
+                route::get('', [CategoryController::class, 'inFprodex'])->name('index');
                 route::get('/cat/{cat}', [CategoryController::class, 'category'])->name('category');
                 route::post('add', [CategoryController::class, 'add'])->name('add');
                 route::post('update', [CategoryController::class, 'update'])->name('update');

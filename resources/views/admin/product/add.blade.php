@@ -8,8 +8,6 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('admin/plugins/drophify/css/dropify.min.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
-
-
     <style>
         #mass-image .dropify-wrapper {
             height: 150px;
@@ -48,7 +46,9 @@
                                     <label for="category_id">Service Category</label>
                                     <select type="text" name="category_id" class="form-control" id="category_id" required>
                                         @foreach ($serviceCategories as $category)
+                                        @if($category->type !== 3)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endif
                                         @endforeach
                                     </select>
                                 </div>
